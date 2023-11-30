@@ -1,10 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
-import { IoIosArrowForward } from "react-icons/io";
+import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { CiLogout } from "react-icons/ci";
+import { IoIosArrowForward } from "react-icons/io";
+import { Link, useLocation } from "react-router-dom";
 
 import { menuItems } from "./LayoutData";
-import { useState } from "react";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -72,14 +71,6 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-
-      {/* footer */}
-      <div className="fixed bottom-0 mb-2 p-4 bg-gray-950 rounded-md">
-        <div className="flex items-center text-gray-400 w-full">
-          <CiLogout className="text-xl mr-4" />
-          <button className="">Logout</button>
-        </div>
-      </div>
     </div>
   );
 };
