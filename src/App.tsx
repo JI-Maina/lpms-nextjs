@@ -1,11 +1,13 @@
-import { Button } from "@components/ui/button";
+import Sidebar from "@components/layout/Sidebar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <main className="">
-      Home Page
-      <Button>Click Me</Button>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/dashboard" element={<Sidebar />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
