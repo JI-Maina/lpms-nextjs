@@ -9,6 +9,7 @@ import React from "react";
 import { FiMenu } from "react-icons/fi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { Button } from "@components/ui/button";
+import { ModeToggle } from "./ModeToggle";
 
 type NavbarProps = {
   toggleSidebar: () => void;
@@ -16,10 +17,10 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   return (
-    <nav className="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5">
+    <nav className="py-2 px-6 flex items-center shadow-md shadow-black/5">
       <button
         type="button"
-        className="text-lg text-gray-600 md:hidden"
+        className="text-lg text-gray-50 md:hidden"
         onClick={toggleSidebar}
       >
         <FiMenu />
@@ -33,6 +34,10 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
           >
             <IoMdNotificationsOutline />
           </button>
+        </li>
+
+        <li>
+          <ModeToggle />
         </li>
 
         <li>
