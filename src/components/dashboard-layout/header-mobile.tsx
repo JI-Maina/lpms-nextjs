@@ -24,7 +24,7 @@ const HeaderMobile = () => {
       }`}
     >
       <motion.div
-        className="absolute inset-0 right-0 w-full bg-white"
+        className="absolute inset-0 right-0 w-full bg-secondary"
         variants={sidebar}
       />
 
@@ -71,7 +71,7 @@ export default HeaderMobile;
 const MenuToggle = ({ toggle }: { toggle: any }) => (
   <button
     onClick={toggle}
-    className="pointer-events-auto absolute right-4 top-[14px] z-30"
+    className="pointer-events-auto absolute right-4 top-[14px] z-50 "
   >
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path

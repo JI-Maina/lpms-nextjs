@@ -24,7 +24,7 @@ export default function DashboardLayout({
       enableSystem
       disableTransitionOnChange
     >
-      <div className="flex">
+      <div className="flex bg-secondary">
         <SideNav />
         <main className="flex-1">
           <MarginWidthWrapper>
