@@ -5,6 +5,7 @@ import HeaderMobile from "@/components/dashboard-layout/header-mobile";
 import SideNav from "@/components/dashboard-layout/side-nav";
 import MarginWidthWrapper from "@/components/dashboard-layout/margin-width-wrapper";
 import PageWrapper from "@/components/dashboard-layout/page-wrapper";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <body className="bg-white">
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <div className="flex">
         <SideNav />
         <main className="flex-1">
@@ -29,6 +35,6 @@ export default function DashboardLayout({
           </MarginWidthWrapper>
         </main>
       </div>
-    </body>
+    </ThemeProvider>
   );
 }

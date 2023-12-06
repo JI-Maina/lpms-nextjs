@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { DecodedJWT, JWT, RefreshedToken, Token } from "next-auth/jwt";
-import type { AuthOptions, User } from "next-auth";
+import type { AuthOptions, User, UserObject } from "next-auth";
 
 async function refreshAccessToken(token: JWT): Promise<JWT | null> {
   try {
@@ -98,6 +98,11 @@ export const authOptions: AuthOptions = {
       session.access_token = token.access_token;
       session.exp = token.exp;
       session.refresh_token = token.refresh_token;
+      session.user = {
+        username: token.username,
+        user_role: token.user_role,
+      } as User;
+
       return session;
     },
   },

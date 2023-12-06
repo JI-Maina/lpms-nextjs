@@ -4,7 +4,7 @@ import { authOptions } from "../api/auth/[...nextauth]/options";
 const HomePage = async () => {
   const session = await getServerSession(authOptions);
 
-  console.log(session?.access_token);
+  console.log(session);
   return <div>HomePage</div>;
 };
 

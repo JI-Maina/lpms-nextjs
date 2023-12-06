@@ -4,7 +4,16 @@ import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
 import useScroll from "@/hooks/use-scroll";
+import { ModeToggle } from "../theme/mode-toggle";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const Header = () => {
   const scrolled = useScroll(5);
@@ -31,10 +40,10 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="hidden md:block">
-          <div className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center">
-            <span className="font-semibold text-sm">HQ</span>
-          </div>
+        <div className="hidden md:flex md:gap-2">
+          <ModeToggle />
+
+          <UserAvatar />
         </div>
       </div>
     </div>
@@ -42,3 +51,23 @@ const Header = () => {
 };
 
 export default Header;
+
+const UserAvatar = () => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button size="icon" className="rounded-full">
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarFallback>LP</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem>Account</DropdownMenuItem>
+        <DropdownMenuItem>Log-Out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
