@@ -2,7 +2,9 @@
 
 import * as z from "zod";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "../ui/input";
@@ -15,33 +17,13 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-
-const regSchema = z
-  .object({
-    firstName: z
-      .string()
-      .min(3, { message: "Enter a valid firstname" })
-      .max(100),
-    lastName: z
-      .string()
-      .min(3, { message: "Enter a valid firstname" })
-      .max(100),
-    phoneNo: z
-      .string()
-      .min(10, { message: "Phone no. must be exactly 10 characters" })
-      .max(10, { message: "Phone no. must be exactly 10 characters" })
-      .refine((val) => !isNaN(val as unknown as number), {
-        message: "Phone number should be in figures",
-      }),
-    password: z.string().min(6).max(100),
-    cfmPassword: z.string().min(6).max(100),
-  })
-  .refine((data) => data.password === data.cfmPassword, {
-    message: "Passwords do not much",
-    path: ["cfmPassword"],
-  });
+import { regSchema } from "./form-schema";
+// import { useToast } from "../ui/use-toast";
 
 const RegisterForm = () => {
+  const router = useRouter();
+  // const { toast } = useToast();
+
   const form = useForm<z.infer<typeof regSchema>>({
     resolver: zodResolver(regSchema),
     defaultValues: {
@@ -53,16 +35,6 @@ const RegisterForm = () => {
     },
   });
 
-  // type CreateUserResponse = {
-  //   first_name: string;
-  //   last_name: string;
-  //   phone_no: string;
-  //   password: string;
-  //   is_owner: boolean;
-  //   is_caretaker: boolean;
-  //   is_tenant: boolean;
-  // };
-
   const onSubmit = async (values: z.infer<typeof regSchema>) => {
     const user = {
       first_name: values.firstName,
@@ -70,53 +42,64 @@ const RegisterForm = () => {
       phone_no: values.phoneNo,
       password: values.password,
       is_owner: true,
+      is_caretaker: false,
+      is_tenant: false,
     };
 
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/auth/register/",
-        user,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      await axios.post("http://127.0.0.1:8000/auth/register/", user, {
+        headers: { "Content-Type": "application/json" },
+      });
 
-      console.log(res);
+      router.push("/login");
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.log(error?.response?.data);
+        if (!error?.response) {
+          toast.error("Registration Failed! Check your internet connection");
+        } else if (error?.response?.status === 400) {
+          if (error.response.data.phone_number) {
+            toast.error(error.response.data?.phone_no[0]);
+          }
+        }
+      } else {
+        return "An unexpected error occurred";
+      }
     }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Firstname:</FormLabel>
-              <FormControl>
-                <Input placeholder="john" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Firstname:</FormLabel>
+                <FormControl>
+                  <Input placeholder="john" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Lastname:</FormLabel>
-              <FormControl>
-                <Input placeholder="Doe" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Lastname:</FormLabel>
+                <FormControl>
+                  <Input placeholder="Doe" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}

@@ -3,6 +3,7 @@ import type { User, UserObject } from "next-auth";
 
 declare module "next-auth" {
   export interface UserObject {
+    user_id: string;
     username: string;
     user_role: string;
   }

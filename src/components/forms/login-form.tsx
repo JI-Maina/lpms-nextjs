@@ -17,7 +17,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid Email Address" }),
+  phoneNo: z.string().min(10, { message: "Invalid phone number" }).max(10),
   password: z.string().min(4, { message: "Must be greater than 4 characters" }),
 });
 
@@ -25,12 +25,12 @@ const LoginForm = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { phoneNo: "", password: "" },
   });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     const res = await signIn("credentials", {
-      username_or_email: values.email,
+      phone_no: values.phoneNo,
       password: values.password,
       redirect: false,
     });
@@ -50,16 +50,12 @@ const LoginForm = () => {
       >
         <FormField
           control={form.control}
-          name="email"
+          name="phoneNo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email:</FormLabel>
+              <FormLabel>Phone Number:</FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  type="email"
-                  placeholder="johndeo@gmail.com"
-                />
+                <Input {...field} type="phoneNo" placeholder="0700000000" />
               </FormControl>
               <FormMessage />
             </FormItem>

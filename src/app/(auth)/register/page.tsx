@@ -2,15 +2,17 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
 import RegisterForm from "@/components/forms/register-form";
+import Link from "next/link";
 
 const RegisterPage = () => {
   return (
-    <Card className="w-[350px] mb-4">
+    <Card className="w-[380px] mb-4">
       <CardHeader>
         <CardTitle>Get Started</CardTitle>
         <CardDescription>
@@ -21,6 +23,15 @@ const RegisterPage = () => {
       <CardContent>
         <RegisterForm />
       </CardContent>
+
+      <CardFooter>
+        <p className="text-sm text-muted-foreground">
+          Already have an account?{" "}
+          <Link href="/login" className="hover:underline text-ring">
+            Login
+          </Link>
+        </p>
+      </CardFooter>
     </Card>
   );
 };

@@ -57,13 +57,13 @@ export const authOptions: AuthOptions = {
           //   console.log(token);
           if (res.status !== 200) throw token;
 
-          const { exp }: DecodedJWT = jwtDecode(token.access_token);
+          const { exp, user_id }: DecodedJWT = jwtDecode(token.access_token);
 
           return {
             ...token,
             exp,
             user: {
-              username: token.username,
+              user_id,
               user_role: token.user_role,
             },
           } as User;
@@ -99,7 +99,6 @@ export const authOptions: AuthOptions = {
       session.exp = token.exp;
       session.refresh_token = token.refresh_token;
       session.user = {
-        username: token.username,
         user_role: token.user_role,
       } as User;
 

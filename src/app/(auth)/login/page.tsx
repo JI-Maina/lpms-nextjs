@@ -1,11 +1,14 @@
+import Link from "next/link";
+
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import LoginForm from "./LoginForm";
+import LoginForm from "@/components/forms/login-form";
 
 const LoginPage = () => {
   return (
@@ -18,6 +21,15 @@ const LoginPage = () => {
       <CardContent>
         <LoginForm />
       </CardContent>
+
+      <CardFooter>
+        <p className="text-sm text-muted-foreground">
+          Don&apos;t have an account?{" "}
+          <Link href="/register" className="hover:underline text-ring">
+            Register
+          </Link>
+        </p>
+      </CardFooter>
     </Card>
   );
 };
