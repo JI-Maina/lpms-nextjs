@@ -10,7 +10,7 @@ import RegisterForm from "@/components/forms/register-form";
 
 const RegisterPage = () => {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] mb-4">
       <CardHeader>
         <CardTitle>Get Started</CardTitle>
         <CardDescription>

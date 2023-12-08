@@ -9,7 +9,7 @@ import LoginForm from "./LoginForm";
 
 const LoginPage = () => {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] mb-4">
       <CardHeader>
         <CardTitle>Login</CardTitle>
         <CardDescription>Resume the journey</CardDescription>
