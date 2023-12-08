@@ -1,10 +1,24 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import LoginForm from "./LoginForm";
 
 const LoginPage = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <LoginForm />
-    </main>
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Login</CardTitle>
+        <CardDescription>Resume the journey</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <LoginForm />
+      </CardContent>
+    </Card>
   );
 };
 
