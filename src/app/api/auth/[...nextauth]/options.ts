@@ -6,7 +6,7 @@ import type { AuthOptions, User, UserObject } from "next-auth";
 async function refreshAccessToken(token: JWT): Promise<JWT | null> {
   try {
     const res = await fetch(
-      `${process.env.DJANGO_BASE_URL}/api/refresh_token/`,
+      `${process.env.DJANGO_BASE_URL}/auth/refresh_token/`,
       {
         method: "POST",
         body: JSON.stringify({ refresh_token: token.refresh_token }),
