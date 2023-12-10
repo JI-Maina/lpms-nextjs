@@ -1,7 +1,26 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { FileEdit, Plus, Trash2 } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 
@@ -75,12 +94,56 @@ const PropertyPage = async () => {
                 <h2>caretaker: {property.care_taker}</h2>
               </div>
 
-              <div className="flex items-center justify-between">
-                <Button size="sm">Edit</Button>
-                <Button variant="outline" size="sm">
-                  Delete
-                </Button>
-              </div>
+              <Separator />
+
+              <footer className="h-[40px] px-4 p-[2px] text-sm text-muted-foreground flex items-center justify-between mt-1">
+                <p>Created at {property.created_at}</p>
+
+                <div className="flex">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button size="icon" variant="ghost">
+                        <FileEdit />
+                      </Button>
+                    </DialogTrigger>
+
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Edit Property</DialogTitle>
+                        <DialogDescription>
+                          Make changes to your property here. Click save when
+                          you&apos;re done.
+                        </DialogDescription>
+                      </DialogHeader>
+                      property form
+                    </DialogContent>
+                  </Dialog>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <Trash2 />
+                      </Button>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        Are you absolutey sure?
+                      </AlertDialogHeader>
+
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your property and its related data.
+                      </AlertDialogDescription>
+
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Proceed</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              </footer>
             </div>
           </CardContent>
         </Card>
