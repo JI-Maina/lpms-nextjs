@@ -1,22 +1,12 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
-import { FileEdit } from "lucide-react";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { getServerSession } from "next-auth";
+
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
 import CreatePropertyButton from "./create-property-button";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import PropertyDeleteDialog from "@/components/home/property/property-delete-dialog";
+import PropertyEditDialog from "@/components/home/property/property-edit-dialog";
 
 const getProperty = async () => {
   const session = await getServerSession(authOptions);
@@ -34,7 +24,7 @@ const PropertyPage = async () => {
   const propertyData: Promise<Property[]> = getProperty();
   const properties = await propertyData;
 
-  console.log(properties.length);
+  console.log(properties[0]);
 
   return (
     <main className="flex flex-col gap-2">
@@ -69,7 +59,11 @@ const PropertyPage = async () => {
         >
           <CardContent className="flex flex-col md:flex-row justify-between gap-4 p-4">
             <Image
-              src="/property-1.jpg"
+              src={
+                property.property_img
+                  ? `http://127.0.0.1:8000${property.property_img}`
+                  : "/no-propertyfound.png"
+              }
               alt=""
               width={400}
               height={400}
@@ -86,7 +80,7 @@ const PropertyPage = async () => {
                 <h2>floors: {property.number_of_floors}</h2>
                 <h2>units: {property.number_of_units}</h2>
 
-                <h2>caretaker: {property.care_taker?.first_name}</h2>
+                <h2>caretaker: {property.care_taker?.user.first_name}</h2>
               </div>
 
               <Separator />
@@ -95,24 +89,7 @@ const PropertyPage = async () => {
                 <p>Created at {property.created_at}</p>
 
                 <div className="flex">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button size="icon" variant="ghost">
-                        <FileEdit />
-                      </Button>
-                    </DialogTrigger>
-
-                    <DialogContent className="sm:max-w-[425px]">
-                      <DialogHeader>
-                        <DialogTitle>Edit Property</DialogTitle>
-                        <DialogDescription>
-                          Make changes to your property here. Click save when
-                          you&apos;re done.
-                        </DialogDescription>
-                      </DialogHeader>
-                      property form
-                    </DialogContent>
-                  </Dialog>
+                  <PropertyEditDialog property={property} />
 
                   <PropertyDeleteDialog id={property.id} />
                 </div>

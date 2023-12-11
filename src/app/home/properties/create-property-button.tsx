@@ -53,7 +53,7 @@ const CreatePropertyButton = () => {
       property_name: data.name,
       property_lrl: data.lrl,
       number_of_units: data.units,
-      number_of_floors: data.floors ? 0 : null,
+      number_of_floors: data.floors,
       property_img: data.image ? 0 : null,
       care_taker: data.caretaker ? 0 : null,
     };
@@ -74,6 +74,7 @@ const CreatePropertyButton = () => {
       router.refresh();
       setOpen(false);
     } catch (err: any) {
+      console.log(err);
       if (!err?.response) {
         toast({
           description: "Registration Failed! Check your internet connection",

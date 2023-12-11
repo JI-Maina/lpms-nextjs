@@ -28,8 +28,8 @@ export const propertySchema = z.object({
     .string()
     .min(4)
     .max(10, { message: "Property lrl must be between 4-10 characters" }),
-  units: z.number().default("" as unknown as number),
-  floors: z.number().default("" as unknown as number),
+  units: z.number(),
+  floors: z.number(),
   image: z.string().optional(),
-  caretaker: z.number().default("" as unknown as number),
+  caretaker: z.number(),
 });
