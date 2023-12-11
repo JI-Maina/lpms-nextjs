@@ -1,15 +1,4 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import CreatePropertyForm from "@/components/forms/create-property-form";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -23,10 +12,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { FileEdit, Plus, Trash2 } from "lucide-react";
+import { FileEdit } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import CreatePropertyButton from "./create-property-button";
+import PropertyDeleteDialog from "@/components/home/property/property-delete-dialog";
 
 const getProperty = async () => {
   const session = await getServerSession(authOptions);
@@ -124,29 +114,7 @@ const PropertyPage = async () => {
                     </DialogContent>
                   </Dialog>
 
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <Trash2 />
-                      </Button>
-                    </AlertDialogTrigger>
-
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        Are you absolutey sure?
-                      </AlertDialogHeader>
-
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your property and its related data.
-                      </AlertDialogDescription>
-
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Proceed</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                  <PropertyDeleteDialog id={property.id} />
                 </div>
               </footer>
             </div>
