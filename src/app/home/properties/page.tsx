@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import CreatePropertyForm from "@/components/forms/create-property-form";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,8 +14,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -23,6 +26,7 @@ import { Separator } from "@/components/ui/separator";
 import { FileEdit, Plus, Trash2 } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
+import CreatePropertyButton from "./create-property-button";
 
 const getProperty = async () => {
   const session = await getServerSession(authOptions);
@@ -37,34 +41,35 @@ const getProperty = async () => {
 };
 
 const PropertyPage = async () => {
-  const propertyData = getProperty();
+  const propertyData: Promise<Property[]> = getProperty();
   const properties = await propertyData;
 
-  console.log(properties);
-
-  // {
-  //   id: '9e10d374-4294-4eac-86f2-be571b9b3bb6',
-  //   property_name: 'Django Apartments',
-  //   property_lrl: 'D6310',
-  //   number_of_units: 30,
-  //   number_of_floors: 5,
-  //   owner: { id: 4, user: [Object] },
-  //   care_taker: null,
-  //   unit_set: [],
-  //   property_img: '/media/images/properties/9e10d374-4294-4eac-86f2-be571b9b3bb6/property-1.jpg',
-  //   created_at: '2023-12-09T05:43:02.330241Z',
-  //   updated_at: '2023-12-09T05:43:35.124925Z'
-  // }
+  console.log(properties.length);
 
   return (
     <main className="flex flex-col gap-2">
       <header className="flex items-center justify-between py-4 px-2 rounded-lg border bg-card text-card-foreground shadow-sm">
-        <h2 className="text-lg font-semibold">Properties</h2>
+        <h2 className="text-lg font-semibold">
+          Properties {properties.length}
+        </h2>
 
-        <Button size="sm">
-          <Plus className="h-5 w-5 mr-2" />
-          Add
-        </Button>
+        {/* <Dialog>
+          <DialogTrigger asChild>
+            <Button size="sm">
+              <Plus className="h-5 w-5 mr-2" />
+              Add
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Create a new property</DialogTitle>
+            </DialogHeader>
+
+            <CreatePropertyForm />
+          </DialogContent>
+        </Dialog> */}
+        <CreatePropertyButton />
       </header>
 
       {properties.map((property) => (
@@ -91,7 +96,7 @@ const PropertyPage = async () => {
                 <h2>floors: {property.number_of_floors}</h2>
                 <h2>units: {property.number_of_units}</h2>
 
-                <h2>caretaker: {property.care_taker}</h2>
+                <h2>caretaker: {property.care_taker?.first_name}</h2>
               </div>
 
               <Separator />

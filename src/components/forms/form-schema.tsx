@@ -21,3 +21,15 @@ export const regSchema = z
     message: "Passwords do not much",
     path: ["cfmPassword"],
   });
+
+export const propertySchema = z.object({
+  name: z.string().min(3, { message: "Property name is required" }),
+  lrl: z
+    .string()
+    .min(4)
+    .max(10, { message: "Property lrl must be between 4-10 characters" }),
+  units: z.number().default("" as unknown as number),
+  floors: z.number().default("" as unknown as number),
+  image: z.string().optional(),
+  caretaker: z.number().default("" as unknown as number),
+});
