@@ -4,15 +4,10 @@ import { getServerSession } from "next-auth";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import PropertyEditDialog from "@/components/home/property/property-edit-dialog";
-import PropertyDeleteDialog from "@/components/home/property/property-delete-dialog";
-import { CreatePropertyDialog } from "@/components/home/property/CreatePropertyDialog";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import NavigateButton from "@/components/home/property/navigate-button";
+import { CreatePropertyDialog } from "@/components/home/property/CreatePropertyDialog";
 
-const getProperty = async () => {
+const getAllProperties = async () => {
   const session = await getServerSession(authOptions);
 
   const res = await fetch("http://127.0.0.1:8000/property/properties/", {
@@ -25,10 +20,10 @@ const getProperty = async () => {
 };
 
 const PropertyPage = async () => {
-  const propertyData: Promise<Property[]> = getProperty();
+  const propertyData: Promise<Property[]> = getAllProperties();
   const properties = await propertyData;
 
-  console.log(properties[0]);
+  // console.log(properties[0]);
 
   return (
     <main className="flex flex-col gap-2">

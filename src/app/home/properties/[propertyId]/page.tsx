@@ -1,9 +1,37 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import PropertyDeleteDialog from "@/components/home/property/property-delete-dialog";
 import PropertyEditDialog from "@/components/home/property/property-edit-dialog";
+import { DataTable } from "@/components/home/property/unit-table";
 import { Separator } from "@/components/ui/separator";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { columns } from "./columns";
 
-const SinglePropertyPage = () => {
+type Params = {
+  params: {
+    propertyId: string;
+  };
+};
+
+const getProperty = async (id: string) => {
+  const session = await getServerSession(authOptions);
+
+  const res = await fetch(`http://127.0.0.1:8000/property/properties/${id}/`, {
+    headers: { Authorization: `Bearer ${session?.access_token}` },
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch data");
+
+  return res.json();
+};
+
+const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
+  const propertyData: Promise<Property> = getProperty(propertyId);
+  const property = await propertyData;
+
+  const { unit_set: units } = property;
+  // console.log(units);
+
   return (
     <main>
       <header className="bg-card text-card-foreground p-4 pb-2 flex flex-col gap-2">
@@ -40,7 +68,9 @@ const SinglePropertyPage = () => {
         </div>
       </header>
 
-      <div>Units table</div>
+      <div>
+        <DataTable columns={columns} data={units} />
+      </div>
     </main>
   );
 };
