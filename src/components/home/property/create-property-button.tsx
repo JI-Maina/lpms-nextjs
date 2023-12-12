@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,32 +18,80 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Plus } from "lucide-react";
+import { Plus, RotateCw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { propertySchema } from "@/components/forms/form-schema";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
 
-export const CreatePropertyButton = () => {
+const CreatePropertyButton = () => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof propertySchema>>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
       name: "",
       lrl: "",
-      units: "" as unknown as number,
-      floors: "" as unknown as number,
+      units: 0,
+      floors: 0,
       image: "",
-      caretaker: "" as unknown as number,
+      caretaker: 0,
     },
   });
 
-  const onSubmit = (data: z.infer<typeof propertySchema>) => {
+  const onSubmit = async (data: z.infer<typeof propertySchema>) => {
     console.log(data);
-    setOpen(false);
+    const property = {
+      property_name: data.name,
+      property_lrl: data.lrl,
+      number_of_units: data.units,
+      number_of_floors: data.floors,
+      property_img: null,
+      care_taker: data.caretaker ? 0 : null,
+    };
+    console.log(property);
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/property/properties/",
+        property,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.access_token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      toast({ description: res.statusText });
+      router.refresh();
+      setOpen(false);
+    } catch (err: any) {
+      console.log(err);
+      if (!err?.response) {
+        toast({
+          description: "Registration Failed! Check your internet connection",
+          variant: "destructive",
+        });
+      } else if (err?.response?.status === 400) {
+        if (err.response?.data.number_of_units) {
+          toast({
+            description: `Units - ${err.response.data?.number_of_units[0]}`,
+            variant: "destructive",
+          });
+        }
+      } else if (err?.response?.status === 404) {
+        toast({ description: `404 - ${err.code}`, variant: "destructive" });
+      }
+    }
   };
 
   const openChangeWrapper = (value: boolean) => {
@@ -141,7 +190,7 @@ export const CreatePropertyButton = () => {
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
@@ -153,12 +202,16 @@ export const CreatePropertyButton = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  Create {form.formState.isSubmitting && <ReloadIcon />}
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  onClick={form.handleSubmit(onSubmit)}
+                >
+                  Create {form.formState.isSubmitting && <RotateCw />}
                 </Button>
               </DialogClose>
             </DialogFooter>
@@ -168,3 +221,5 @@ export const CreatePropertyButton = () => {
     </Dialog>
   );
 };
+
+export default CreatePropertyButton;

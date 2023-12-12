@@ -3,10 +3,14 @@ import { getServerSession } from "next-auth";
 
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
-import CreatePropertyButton from "./create-property-button";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import PropertyDeleteDialog from "@/components/home/property/property-delete-dialog";
 import PropertyEditDialog from "@/components/home/property/property-edit-dialog";
+import PropertyDeleteDialog from "@/components/home/property/property-delete-dialog";
+import { CreatePropertyDialog } from "@/components/home/property/CreatePropertyDialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import NavigateButton from "@/components/home/property/navigate-button";
 
 const getProperty = async () => {
   const session = await getServerSession(authOptions);
@@ -33,23 +37,7 @@ const PropertyPage = async () => {
           Properties {properties.length}
         </h2>
 
-        {/* <Dialog>
-          <DialogTrigger asChild>
-            <Button size="sm">
-              <Plus className="h-5 w-5 mr-2" />
-              Add
-            </Button>
-          </DialogTrigger>
-
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Create a new property</DialogTitle>
-            </DialogHeader>
-
-            <CreatePropertyForm />
-          </DialogContent>
-        </Dialog> */}
-        <CreatePropertyButton />
+        <CreatePropertyDialog />
       </header>
 
       {properties.map((property) => (
@@ -88,11 +76,7 @@ const PropertyPage = async () => {
               <footer className="h-[40px] px-4 p-[2px] text-sm text-muted-foreground flex items-center justify-between mt-1">
                 <p>Created at {property.created_at}</p>
 
-                <div className="flex">
-                  <PropertyEditDialog property={property} />
-
-                  <PropertyDeleteDialog id={property.id} />
-                </div>
+                <NavigateButton propertyId={property.id} />
               </footer>
             </div>
           </CardContent>
