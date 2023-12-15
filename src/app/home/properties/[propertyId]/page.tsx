@@ -1,11 +1,13 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import PropertyDeleteDialog from "@/components/home/property/property-delete-dialog";
-import PropertyEditDialog from "@/components/home/property/property-edit-dialog";
-import { DataTable } from "@/components/home/property/unit-table";
+import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
+
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+
 import { columns } from "./columns";
+import { DataTable } from "../components/unit-table";
+import PropertyEditDialog from "../components/property-edit-dialog";
+import PropertyDeleteDialog from "../components/property-delete-dialog";
 
 type Params = {
   params: {
@@ -33,7 +35,7 @@ const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
   // console.log(units);
 
   return (
-    <main>
+    <main className="">
       <header className="bg-card text-card-foreground p-4 pb-2 flex flex-col gap-2">
         <div className="flex items-center gap-3">
           <Image
@@ -61,14 +63,13 @@ const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
           </div>
 
           <div className="flex gap-1 absolute right-0 bottom-0">
-            buttons
-            {/* <PropertyEditDialog />
-            <PropertyDeleteDialog /> */}
+            <PropertyEditDialog property={property} />
+            <PropertyDeleteDialog id={propertyId} />
           </div>
         </div>
       </header>
 
-      <div>
+      <div className="max-w-[360px] sm:max-w-full">
         <DataTable columns={columns} data={units} />
       </div>
     </main>

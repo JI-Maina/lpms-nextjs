@@ -38,3 +38,12 @@ type Unit = {
   balance: number;
   tenant: User | null;
 };
+
+type Room = {
+  unit_name: string;
+  unit_type: string;
+  unit_deposit: string;
+  unit_size: string;
+  unit_rent: string;
+  unit_img: File | null;
+};
