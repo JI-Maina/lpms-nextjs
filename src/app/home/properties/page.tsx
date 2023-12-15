@@ -4,8 +4,8 @@ import { getServerSession } from "next-auth";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { CreatePropertyDialog } from "./components/CreatePropertyDialog";
 import NavigateButton from "./components/navigate-button";
+import { CreatePropertyDialog } from "./components/CreatePropertyDialog";
 
 const getAllProperties = async () => {
   const session = await getServerSession(authOptions);
