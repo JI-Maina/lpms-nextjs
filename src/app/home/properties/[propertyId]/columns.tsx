@@ -70,7 +70,7 @@ export const columns: ColumnDef<Unit>[] = [
       return (
         <div className="flex items-center justify-center gap-2">
           <UnitEditDialog unit={unit} />
-          <UnitDeleteDialog unitId={unit.id} />
+          <UnitDeleteDialog unit={unit} />
         </div>
       );
     },

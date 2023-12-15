@@ -11,9 +11,44 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
 import { Trash2 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const UnitDeleteDialog = ({ unitId }: { unitId: number }) => {
+const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
+  const { data: session } = useSession();
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `http://127.0.0.1:8000/property/properties/${unit.property}/units/${unit.id}/`,
+        {
+          headers: { Authorization: `Bearer ${session?.access_token}` },
+        }
+      );
+
+      toast({ description: `Success! unit ${unit.unit_name} deleted` });
+      router.refresh();
+    } catch (err: any) {
+      console.log(err);
+      if (!err?.response) {
+        toast({
+          description: "Deletion Failed! Check your internet connection",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          description: "Property deletion failed!",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -26,15 +61,13 @@ const UnitDeleteDialog = ({ unitId }: { unitId: number }) => {
         <AlertDialogHeader>Are you absolutly sure?</AlertDialogHeader>
 
         <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete your unit
-          and its related data.
+          This action cannot be undone. This will permanently delete your unit{" "}
+          {unit.unit_name} and its related data.
         </AlertDialogDescription>
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => console.log(unitId)}>
-            Proceed
-          </AlertDialogAction>
+          <AlertDialogAction onClick={handleDelete}>Proceed</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
