@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -57,6 +59,11 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
     },
     mode: "onChange",
   });
+
+  const onsubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -71,7 +78,7 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
         </DialogHeader>
 
         <Form {...form}>
-          <form>
+          <form onSubmit={form.handleSubmit(onsubmit)}>
             <div className="flex gap-2">
               <FormField
                 control={form.control}
@@ -111,7 +118,7 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
                   <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a unit type" />
+                        <SelectValue placeholder={unit.unit_type} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -175,7 +182,9 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button>Save</Button>
+            <Button type="submit" onClick={form.handleSubmit(onsubmit)}>
+              Save
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

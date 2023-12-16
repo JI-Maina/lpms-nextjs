@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import axiosPrivate from "@/lib/axios-private";
 import axios from "axios";
 import { Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -24,8 +25,8 @@ const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `http://127.0.0.1:8000/property/properties/${unit.property}/units/${unit.id}/`,
+      await axiosPrivate.delete(
+        `/property/properties/${unit.property}/units/${unit.id}/`,
         {
           headers: { Authorization: `Bearer ${session?.access_token}` },
         }

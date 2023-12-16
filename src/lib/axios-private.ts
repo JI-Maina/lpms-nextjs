@@ -5,37 +5,39 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 const BASE_URL = "http://127.0.0.1:8000";
 
-export const getSession = async (req, res) => {
-  const session = await getServerSession(authOptions, { req });
-  return res.status(200).json({ session });
-};
+const axiosPrivate = axios.create({
+  baseURL: BASE_URL,
+  headers: { "Content-Type": "application/json" },
+});
 
-const createAxiosInstance = async () => {
-  //   const session = await getServerSession(authOptions);
-  const accessToken = await getSession();
+export default axiosPrivate;
 
-  const axiosInstance = axios.create({
-    baseURL: BASE_URL,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+// export const getSession = async (req, res) => {
+//   const session = await getServerSession(authOptions, { req });
+//   return res.status(200).json({ session });
+// };
 
-  if (accessToken) {
-    axiosInstance.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${accessToken}`;
-  }
+// const createAxiosInstance = async () => {
+//   //   const session = await getServerSession(authOptions);
+//   const accessToken = await getSession();
 
-  return axiosInstance;
-};
+//   const axiosInstance = axios.create({
+//     baseURL: BASE_URL,
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
 
-export default createAxiosInstance;
+//   if (accessToken) {
+//     axiosInstance.defaults.headers.common[
+//       "Authorization"
+//     ] = `Bearer ${accessToken}`;
+//   }
 
-// const axiosPrivate = axios.create({
-//   baseURL: BASE_URL,
-//   headers: { "Content-Type": "application/json" },
-// });
+//   return axiosInstance;
+// };
+
+// export default createAxiosInstance;
 
 // axiosPrivate.interceptors.request.use(async (config) => {
 //   const session = await getServerSession(authOptions);

@@ -70,7 +70,7 @@ const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
       </header>
 
       <div className="max-w-[360px] sm:max-w-full">
-        <DataTable columns={columns} data={units} />
+        <DataTable columns={columns} data={units} propertyId={propertyId} />
       </div>
     </main>
   );
