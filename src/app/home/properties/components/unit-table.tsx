@@ -136,11 +136,10 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  onClick={() =>
-                    router.push(
-                      `/home/properties/${propertyId}/units/${row.id}`
-                    )
-                  }
+                  onClick={() => {
+                    const { id } = row.original as Unit;
+                    router.push(`/home/properties/units/${id}`);
+                  }}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

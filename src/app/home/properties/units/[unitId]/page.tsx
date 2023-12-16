@@ -1,8 +1,9 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getServerSession } from "next-auth";
-import React from "react";
+
 import UnitCard from "../components/unit-card";
+import { getProperty } from "../../[propertyId]/page";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 type Params = {
   params: {
@@ -25,11 +26,8 @@ const getUnit = async (propertyId: string, unitId: string) => {
 
 const UnitPage = async (params: Params) => {
   const { propertyId, unitId } = params.params;
-  const unitData = getUnit(propertyId, unitId);
+  const unitData: Promise<Unit> = getUnit(propertyId, unitId);
   const unit = await unitData;
-
-  console.log(typeof propertyId);
-  console.log(typeof unitId);
 
   return (
     <main>

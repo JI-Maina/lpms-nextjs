@@ -15,7 +15,7 @@ type Params = {
   };
 };
 
-const getProperty = async (id: string) => {
+export const getProperty = async (id: string) => {
   const session = await getServerSession(authOptions);
 
   const res = await fetch(`http://127.0.0.1:8000/property/properties/${id}/`, {
@@ -32,7 +32,7 @@ const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
   const property = await propertyData;
 
   const { unit_set: units } = property;
-  // console.log(units);
+  console.log(units);
 
   return (
     <main className="">
