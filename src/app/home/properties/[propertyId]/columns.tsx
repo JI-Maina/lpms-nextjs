@@ -4,8 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import UnitDeleteDialog from "../components/unit-delete-dialog";
-import UnitEditDialog from "../components/unit-edit-dialog";
+import UnitDeleteDialog from "../../units/components/unit-delete-dialog";
+import UnitEditDialog from "../../units/components/unit-edit-dialog";
 
 // status: "pending" | "processing" | "success" | "failed";
 
@@ -31,15 +31,15 @@ export const columns: ColumnDef<Unit>[] = [
   {
     accessorKey: "unit_rent",
     header: "Rent",
-    // cell: ({ row }) => {
-    //   const amount = parseFloat(row.getValue("unit_rent"));
-    //   const formatted = new Intl.NumberFormat("en-US", {
-    //     style: "currency",
-    //     currency: "KES",
-    //   }).format(amount);
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("unit_rent"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "KES",
+      }).format(amount);
 
-    //   return <div className="font-medium">{formatted}</div>;
-    // },
+      return <div className="font-medium">{formatted}</div>;
+    },
   },
   {
     accessorKey: "tenant",
@@ -62,17 +62,17 @@ export const columns: ColumnDef<Unit>[] = [
       return <div className="font-medium">{formatted}</div>;
     },
   },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const unit = row.original;
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => {
+  //     const unit = row.original;
 
-      return (
-        <div className="flex items-center justify-center gap-2">
-          <UnitEditDialog unit={unit} />
-          <UnitDeleteDialog unit={unit} />
-        </div>
-      );
-    },
-  },
+  //     return (
+  //       <div className="flex items-center justify-center gap-2">
+  //         <UnitEditDialog unit={unit} />
+  //         <UnitDeleteDialog unit={unit} />
+  //       </div>
+  //     );
+  //   },
+  // },
 ];

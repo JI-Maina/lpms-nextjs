@@ -23,7 +23,7 @@ const PropertyPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();
   const properties = await propertyData;
 
-  // console.log(properties[0]);
+  // console.log(properties);
 
   return (
     <main className="flex flex-col gap-2">

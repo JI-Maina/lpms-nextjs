@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import UnitCard from "../components/unit-card";
-import { getProperty } from "../../[propertyId]/page";
 import { getServerSession } from "next-auth";
+
+import UnitCard from "../components/unit-card";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 type Params = {
@@ -34,8 +34,8 @@ const UnitPage = async (params: Params) => {
       <Tabs defaultValue="unit" className="w-full">
         <TabsList>
           <TabsTrigger value="unit">Unit</TabsTrigger>
-          <TabsTrigger value="payment">Payment</TabsTrigger>
-          <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
+          <TabsTrigger value="payment">Make payment</TabsTrigger>
+          <TabsTrigger value="maintenance">Create maintenance</TabsTrigger>
         </TabsList>
 
         <TabsContent value="unit">

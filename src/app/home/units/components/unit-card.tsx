@@ -6,8 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
-import UnitEditDialog from "../../components/unit-edit-dialog";
-import UnitDeleteDialog from "../../components/unit-delete-dialog";
+import UnitEditDialog from "./unit-edit-dialog";
+import UnitDeleteDialog from "./unit-delete-dialog";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 

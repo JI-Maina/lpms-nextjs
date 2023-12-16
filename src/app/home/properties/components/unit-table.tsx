@@ -107,8 +107,7 @@ export function DataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <CreateUnitDialog propertyId={String((data[0] as any).property)} />
+          <CreateUnitDialog propertyId={propertyId} />
         </div>
       </div>
 
@@ -138,7 +137,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   onClick={() => {
                     const { id } = row.original as Unit;
-                    router.push(`/home/properties/units/${id}`);
+                    router.push(`/home/units/${id}`);
                   }}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
