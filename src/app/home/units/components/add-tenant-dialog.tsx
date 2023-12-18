@@ -1,10 +1,20 @@
 "use client";
 
+import { z } from "zod";
+import { UserPlus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -25,13 +35,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import axiosPrivate from "@/lib/axios-private";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { UserPlus } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useState } from "react";
 
 type AddProps = {
   unit: UnitInput;
@@ -43,7 +47,10 @@ const tenantSchema = z.object({
 });
 
 const AddTenantDialog = ({ unit, tenants }: AddProps) => {
+  const [open, setOpen] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof tenantSchema>>({
     resolver: zodResolver(tenantSchema),
@@ -56,20 +63,36 @@ const AddTenantDialog = ({ unit, tenants }: AddProps) => {
 
   const onsubmit = async (data: z.infer<typeof tenantSchema>) => {
     try {
-      const res = await axiosPrivate.patch(
+      await axiosPrivate.patch(
         `/property/properties/${propertyId}/units/${unitId}/`,
         { ...unit, tenant: parseInt(data.tenant) },
         { headers: { Authorization: `Bearer ${session?.access_token}` } }
       );
-
-      console.log(res);
-    } catch (err) {
-      console.log(err);
+      //   console.log(res);
+      setOpen(false);
+      toast({ description: "Success" });
+      router.refresh();
+    } catch (err: any) {
+      //   console.log(err);
+      if (!err?.response) {
+        toast({
+          description: "Creation Failed! Check your internet connection",
+          variant: "destructive",
+        });
+      } else if (err?.response?.status === 400) {
+        if (err.response.data) {
+          toast({ description: err.response.data[0], variant: "destructive" });
+        }
+      }
     }
   };
 
+  const openChangeWrapper = (value: boolean) => {
+    setOpen(value);
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={openChangeWrapper}>
       <DialogTrigger asChild>
         <Button size="icon" variant="outline">
           <UserPlus className="w-5 h-5" />
@@ -78,17 +101,17 @@ const AddTenantDialog = ({ unit, tenants }: AddProps) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Tenant</DialogTitle>
+          <DialogTitle>Add a tenant to unit {unit.unit_name}</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onsubmit)}>
+          <form onSubmit={form.handleSubmit(onsubmit)} className="py-8">
             <FormField
               control={form.control}
               name="tenant"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Select Tenant</FormLabel>
+                  {/* <FormLabel>Select Tenant</FormLabel> */}
                   <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>

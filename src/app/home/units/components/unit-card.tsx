@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import AddTenantDialog from "./add-tenant-dialog";
+import RemoveTenant from "./remove-tenant";
 
 const getTenants = async () => {
   const session = await getServerSession(authOptions);
@@ -34,7 +35,7 @@ const UnitCard = async ({ unit }: { unit: Unit }) => {
   const lastName = unit.tenant?.user.last_name;
   const tenant = `${firstName} ${lastName}`;
 
-  // console.log(tenants);
+  console.log(tenant);
   return (
     <div className="w-full md:max-w-[800px] mx-auto md:p-4 pt-3">
       <Card>
@@ -53,6 +54,7 @@ const UnitCard = async ({ unit }: { unit: Unit }) => {
               alt={unit.unit_name}
               width={500}
               height={500}
+              priority
             />
           </div>
 
@@ -80,7 +82,12 @@ const UnitCard = async ({ unit }: { unit: Unit }) => {
         <Separator />
 
         <CardFooter className="flex items-center justify-end gap-1 p-2">
-          <AddTenantDialog unit={unit as UnitInput} tenants={tenants} />
+          {!unit.tenant ? (
+            <AddTenantDialog unit={unit as UnitInput} tenants={tenants} />
+          ) : (
+            <RemoveTenant unit={unit as UnitInput} />
+          )}
+
           <UnitEditDialog unit={unit} />
           <UnitDeleteDialog unit={unit} />
         </CardFooter>
