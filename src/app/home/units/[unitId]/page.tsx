@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 
 import UnitCard from "../components/unit-card";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import UnitPayment from "../components/unit-payment";
 
 type Params = {
   params: {
@@ -31,19 +32,25 @@ const UnitPage = async (params: Params) => {
 
   return (
     <main>
-      <Tabs defaultValue="unit" className="w-full">
-        <TabsList>
-          <TabsTrigger value="unit">Unit</TabsTrigger>
-          <TabsTrigger value="payment">Make payment</TabsTrigger>
-          <TabsTrigger value="maintenance">Create maintenance</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="unit">
+      <section className="flex flex-col lg:flex-row gap-4">
+        <div className="flex-1 w-full md:max-w-[400px] md:mx-auto ">
           <UnitCard unit={unit} />
-        </TabsContent>
-        <TabsContent value="payment">payment</TabsContent>
-        <TabsContent value="maintenance">maintenance</TabsContent>
-      </Tabs>
+        </div>
+
+        <div className="flex-1 w-full md:max-w-[400px] md:mx-auto">
+          <Tabs defaultValue="payment" className=" ">
+            <TabsList className="grid grid-cols-2 w-full">
+              <TabsTrigger value="payment">Make payment</TabsTrigger>
+              <TabsTrigger value="maintenance">Create maintenance</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="payment">
+              <UnitPayment />
+            </TabsContent>
+            <TabsContent value="maintenance">maintenance</TabsContent>
+          </Tabs>
+        </div>
+      </section>
     </main>
   );
 };
