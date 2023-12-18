@@ -44,6 +44,21 @@ export const columns: ColumnDef<Unit>[] = [
   {
     accessorKey: "tenant",
     header: "Tenant",
+    cell: ({ row }) => {
+      const unit = row.original;
+
+      return (
+        <div>
+          {unit.tenant ? (
+            <p>
+              {unit.tenant?.user.first_name} {unit.tenant?.user.last_name}
+            </p>
+          ) : (
+            "Vacant"
+          )}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "is_rent_paid",

@@ -10,13 +10,31 @@ import UnitEditDialog from "./unit-edit-dialog";
 import UnitDeleteDialog from "./unit-delete-dialog";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import AddTenantDialog from "./add-tenant-dialog";
 
-const UnitCard = ({ unit }: { unit: Unit }) => {
+const getTenants = async () => {
+  const session = await getServerSession(authOptions);
+
+  const res = await fetch("http://127.0.0.1:8000/users/tenants/", {
+    headers: { Authorization: `Bearer ${session?.access_token}` },
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch tenants");
+
+  return res.json();
+};
+
+const UnitCard = async ({ unit }: { unit: Unit }) => {
+  const tenantData: Promise<Tenant[]> = getTenants();
+  const tenants = await tenantData;
+
   const firstName = unit.tenant?.user.first_name;
   const lastName = unit.tenant?.user.last_name;
   const tenant = `${firstName} ${lastName}`;
 
-  console.log(unit);
+  // console.log(tenants);
   return (
     <div className="w-full md:max-w-[800px] mx-auto md:p-4 pt-3">
       <Card>
@@ -62,6 +80,7 @@ const UnitCard = ({ unit }: { unit: Unit }) => {
         <Separator />
 
         <CardFooter className="flex items-center justify-end gap-1 p-2">
+          <AddTenantDialog unit={unit as UnitInput} tenants={tenants} />
           <UnitEditDialog unit={unit} />
           <UnitDeleteDialog unit={unit} />
         </CardFooter>

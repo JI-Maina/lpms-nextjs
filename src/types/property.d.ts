@@ -39,6 +39,20 @@ type Unit = {
   tenant: User | null;
 };
 
+type UnitInput = {
+  id: number;
+  unit_name: string;
+  unit_type: string;
+  property: string;
+  unit_deposit: string;
+  unit_size: string;
+  unit_rent: string;
+  unit_img: string | null;
+  is_rent_paid: boolean;
+  balance: number;
+  tenant: number | null;
+};
+
 type Room = {
   unit_name: string;
   unit_type: string;
@@ -46,4 +60,30 @@ type Room = {
   unit_size: string;
   unit_rent: string;
   unit_img: File | null;
+};
+
+type Tenant = {
+  id: number;
+  id_number: string;
+  nok_first_name: string;
+  nok_last_name: string;
+  nok_phone_no: string;
+  user: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    phone_no: string;
+    is_owner: boolean;
+    is_caretaker: boolean;
+    is_tenant: boolean;
+  };
+  creator: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    phone_no: string;
+    is_owner: boolean;
+    is_caretaker: boolean;
+    is_tenant: boolean;
+  };
 };
