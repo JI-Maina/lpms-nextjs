@@ -2,11 +2,11 @@ import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
-import RemoveTenant from "./remove-tenant";
 import UnitEditDialog from "./unit-edit-dialog";
 import AddTenantDialog from "./add-tenant-dialog";
 import UnitDeleteDialog from "./unit-delete-dialog";
 import { Separator } from "@/components/ui/separator";
+import RemoveTenantDialog from "./remove-tenant-dialog";
 import {
   Card,
   CardContent,
@@ -85,7 +85,7 @@ const UnitCard = async ({ unit }: { unit: Unit }) => {
           {!unit.tenant ? (
             <AddTenantDialog unit={unit as UnitInput} tenants={tenants} />
           ) : (
-            <RemoveTenant unit={unit} />
+            <RemoveTenantDialog unit={unit} />
           )}
 
           <UnitEditDialog unit={unit} />

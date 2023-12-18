@@ -18,7 +18,7 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 
-const RemoveTenant = ({ unit }: { unit: Unit }) => {
+const RemoveTenantDialog = ({ unit }: { unit: Unit }) => {
   const { data: session } = useSession();
   const { toast } = useToast();
   const router = useRouter();
@@ -81,4 +81,4 @@ const RemoveTenant = ({ unit }: { unit: Unit }) => {
   );
 };
 
-export default RemoveTenant;
+export default RemoveTenantDialog;

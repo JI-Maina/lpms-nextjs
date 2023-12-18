@@ -117,7 +117,7 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
       toast({ description: "Unit created" });
       form.reset();
     } catch (err: any) {
-      console.log(err);
+      // console.log(err);
       if (!err?.response) {
         toast({
           description: "Creation Failed! Check your internet connection",
