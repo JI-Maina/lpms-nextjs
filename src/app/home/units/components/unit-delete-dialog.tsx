@@ -1,5 +1,12 @@
 "use client";
 
+import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+import axiosPrivate from "@/lib/axios-private";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,13 +17,6 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import axiosPrivate from "@/lib/axios-private";
-import axios from "axios";
-import { Trash2 } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
   const { data: session } = useSession();
@@ -33,6 +33,7 @@ const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
       );
 
       toast({ description: `Success! unit ${unit.unit_name} deleted` });
+      router.push(`/home/properties/${unit.property}`);
       router.refresh();
     } catch (err: any) {
       console.log(err);

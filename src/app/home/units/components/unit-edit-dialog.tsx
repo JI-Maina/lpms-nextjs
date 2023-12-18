@@ -1,6 +1,17 @@
 "use client";
 
+import { z } from "zod";
+import { useState } from "react";
+import { Edit } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Input } from "@/components/ui/input";
+import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Dialog,
   DialogClose,
@@ -25,10 +36,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Edit } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const UNITTYPES = [
   "single-room",
@@ -40,32 +47,69 @@ const UNITTYPES = [
 
 const unitSchema = z.object({
   unit_name: z.string().min(1, { message: "unit name is required" }),
-  unit_type: z.enum(UNITTYPES),
+  unit_type: z.string(),
   unit_deposit: z.number().positive({ message: "Deposit is required" }),
   unit_size: z.string().min(1, { message: "unit size is required" }),
   unit_rent: z.number().positive({ message: "enter valid rent" }),
-  unit_img: z.string(),
+  // unit_img: z.string().nullable(),
 });
 
 const UnitEditDialog = ({ unit }: { unit: Unit }) => {
-  const form = useForm({
+  const { data: session } = useSession();
+  const { toast } = useToast();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const form = useForm<z.infer<typeof unitSchema>>({
+    resolver: zodResolver(unitSchema),
     defaultValues: {
       unit_name: unit.unit_name,
       unit_type: unit.unit_type,
-      unit_deposit: unit.unit_deposit,
+      unit_deposit: parseInt(unit.unit_deposit),
       unit_size: unit.unit_size,
-      unit_rent: unit.unit_rent,
-      unit_img: unit.unit_img,
+      unit_rent: parseInt(unit.unit_rent),
+      // unit_img: unit.unit_img,
     },
     mode: "onChange",
   });
 
-  const onsubmit = (data) => {
-    console.log(data);
+  // console.log(unit);
+  const propertyId = unit.property;
+  const unitId = unit.id;
+
+  const onsubmit = async (data: z.infer<typeof unitSchema>) => {
+    try {
+      const res = await axiosPrivate.patch(
+        `/property/properties/${propertyId}/units/${unitId}/`,
+        { ...unit, ...data },
+        { headers: { Authorization: `Bearer ${session?.access_token}` } }
+      );
+
+      // console.log(res);
+      toast({ description: "Success" });
+      setOpen(false);
+      router.refresh();
+    } catch (err: any) {
+      console.log(err);
+      if (!err.response) {
+        toast({
+          description: "Edit failed! please check your internet connection",
+          variant: "destructive",
+        });
+      } else if (err?.response?.status === 400) {
+        if (err.response.data) {
+          toast({ description: err.response.data[0], variant: "destructive" });
+        }
+      }
+    }
+  };
+
+  const onOpenChangeWrapper = (value: boolean) => {
+    setOpen(value);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChangeWrapper}>
       <DialogTrigger asChild>
         <Button size="icon" variant="outline">
           <Edit className="w-5 h-5" />
