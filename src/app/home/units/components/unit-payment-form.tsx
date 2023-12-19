@@ -32,9 +32,9 @@ const FORTYPES = ["rent", "deposit", "maintenance"] as const;
 const METHODTYPES = ["cash", "m-pesa", "bank"] as const;
 
 const paymentSchema = z.object({
-  date: z.string(),
+  date: z.string().min(3, { message: "Please enter a valid date" }),
   method: z.enum(METHODTYPES),
-  amount: z.number(),
+  amount: z.number().min(2, { message: "Please enter a valid fee" }),
   paymentFor: z.enum(FORTYPES),
 });
 
