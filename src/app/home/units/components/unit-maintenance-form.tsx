@@ -1,5 +1,8 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -10,8 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
 
 type Params = {
   params: {
@@ -19,13 +20,12 @@ type Params = {
   };
 };
 
-const UnitPayment = () => {
+const UnitMaintenanceForm = () => {
   const form = useForm({
     defaultValues: {
-      paymentDate: "",
-      paymentMethod: "",
-      paymentAmount: "",
-      paymentFor: "",
+      type: "",
+      fee: "",
+      date: "",
     },
   });
 
@@ -36,10 +36,10 @@ const UnitPayment = () => {
           <form className="space-y-6">
             <FormField
               control={form.control}
-              name="paymentDate"
+              name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Date:</FormLabel>
+                  <FormLabel>Maintenance Date</FormLabel>
                   <FormControl>
                     <Input type="date" placeholder="12/12/1919" {...field} />
                   </FormControl>
@@ -50,10 +50,10 @@ const UnitPayment = () => {
 
             <FormField
               control={form.control}
-              name="paymentMethod"
+              name="fee"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Method:</FormLabel>
+                  <FormLabel>Maintenance Cost</FormLabel>
                   <FormControl>
                     <Input type="text" placeholder="M-pesa" {...field} />
                   </FormControl>
@@ -64,26 +64,12 @@ const UnitPayment = () => {
 
             <FormField
               control={form.control}
-              name="paymentAmount"
+              name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Amount:</FormLabel>
+                  <FormLabel>Maintenance Type</FormLabel>
                   <FormControl>
                     <Input type="text" placeholder="M-pesa" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="paymentFor"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Payment For:</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="rent" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -91,7 +77,7 @@ const UnitPayment = () => {
             />
 
             <CardFooter className="p-0">
-              <Button className="w-full">Pay</Button>
+              <Button className="w-full">Create</Button>
             </CardFooter>
           </form>
         </Form>
@@ -100,4 +86,4 @@ const UnitPayment = () => {
   );
 };
 
-export default UnitPayment;
+export default UnitMaintenanceForm;
