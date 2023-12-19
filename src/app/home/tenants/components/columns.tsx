@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Trash2 } from "lucide-react";
+import DeleteTenantModal from "./delete-tenant-modal";
 
 export const columns: ColumnDef<Tenant>[] = [
   {
@@ -63,11 +64,7 @@ export const columns: ColumnDef<Tenant>[] = [
     cell: ({ row }) => {
       const tenant = row.original;
 
-      return (
-        <Button size="icon" variant="ghost">
-          <Trash2 className="w-5 h-5" />
-        </Button>
-      );
+      return <DeleteTenantModal tenant={tenant} />;
     },
   },
 ];
