@@ -1,9 +1,16 @@
 "use client";
 
+import { z } from "zod";
+import { RotateCcw } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
+import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
@@ -13,8 +20,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Select,
   SelectContent,
@@ -22,11 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import axiosPrivate from "@/lib/axios-private";
-import { useSession } from "next-auth/react";
-import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-import { RotateCcw } from "lucide-react";
 
 const FORTYPES = ["rent", "deposit", "maintenance"] as const;
 const METHODTYPES = ["cash", "m-pesa", "bank"] as const;
@@ -121,7 +121,7 @@ const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Payment Method:</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select onValueChange={(method) => field.onChange(method)}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select payment method" />
@@ -139,28 +139,6 @@ const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Payment Amount:</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      placeholder="3000"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(parseFloat(e.target.value))
-                      }
-                    />
-                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -195,7 +173,29 @@ const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
               )}
             />
 
-            <CardFooter className="p-0">
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Payment Amount:</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      placeholder="3000"
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(parseFloat(e.target.value))
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <CardFooter className="p-0 mt-8">
               <Button className="w-full" disabled={form.formState.isSubmitting}>
                 Pay{" "}
                 {form.formState.isSubmitting && (

@@ -20,7 +20,7 @@ type Params = {
   };
 };
 
-const UnitMaintenanceForm = () => {
+const UnitMaintenanceForm = ({ unit }: { unit: Unit }) => {
   const form = useForm({
     defaultValues: {
       type: "",

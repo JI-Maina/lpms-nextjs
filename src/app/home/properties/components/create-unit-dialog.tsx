@@ -117,15 +117,23 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
       toast({ description: "Unit created" });
       form.reset();
     } catch (err: any) {
-      // console.log(err);
+      // console.log(err.response.data.user.phone_no[0]);
       if (!err?.response) {
         toast({
           description: "Creation Failed! Check your internet connection",
           variant: "destructive",
         });
       } else if (err?.response?.status === 400) {
-        if (err.response.data) {
-          toast({ description: err.response.data[0], variant: "destructive" });
+        if (err.response.data?.user.phone_no) {
+          toast({
+            description: err.response.data.user.phone_no[0],
+            variant: "destructive",
+          });
+        } else if (err.response.data?.user.id_number) {
+          toast({
+            description: err.response.data.user.id_number[0],
+            variant: "destructive",
+          });
         }
       }
     }

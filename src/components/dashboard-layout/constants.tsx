@@ -12,17 +12,22 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: "Properties",
     path: "/home/properties",
     icon: <Icon icon="lucide:building" width="24" height="24" />,
-    submenu: true,
-    subMenuItems: [
-      { title: "All", path: "/home/properties" },
-      { title: "Web Design", path: "/projects/web-design" },
-      { title: "Graphic Design", path: "/projects/graphic-design" },
-    ],
+    // submenu: true,
+    // subMenuItems: [
+    //   { title: "All", path: "/home/properties" },
+    //   { title: "Web Design", path: "/projects/web-design" },
+    //   { title: "Graphic Design", path: "/projects/graphic-design" },
+    // ],
   },
   {
-    title: "Messages",
-    path: "/home/messages",
-    icon: <Icon icon="lucide:mail" width="24" height="24" />,
+    title: "Tenants",
+    path: "/home/tenants",
+    icon: <Icon icon="lucide:users" width="24" height="24" />,
+  },
+  {
+    title: "Payments",
+    path: "/home/payments",
+    icon: <Icon icon="lucide:bitcoin" width="24" height="24" />,
   },
   {
     title: "Maintenances",
@@ -38,10 +43,5 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
       { title: "Account", path: "/settings/account" },
       { title: "Privacy", path: "/settings/privacy" },
     ],
-  },
-  {
-    title: "Payments",
-    path: "/home/payments",
-    icon: <Icon icon="lucide:bitcoin" width="24" height="24" />,
   },
 ];

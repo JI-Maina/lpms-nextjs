@@ -49,7 +49,7 @@ const UnitPage = async (params: Params) => {
               <UnitPaymentForm unit={unit} />
             </TabsContent>
             <TabsContent value="maintenance">
-              <UnitMaintenanceForm />
+              <UnitMaintenanceForm unit={unit} />
             </TabsContent>
           </Tabs>
         </div>
