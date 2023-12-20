@@ -1,29 +1,16 @@
 import Image from "next/image";
-import { getServerSession } from "next-auth";
 
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import NavigateButton from "./components/navigate-button";
 import { CreatePropertyDialog } from "./components/CreatePropertyDialog";
-
-const getAllProperties = async () => {
-  const session = await getServerSession(authOptions);
-
-  const res = await fetch("http://127.0.0.1:8000/property/properties/", {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch property data");
-
-  return res.json();
-};
+import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 
 const PropertyPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();
   const properties = await propertyData;
 
-  // console.log(properties);
+  console.log(properties[0]);
 
   return (
     <main className="flex flex-col gap-2">

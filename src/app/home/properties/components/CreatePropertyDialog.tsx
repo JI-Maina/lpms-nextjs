@@ -24,25 +24,67 @@ import { z } from "zod";
 import { propertySchema } from "@/components/forms/form-schema";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import axiosPrivate from "@/lib/axios-private";
 
 export const CreatePropertyDialog = () => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+  const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof propertySchema>>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
       name: "",
       lrl: "",
-      units: "" as unknown as number,
-      floors: "" as unknown as number,
-      image: "",
-      caretaker: "" as unknown as number,
+      units: 0,
+      floors: 0,
     },
   });
 
-  const onSubmit = (data: z.infer<typeof propertySchema>) => {
-    console.log(data);
-    setOpen(false);
+  const onSubmit = async (data: z.infer<typeof propertySchema>) => {
+    const property = {
+      property_name: data.name,
+      property_lrl: data.lrl,
+      number_of_units: data.units,
+      number_of_floors: data.floors,
+      // property_img: null,
+      care_taker: null,
+    };
+
+    try {
+      await axiosPrivate.post("/property/properties/", property, {
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      });
+
+      router.refresh();
+      form.reset();
+      toast({ title: "Success", description: "Property created" });
+      setOpen(false);
+    } catch (err: any) {
+      // console.log(err);
+      if (!err?.response) {
+        toast({
+          description: "Creation Failed! Check your internet connection",
+          variant: "destructive",
+        });
+      } else if (err?.response?.status === 400) {
+        if (err.response.data?.user.phone_no) {
+          toast({
+            description: err.response.data.user.phone_no[0],
+            variant: "destructive",
+          });
+        } else if (err.response.data?.user.id_number) {
+          toast({
+            description: err.response.data.user.id_number[0],
+            variant: "destructive",
+          });
+        }
+      }
+    }
   };
 
   const openChangeWrapper = (value: boolean) => {
@@ -97,37 +139,43 @@ export const CreatePropertyDialog = () => {
               )}
             />
 
-            <div className="flex gap-3">
-              <FormField
-                control={form.control}
-                name="floors"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Floors</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="units"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Units</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="floors"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Floors</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
+              control={form.control}
+              name="units"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Units</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* <FormField
               control={form.control}
               name="caretaker"
               render={({ field }) => (
@@ -139,9 +187,9 @@ export const CreatePropertyDialog = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
@@ -153,12 +201,16 @@ export const CreatePropertyDialog = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  Create{" "}
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  onClick={form.handleSubmit(onSubmit)}
+                >
+                  Create
                   {/* {form.formState.isSubmitting && (
                     <ReloadIcon className="animate-spin h-3 w-3" />
                   )} */}
