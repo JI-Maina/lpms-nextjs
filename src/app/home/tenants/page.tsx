@@ -20,7 +20,7 @@ const TenantsPage = async () => {
   const tenantData = getAllTenants();
   const tenants = await tenantData;
 
-  console.log(tenants);
+  // console.log(tenants);
 
   return (
     <div>
