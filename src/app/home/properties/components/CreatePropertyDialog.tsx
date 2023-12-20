@@ -96,7 +96,7 @@ export const CreatePropertyDialog = () => {
       <DialogTrigger asChild>
         <Button size="sm">
           <Plus className="h-5 w-5 mr-2" />
-          Add
+          Property
         </Button>
       </DialogTrigger>
 

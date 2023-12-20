@@ -1,7 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import NavigateButton from "./navigate-button";
 import Image from "next/image";
-import { Separator } from "@/components/ui/separator";
+import { format } from "date-fns";
+
+import NavigateButton from "./navigate-button";
+import PropertyDeleteDialog from "./property-delete-dialog";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const PropertyCard = ({ property }: { property: Property }) => {
   return (
@@ -10,7 +18,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
         <CardTitle>{property.property_name}</CardTitle>
         <NavigateButton propertyId={property.id} />
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-4 pb-3">
         <Image
           src={
             property.property_img
@@ -40,11 +48,14 @@ const PropertyCard = ({ property }: { property: Property }) => {
             }
           />
 
-          <Separator />
+          <CardFooter className="flex items-center justify-between gap-1 mt-2 p-0">
+            <DetailsCard
+              event="Created at"
+              detail={format(new Date(property.created_at), "yyyy-MM-dd")}
+            />
 
-          <footer className="h-[40px] px-4 p-[2px] text-sm text-muted-foreground flex items-center justify-between mt-1">
-            <p>Created at {property.created_at}</p>
-          </footer>
+            <PropertyDeleteDialog id={property.id} />
+          </CardFooter>
         </div>
       </CardContent>
     </Card>
@@ -59,7 +70,7 @@ const DetailsCard = ({ event, detail }: { event: any; detail: any }) => {
       <h1 className="font-semibold text-muted-foreground capitalize">
         {event}:
       </h1>
-      <h1 className="">{detail}</h1>
+      <h1 className="ml-2">{detail}</h1>
     </div>
   );
 };

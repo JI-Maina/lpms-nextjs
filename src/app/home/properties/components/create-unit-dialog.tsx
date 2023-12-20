@@ -148,7 +148,7 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
       <DialogTrigger asChild>
         <Button size="sm">
           <Plus className="h-4 w-4" />
-          unit
+          Unit
         </Button>
       </DialogTrigger>
 

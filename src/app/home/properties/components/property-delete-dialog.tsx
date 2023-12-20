@@ -49,7 +49,7 @@ const PropertyDeleteDialog = ({ id }: { id: string }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="outline" size="icon">
           <Trash2 />
         </Button>
       </AlertDialogTrigger>
