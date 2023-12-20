@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import NavigateButton from "./components/navigate-button";
 import { CreatePropertyDialog } from "./components/CreatePropertyDialog";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
+import PropertyCard from "./components/property-card";
 
 const PropertyPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();
@@ -22,48 +23,11 @@ const PropertyPage = async () => {
         <CreatePropertyDialog />
       </header>
 
-      {properties.map((property) => (
-        <Card
-          key={property.id}
-          className="w-full md:w-3/4 h-full md:mx-auto mt-4"
-        >
-          <CardContent className="flex flex-col md:flex-row justify-between gap-4 p-4">
-            <Image
-              src={
-                property.property_img
-                  ? `http://127.0.0.1:8000${property.property_img}`
-                  : "/no-propertyfound.png"
-              }
-              alt=""
-              width={400}
-              height={400}
-              className="flex-1 rounded-md"
-            />
-            <div className="flex-1 justify-end">
-              <h2 className="text-lg font-semibold mb-3">
-                {property.property_name}
-              </h2>
-              <div className="grid gap-4 mb-3 grid-cols-2 lg:grid-cols-1">
-                <h2>lrl: {property.property_lrl}</h2>
-                <h2>type: residential</h2>
-
-                <h2>floors: {property.number_of_floors}</h2>
-                <h2>units: {property.number_of_units}</h2>
-
-                <h2>caretaker: {property.care_taker?.user.first_name}</h2>
-              </div>
-
-              <Separator />
-
-              <footer className="h-[40px] px-4 p-[2px] text-sm text-muted-foreground flex items-center justify-between mt-1">
-                <p>Created at {property.created_at}</p>
-
-                <NavigateButton propertyId={property.id} />
-              </footer>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {properties.map((property) => (
+          <PropertyCard key={property.id} property={property} />
+        ))}
+      </div>
     </main>
   );
 };
