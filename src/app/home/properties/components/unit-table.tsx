@@ -135,6 +135,7 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  className="hover:cursor-pointer"
                   onClick={() => {
                     const { id } = row.original as Unit;
                     router.push(`/home/units/${id}`);

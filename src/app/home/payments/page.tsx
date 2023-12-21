@@ -11,6 +11,10 @@ const TenantsPage = async () => {
   // console.log(payments);
   // console.log(properties.length);
 
+  if (properties.length === 0) {
+    return <div>No payments to view, create a property first.</div>;
+  }
+
   return (
     <>
       {properties.length === 1 ? (

@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Check, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import UnitDeleteDialog from "../../units/components/unit-delete-dialog";
@@ -29,19 +29,6 @@ export const columns: ColumnDef<Unit>[] = [
     header: "Type",
   },
   {
-    accessorKey: "unit_rent",
-    header: "Rent",
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("unit_rent"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "KES",
-      }).format(amount);
-
-      return <div className="font-medium">{formatted}</div>;
-    },
-  },
-  {
     accessorKey: "tenant",
     header: "Tenant",
     cell: ({ row }) => {
@@ -61,8 +48,34 @@ export const columns: ColumnDef<Unit>[] = [
     },
   },
   {
+    accessorKey: "unit_rent",
+    header: "Rent",
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("unit_rent"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "KES",
+      }).format(amount);
+
+      return <div className="font-medium">{formatted}</div>;
+    },
+  },
+  {
     accessorKey: "is_rent_paid",
-    header: "Payment",
+    header: "Paid",
+    cell: ({ row }) => {
+      const unit = row.original;
+
+      return (
+        <>
+          {unit.is_rent_paid ? (
+            <Check color="#0ef11d" className="h-4 w-4" />
+          ) : (
+            <X color="#f10e0e" className="h-4 w-4" />
+          )}
+        </>
+      );
+    },
   },
   {
     accessorKey: "balance",

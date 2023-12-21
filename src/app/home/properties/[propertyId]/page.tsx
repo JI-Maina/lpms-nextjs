@@ -34,7 +34,7 @@ const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
 
   return (
     <main className="">
-      <header className="bg-card text-card-foreground p-4 pb-2 flex flex-col gap-2">
+      <header className="border text-card-foreground p-4 pb-2 flex flex-col gap-2">
         <div className="flex items-center gap-3">
           <Image
             src="/property-1.jpg"

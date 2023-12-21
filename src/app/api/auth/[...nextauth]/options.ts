@@ -87,7 +87,7 @@ export const authOptions: AuthOptions = {
       }
 
       // Return previous token if the access token has not expired
-      if (Date.now() < token.exp * 100) {
+      if (Date.now() < token.exp * 1000) {
         return token;
       }
 
@@ -104,5 +104,10 @@ export const authOptions: AuthOptions = {
 
       return session;
     },
+  },
+
+  pages: {
+    signIn: "/auth/login",
+    newUser: "/auth/register",
   },
 };

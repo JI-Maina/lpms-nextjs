@@ -2,7 +2,6 @@
 
 import * as z from "zod";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,15 +50,15 @@ const RegisterForm = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      router.push("/login");
+      router.push("/auth/register");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log(error?.response?.data);
         if (!error?.response) {
-          toast.error("Registration Failed! Check your internet connection");
+          // toast.error("Registration Failed! Check your internet connection");
         } else if (error?.response?.status === 400) {
           if (error.response.data.phone_number) {
-            toast.error(error.response.data?.phone_no[0]);
+            // toast.error(error.response.data?.phone_no[0]);
           }
         }
       } else {

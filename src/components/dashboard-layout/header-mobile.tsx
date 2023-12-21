@@ -24,7 +24,7 @@ const HeaderMobile = () => {
       }`}
     >
       <motion.div
-        className="absolute inset-0 right-0 w-full bg-secondary"
+        className="absolute inset-0 right-0 w-full bg-background"
         variants={sidebar}
       />
 

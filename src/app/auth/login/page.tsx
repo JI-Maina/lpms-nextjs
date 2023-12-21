@@ -25,7 +25,7 @@ const LoginPage = () => {
       <CardFooter>
         <p className="text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="hover:underline text-ring">
+          <Link href="/auth/register" className="hover:underline text-ring">
             Register
           </Link>
         </p>

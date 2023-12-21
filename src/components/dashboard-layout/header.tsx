@@ -14,15 +14,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { signOut } from "next-auth/react";
 
 const Header = () => {
-  const scrolled = useScroll(5);
+  // const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
 
   return (
     <div
       className={cn(
-        `sticky inset-x-0 top-0 z-30 w-full transition-all bg-secondary`
+        `sticky inset-x-0 top-0 z-30 w-full transition-all bg-background border-b`
       )}
     >
       <div className="flex h-[55px] items-center justify-between px-4">
@@ -62,7 +63,7 @@ const UserAvatar = () => {
 
       <DropdownMenuContent align="end">
         <DropdownMenuItem>Account</DropdownMenuItem>
-        <DropdownMenuItem>Log-Out</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()}>Log-Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
