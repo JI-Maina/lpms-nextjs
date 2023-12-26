@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import AddUnitPaymentDialog from "./add-unit-payment-dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -51,17 +52,21 @@ export function PaymentsTable<TData, TValue>({
   return (
     <>
       {/* table header with filter */}
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter payments..."
-          value={
-            (table.getColumn("payment_for")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("payment_for")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+      <div className="flex items-center justify-between">
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter payments..."
+            value={
+              (table.getColumn("payment_for")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("payment_for")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
+
+        {/* <AddUnitPaymentDialog /> */}
       </div>
 
       <div className="rounded-md border">

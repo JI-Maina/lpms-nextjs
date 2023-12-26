@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { columns } from "../components/columns";
 import { PaymentsTable } from "../components/payments-table";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import AddUnitPaymentDialog from "../components/add-unit-payment-dialog";
+import { getProperty } from "@/lib/data-fetching/fetch-property";
 
 type Props = {
   params: {
@@ -29,10 +31,16 @@ const PropertPaymentsPage = async ({ params: { propertyId } }: Props) => {
   const paymentData = getAllPayments(propertyId as string);
   const payments = await paymentData;
 
-  console.log(payments);
-  console.log(propertyId);
+  const propertyData: Promise<Property> = getProperty(propertyId as string);
+  const property = await propertyData;
+  const units = property.unit_set;
 
-  return <PaymentsTable data={payments} columns={columns} />;
+  return (
+    <main>
+      <AddUnitPaymentDialog units={units} />
+      <PaymentsTable data={payments} columns={columns} />;
+    </main>
+  );
 };
 
 export default PropertPaymentsPage;

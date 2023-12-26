@@ -33,12 +33,12 @@ const UnitPage = async (params: Params) => {
 
   return (
     <main>
-      <section className="flex flex-col lg:flex-row gap-4">
-        <div className="flex-1 w-full md:max-w-[400px] md:mx-auto ">
+      <section className="flex flex-col lg:flex-row gap-4 md:pt-4">
+        <div className="flex-1 w-full md:max-w-[400px] md:mx-auto">
           <UnitCard unit={unit} />
         </div>
 
-        <div className="flex-1 w-full md:max-w-[400px] md:mx-auto">
+        {/* <div className="flex-1 w-full md:max-w-[400px] md:mx-auto">
           <Tabs defaultValue="payment" className=" ">
             <TabsList className="grid grid-cols-2 w-full">
               <TabsTrigger value="payment">Make payment</TabsTrigger>
@@ -52,7 +52,7 @@ const UnitPage = async (params: Params) => {
               <UnitMaintenanceForm unit={unit} />
             </TabsContent>
           </Tabs>
-        </div>
+        </div> */}
       </section>
     </main>
   );

@@ -1,5 +1,15 @@
 "use client";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Plus } from "lucide-react";
+
 import { z } from "zod";
 import { RotateCcw } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -27,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
 
 const FORTYPES = ["rent", "deposit", "maintenance"] as const;
 const METHODTYPES = ["cash", "m-pesa", "bank"] as const;
@@ -36,25 +47,27 @@ const paymentSchema = z.object({
   method: z.enum(METHODTYPES),
   amount: z.number().min(2, { message: "Please enter a valid fee" }),
   paymentFor: z.enum(FORTYPES),
+  unit: z.string().min(1, { message: "Please select a unit" }),
 });
 
-const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
+const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
   const { data: session } = useSession();
   const { toast } = useToast();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const occupiedUnits = units.filter((unit) => unit.tenant);
 
   const form = useForm<z.infer<typeof paymentSchema>>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
+      unit: "",
       date: "",
       method: "cash",
       amount: 0,
       paymentFor: "rent",
     },
   });
-
-  const propertyId = unit.property;
-  const unitId = unit.id;
 
   const onSubmit = async (data: z.infer<typeof paymentSchema>) => {
     const pay = {
@@ -63,6 +76,9 @@ const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
       payment_amount: data.amount,
       payment_for: data.paymentFor,
     };
+
+    const propertyId = units[0].property;
+    const unitId = data.unit;
 
     try {
       const res = await axiosPrivate.post(
@@ -77,6 +93,7 @@ const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
         form.reset();
         toast({ description: "Payment updated successfully" });
         router.refresh();
+        setOpen(false);
       }
     } catch (err: any) {
       console.log(err?.response.data);
@@ -96,11 +113,51 @@ const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
     }
   };
 
+  const onOpenChangeWrapper = (value: boolean) => {
+    setOpen(value);
+  };
+
   return (
-    <Card>
-      <CardContent className="mt-4">
+    <Dialog open={open} onOpenChange={onOpenChangeWrapper}>
+      <DialogTrigger asChild>
+        <Button size="sm">
+          <Plus className="mr-2 w-4 h-4" />
+          Payment
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Make a payment for a unit</DialogTitle>
+        </DialogHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="unit"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Unit:</FormLabel>
+                  <Select onValueChange={(unit) => field.onChange(unit)}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select unit" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {occupiedUnits.map((unit) => (
+                        <SelectItem key={unit.id} value={unit.id.toString()}>
+                          {unit.unit_name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="date"
@@ -195,19 +252,19 @@ const UnitPaymentForm = ({ unit }: { unit: Unit }) => {
               )}
             />
 
-            <CardFooter className="p-0 mt-8">
+            <DialogFooter className="p-0 mt-8">
               <Button className="w-full" disabled={form.formState.isSubmitting}>
                 Pay{" "}
                 {form.formState.isSubmitting && (
                   <RotateCcw className="ml-2 h-4 w-4 animate-spin" />
                 )}
               </Button>
-            </CardFooter>
+            </DialogFooter>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default UnitPaymentForm;
+export default AddUnitPaymentDialog;
