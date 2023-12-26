@@ -4,8 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Check, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import UnitDeleteDialog from "../../units/components/unit-delete-dialog";
-import UnitEditDialog from "../../units/components/unit-edit-dialog";
+import UnitDeleteDialog from "../[propertyId]/units/components/unit-delete-dialog";
+import UnitEditDialog from "../[propertyId]/units/components/unit-edit-dialog";
 
 // status: "pending" | "processing" | "success" | "failed";
 

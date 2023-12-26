@@ -32,7 +32,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import CreateUnitDialog from "./create-unit-dialog";
+import CreateUnitDialog from "../../properties/components/create-unit-dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -40,7 +40,7 @@ interface DataTableProps<TData, TValue> {
   propertyId: string;
 }
 
-export function DataTable<TData, TValue>({
+export function UnitsTable<TData, TValue>({
   columns,
   data,
   propertyId,

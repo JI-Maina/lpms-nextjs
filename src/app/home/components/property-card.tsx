@@ -3,13 +3,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
-const PropertyCard = ({ property }: { property: Property }) => {
+type Props = {
+  property: Property;
+  path: string;
+};
+
+const PropertyCard = ({ property, path }: Props) => {
   const router = useRouter();
 
   return (
     <Card
       className="max-w-xs hover:cursor-pointer hover:bg-accent"
-      onClick={() => router.push(`/home/payments/${property.id}`)}
+      onClick={() => router.push(`${path}/${property.id}`)}
     >
       <CardHeader>
         <CardTitle>{property.property_name}</CardTitle>
