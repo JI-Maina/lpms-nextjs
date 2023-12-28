@@ -29,7 +29,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function PaymentsTable<TData, TValue>({
+export function MaintenancesTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -53,12 +53,15 @@ export function PaymentsTable<TData, TValue>({
       {/* table header with filter */}
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter payments..."
+          placeholder="Filter maintenances..."
           value={
-            (table.getColumn("payment_for")?.getFilterValue() as string) ?? ""
+            (table.getColumn("maintenance_type")?.getFilterValue() as string) ??
+            ""
           }
           onChange={(event) =>
-            table.getColumn("payment_for")?.setFilterValue(event.target.value)
+            table
+              .getColumn("maintenance_type")
+              ?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

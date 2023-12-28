@@ -3,24 +3,25 @@
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import { Maintenance } from "@/types/property";
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Maintenance>[] = [
   {
-    accessorKey: "payment_for",
+    accessorKey: "maintenance_type",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Payment
+          Maintenance
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "payment_amount",
+    accessorKey: "maintenance_fee",
     header: "Amount",
     // cell: ({ row }) => {
     //   const tenant = row.original;
@@ -29,11 +30,7 @@ export const columns: ColumnDef<Payment>[] = [
     // },
   },
   {
-    accessorKey: "payment_method",
-    header: "Method",
-  },
-  {
-    accessorKey: "payment_date",
+    accessorKey: "maintenance_date",
     header: "Date",
   },
   {
@@ -45,20 +42,6 @@ export const columns: ColumnDef<Payment>[] = [
       return <div>{payment.unit.unit_name}</div>;
     },
   },
-  {
-    accessorKey: "tenant",
-    header: "Tenant",
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <div>
-          {payment.unit.tenant.user.first_name}{" "}
-          {payment.unit.tenant.user.last_name}
-        </div>
-      );
-    },
-  },
   // {
   //   accessorKey: "actions",
   //   cell: ({ row }) => {
@@ -68,29 +51,3 @@ export const columns: ColumnDef<Payment>[] = [
   //   },
   // },
 ];
-
-// {
-//     id: 5,
-//     id_number: '32327754',
-//     nok_first_name: 'Michael',
-//     nok_last_name: 'Joseph',
-//     nok_phone_no: '0770416102',
-//     user: {
-//       id: 11,
-//       first_name: 'George',
-//       last_name: 'Saitoti',
-//       phone_no: '0717416111',
-//       is_owner: false,
-//       is_caretaker: false,
-//       is_tenant: true
-//     },
-//     creator: {
-//       id: 9,
-//       first_name: 'Daniel',
-//       last_name: 'Moi',
-//       phone_no: '0770416103',
-//       is_owner: true,
-//       is_caretaker: false,
-//       is_tenant: false
-//     }
-//   }

@@ -1,8 +1,9 @@
-import SelectProperty from "./components/select-property";
-import PaymentsNavigation from "./components/payment-navigation";
+import { Property } from "@/types/property";
+import SelectProperty from "../components/select-property";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
+import MaintenanceNavigation from "./components/maintenance-navigation";
 
-const TenantsPage = async () => {
+const MaintenancePage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();
   const properties = await propertyData;
 
@@ -18,12 +19,12 @@ const TenantsPage = async () => {
   return (
     <>
       {properties.length === 1 ? (
-        <PaymentsNavigation property={propertyId as string} />
+        <MaintenanceNavigation property={propertyId as string} />
       ) : (
-        <SelectProperty />
+        <SelectProperty path="/home/maintenances" />
       )}
     </>
   );
 };
 
-export default TenantsPage;
+export default MaintenancePage;

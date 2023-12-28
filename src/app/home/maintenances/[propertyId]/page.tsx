@@ -1,8 +1,9 @@
 import { getServerSession } from "next-auth";
 
 import { columns } from "../components/columns";
-import { PaymentsTable } from "../components/payments-table";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { MaintenancesTable } from "../components/maintenances-table";
+import { Maintenance } from "@/types/property";
 
 type Props = {
   params: {
@@ -10,11 +11,11 @@ type Props = {
   };
 };
 
-const getAllPayments = async (id: string) => {
+const getAllMaintenances = async (id: string) => {
   const session = await getServerSession(authOptions);
 
   const res = await fetch(
-    `http://127.0.0.1:8000/property/properties/${id}/payments/`,
+    `http://127.0.0.1:8000/property/properties/${id}/maintenances/`,
     {
       headers: { Authorization: `Bearer ${session?.access_token}` },
     }
@@ -25,14 +26,16 @@ const getAllPayments = async (id: string) => {
   return res.json();
 };
 
-const PropertPaymentsPage = async ({ params: { propertyId } }: Props) => {
-  const paymentData = getAllPayments(propertyId as string);
-  const payments = await paymentData;
+const PropertMaintenancesPage = async ({ params: { propertyId } }: Props) => {
+  const maintenanceData: Promise<Maintenance[]> =
+    getAllMaintenances(propertyId);
 
-  console.log(payments);
-  console.log(propertyId);
+  const maintenances = await maintenanceData;
 
-  return <PaymentsTable data={payments} columns={columns} />;
+  // console.log(maintenances);
+  // console.log(propertyId);
+
+  return <MaintenancesTable data={maintenances} columns={columns} />;
 };
 
-export default PropertPaymentsPage;
+export default PropertMaintenancesPage;

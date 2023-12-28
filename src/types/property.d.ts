@@ -1,3 +1,5 @@
+import { number } from "zod";
+
 type Property = {
   id: string;
   property_name: string;
@@ -94,18 +96,14 @@ type Payment = {
   payment_method: "cash";
   payment_amount: "2500.00";
   payment_for: "rent";
-  unit: {
-    id: number;
-    unit_name: string;
-    unit_type: string;
-    property: string;
-    unit_deposit: string;
-    unit_size: string;
-    unit_rent: string;
-    unit_img: null;
-    is_rent_paid: boolean;
-    balance: number;
-    tenant: Tenant;
-  };
-  tenant: number;
+  unit: Unit;
+  tenant: Tenant;
+};
+
+type Maintenance = {
+  id: number;
+  maintenance_type: string;
+  maintenance_fee: string;
+  maintenance_date: string;
+  unit: Unit;
 };

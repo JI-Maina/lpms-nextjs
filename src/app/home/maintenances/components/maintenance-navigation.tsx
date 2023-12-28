@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const PaymentsNavigation = ({ property }: { property: String }) => {
+const MaintenanceNavigation = ({ property }: { property: String }) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -13,4 +13,4 @@ const PaymentsNavigation = ({ property }: { property: String }) => {
   return null;
 };
 
-export default PaymentsNavigation;
+export default MaintenanceNavigation;
