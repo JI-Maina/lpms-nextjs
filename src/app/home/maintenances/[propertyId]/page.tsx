@@ -4,9 +4,9 @@ import { columns } from "../components/columns";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { MaintenancesTable } from "../components/maintenances-table";
 import { Maintenance, Property } from "@/types/property";
-import AddMaintenanceDialog from "../components/add-unit-maintenance-dialog";
 import AddUnitMaintenanceDialog from "../components/add-unit-maintenance-dialog";
 import { getProperty } from "@/lib/data-fetching/fetch-property";
+import PropertyHeader from "../../components/property-header";
 
 type Props = {
   params: {
@@ -44,7 +44,12 @@ const PropertMaintenancesPage = async ({ params: { propertyId } }: Props) => {
 
   return (
     <>
-      <AddUnitMaintenanceDialog units={units} />
+      <PropertyHeader
+        property={property}
+        title="Maintenance Data"
+        actionModal={<AddUnitMaintenanceDialog units={units} />}
+      />
+
       <MaintenancesTable data={maintenances} columns={columns} />
     </>
   );
