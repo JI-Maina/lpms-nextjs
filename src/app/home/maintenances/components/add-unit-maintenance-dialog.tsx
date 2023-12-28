@@ -1,8 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -10,17 +12,9 @@ import {
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 
-import { z } from "zod";
-import { RotateCcw } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
-import axiosPrivate from "@/lib/axios-private";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
@@ -30,52 +24,56 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import axiosPrivate from "@/lib/axios-private";
+import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { RotateCcw } from "lucide-react";
 import { Unit } from "@/types/property";
+import { useState } from "react";
 
-const FORTYPES = ["rent", "deposit", "maintenance"] as const;
-const METHODTYPES = ["cash", "m-pesa", "bank"] as const;
+const MAINTENANCETYPES = ["Routine", "Preventive", "Corrective"] as const;
 
-const paymentSchema = z.object({
-  date: z.string().min(3, { message: "Please enter a valid date" }),
-  method: z.enum(METHODTYPES),
-  amount: z.number().min(2, { message: "Please enter a valid fee" }),
-  paymentFor: z.enum(FORTYPES),
+const maintenanceSchema = z.object({
+  type: z.enum(MAINTENANCETYPES),
+  fee: z.string().min(2, { message: "Please enter a valid amount" }),
+  date: z.string().min(3, { message: "Please input a valid date" }),
   unit: z.string().min(1, { message: "Please select a unit" }),
 });
 
-const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
+const AddUnitMaintenanceDialog = ({ units }: { units: Unit[] }) => {
   const { data: session } = useSession();
   const { toast } = useToast();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  const occupiedUnits = units.filter((unit) => unit.tenant);
-
-  const form = useForm<z.infer<typeof paymentSchema>>({
-    resolver: zodResolver(paymentSchema),
+  const form = useForm<z.infer<typeof maintenanceSchema>>({
+    resolver: zodResolver(maintenanceSchema),
     defaultValues: {
+      type: "Routine",
       unit: "",
+      fee: "",
       date: "",
-      method: "cash",
-      amount: 0,
-      paymentFor: "rent",
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof paymentSchema>) => {
-    const pay = {
-      payment_date: data.date,
-      payment_method: data.method,
-      payment_amount: data.amount,
-      payment_for: data.paymentFor,
+  const occupiedUnits = units.filter((unit) => unit.tenant);
+
+  const onSubmit = async (data: z.infer<typeof maintenanceSchema>) => {
+    const maintenance = {
+      maintenance_type: data.type,
+      maintenance_fee: data.fee,
+      maintenance_date: data.date,
     };
 
     const propertyId = units[0].property;
@@ -83,8 +81,8 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
 
     try {
       const res = await axiosPrivate.post(
-        `/property/properties/${propertyId}/units/${unitId}/payments/`,
-        pay,
+        `/property/properties/${propertyId}/units/${unitId}/maintenances/`,
+        maintenance,
         {
           headers: { Authorization: `Bearer ${session?.access_token}` },
         }
@@ -92,12 +90,15 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
 
       if (res.status === 201) {
         form.reset();
-        toast({ description: "Payment updated successfully" });
+        toast({
+          title: "Success",
+          description: "Maintenance updated successfully",
+        });
         router.refresh();
         setOpen(false);
       }
     } catch (err: any) {
-      console.log(err?.response.data);
+      // console.log(err?.response.data);
       if (!err.response) {
         toast({
           description: "Failed to make payment! Check your internet connection",
@@ -106,7 +107,7 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
       } else if (err?.response.status === 400) {
         if (err.response?.data) {
           toast({
-            description: `${err.response.data[0]}`,
+            description: `Error`,
             variant: "destructive",
           });
         }
@@ -122,14 +123,15 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
     <Dialog open={open} onOpenChange={onOpenChangeWrapper}>
       <DialogTrigger asChild>
         <Button size="sm">
-          <Plus className="mr-2 w-4 h-4" />
-          Payment
+          <Plus className="mr-2 w-4 h-4" /> Maintenance
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Make a payment for a unit</DialogTitle>
+          <DialogDescription>
+            Select a unit and then record a maintenance to it
+          </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -164,9 +166,9 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Date:</FormLabel>
+                  <FormLabel>Maintenance Date</FormLabel>
                   <FormControl>
-                    <Input type="date" placeholder="12/12/1919" {...field} />
+                    <Input type="date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -175,89 +177,52 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
 
             <FormField
               control={form.control}
-              name="method"
+              name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Method:</FormLabel>
-                  <Select onValueChange={(method) => field.onChange(method)}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select payment method" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {METHODTYPES.map((method, idx) => (
-                        <SelectItem
-                          key={idx}
-                          value={method}
-                          className="capitalize"
-                        >
-                          {method}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="paymentFor"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Payment For:</FormLabel>
+                  <FormLabel>Maintenance Type</FormLabel>
                   <Select onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="The payment is for?" />
-                      </SelectTrigger>
-                    </FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="select type" />
+                    </SelectTrigger>
+
                     <SelectContent>
-                      {FORTYPES.map((pay, idx) => (
-                        <SelectItem
-                          key={idx}
-                          value={pay}
-                          className="capitalize"
-                        >
-                          {pay}
+                      {MAINTENANCETYPES.map((type, idx) => (
+                        <SelectItem key={idx} value={type}>
+                          {type}
                         </SelectItem>
                       ))}
                     </SelectContent>
+
+                    <FormMessage />
                   </Select>
-                  <FormMessage />
                 </FormItem>
               )}
             />
 
             <FormField
               control={form.control}
-              name="amount"
+              name="fee"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Amount:</FormLabel>
+                  <FormLabel>Maintenance Cost</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      placeholder="3000"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(parseFloat(e.target.value))
-                      }
-                    />
+                    <Input type="text" placeholder="3000" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <DialogFooter className="p-0 mt-8">
-              <Button className="w-full" disabled={form.formState.isSubmitting}>
-                Pay{" "}
+            <DialogFooter className="p-0">
+              <Button
+                className="w-full"
+                onClick={form.handleSubmit(onSubmit)}
+                disabled={form.formState.isSubmitting}
+              >
+                Create{" "}
                 {form.formState.isSubmitting && (
-                  <RotateCcw className="ml-2 h-4 w-4 animate-spin" />
+                  <RotateCcw className="ml-2 h-4 w-4" />
                 )}
               </Button>
             </DialogFooter>
@@ -268,4 +233,4 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
   );
 };
 
-export default AddUnitPaymentDialog;
+export default AddUnitMaintenanceDialog;

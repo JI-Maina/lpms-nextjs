@@ -2,6 +2,7 @@ import { getProperty } from "@/lib/data-fetching/fetch-property";
 import Image from "next/image";
 import { UnitsTable } from "../components/unit-table";
 import { columns } from "../components/columns";
+import { Property } from "@/types/property";
 
 type Props = {
   params: {

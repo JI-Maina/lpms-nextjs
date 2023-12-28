@@ -1,3 +1,4 @@
+import { Property } from "@/types/property";
 import SelectProperty from "../components/select-property";
 import PaymentsNavigation from "./components/payment-navigation";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
@@ -20,7 +21,7 @@ const TenantsPage = async () => {
       {properties.length === 1 ? (
         <PaymentsNavigation property={propertyId as string} />
       ) : (
-        <SelectProperty />
+        <SelectProperty path="/home/payments" />
       )}
     </>
   );

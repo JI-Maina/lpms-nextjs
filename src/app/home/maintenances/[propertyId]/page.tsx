@@ -3,7 +3,10 @@ import { getServerSession } from "next-auth";
 import { columns } from "../components/columns";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { MaintenancesTable } from "../components/maintenances-table";
-import { Maintenance } from "@/types/property";
+import { Maintenance, Property } from "@/types/property";
+import AddMaintenanceDialog from "../components/add-unit-maintenance-dialog";
+import AddUnitMaintenanceDialog from "../components/add-unit-maintenance-dialog";
+import { getProperty } from "@/lib/data-fetching/fetch-property";
 
 type Props = {
   params: {
@@ -29,13 +32,22 @@ const getAllMaintenances = async (id: string) => {
 const PropertMaintenancesPage = async ({ params: { propertyId } }: Props) => {
   const maintenanceData: Promise<Maintenance[]> =
     getAllMaintenances(propertyId);
-
   const maintenances = await maintenanceData;
+
+  const propertyData: Promise<Property> = getProperty(propertyId);
+  const property = await propertyData;
+  const units = property.unit_set;
+  // console.log(property);
 
   // console.log(maintenances);
   // console.log(propertyId);
 
-  return <MaintenancesTable data={maintenances} columns={columns} />;
+  return (
+    <>
+      <AddUnitMaintenanceDialog units={units} />
+      <MaintenancesTable data={maintenances} columns={columns} />
+    </>
+  );
 };
 
 export default PropertMaintenancesPage;

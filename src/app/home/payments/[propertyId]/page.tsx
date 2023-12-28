@@ -5,6 +5,7 @@ import { PaymentsTable } from "../components/payments-table";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import AddUnitPaymentDialog from "../components/add-unit-payment-dialog";
 import { getProperty } from "@/lib/data-fetching/fetch-property";
+import { Property } from "@/types/property";
 
 type Props = {
   params: {
@@ -38,7 +39,7 @@ const PropertPaymentsPage = async ({ params: { propertyId } }: Props) => {
   return (
     <main>
       <AddUnitPaymentDialog units={units} />
-      <PaymentsTable data={payments} columns={columns} />;
+      <PaymentsTable data={payments} columns={columns} />
     </main>
   );
 };
