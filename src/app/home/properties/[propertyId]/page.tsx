@@ -6,23 +6,13 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { columns } from "../../property/components/columns";
 import PropertyEditDialog from "../components/property-edit-dialog";
 import { UnitsTable } from "../../property/components/unit-table";
+import { Property } from "@/types/property";
+import { getProperty } from "@/lib/data-fetching/fetch-property";
 
 type Params = {
   params: {
     propertyId: string;
   };
-};
-
-export const getProperty = async (id: string) => {
-  const session = await getServerSession(authOptions);
-
-  const res = await fetch(`http://127.0.0.1:8000/property/properties/${id}/`, {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch data");
-
-  return res.json();
 };
 
 const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {

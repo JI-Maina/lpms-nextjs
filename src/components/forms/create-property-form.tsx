@@ -26,8 +26,8 @@ const CreatePropertyForm = () => {
       lrl: "",
       units: 0,
       floors: 0,
-      image: "",
-      caretaker: 0,
+      // image: "",
+      // caretaker: 0,
     },
   });
 
@@ -95,7 +95,7 @@ const CreatePropertyForm = () => {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="caretaker"
           render={({ field }) => (
@@ -121,7 +121,7 @@ const CreatePropertyForm = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogFooter>
