@@ -1,6 +1,7 @@
 import PropertyCard from "./components/property-card";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 import { CreatePropertyDialog } from "./components/CreatePropertyDialog";
+import { Property } from "@/types/property";
 
 const PropertyPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();

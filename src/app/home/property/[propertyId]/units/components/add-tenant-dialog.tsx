@@ -36,6 +36,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { Tenant, UnitInput } from "@/types/property";
 
 type AddProps = {
   unit: UnitInput;

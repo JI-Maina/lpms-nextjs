@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Trash2 } from "lucide-react";
 import DeleteTenantModal from "./delete-tenant-modal";
+import { Tenant } from "@/types/property";
 
 export const columns: ColumnDef<Tenant>[] = [
   {

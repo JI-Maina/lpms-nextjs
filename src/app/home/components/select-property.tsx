@@ -1,6 +1,7 @@
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 
 import PropertyCard from "./property-card";
+import { Property } from "@/types/property";
 
 const SelectProperty = async ({ path }: { path: string }) => {
   const propertyData: Promise<Property[]> = getAllProperties();

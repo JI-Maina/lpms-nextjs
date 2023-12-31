@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Property } from "@/types/property";
 
 const PropertyCard = ({ property }: { property: Property }) => {
   return (

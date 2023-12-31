@@ -17,6 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Unit } from "@/types/property";
 
 const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
   const { data: session } = useSession();

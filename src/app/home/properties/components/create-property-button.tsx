@@ -43,8 +43,8 @@ const CreatePropertyButton = () => {
       lrl: "",
       units: 0,
       floors: 0,
-      image: "",
-      caretaker: 0,
+      // image: "",
+      // caretaker: 0,
     },
   });
 
@@ -55,10 +55,11 @@ const CreatePropertyButton = () => {
       property_lrl: data.lrl,
       number_of_units: data.units,
       number_of_floors: data.floors,
-      property_img: null,
-      care_taker: data.caretaker ? 0 : null,
+      // property_img: null,
+      // care_taker: data.caretaker ? 0 : null,
     };
-    console.log(property);
+
+    // console.log(property);
     try {
       const res = await axios.post(
         "http://127.0.0.1:8000/property/properties/",
@@ -176,7 +177,7 @@ const CreatePropertyButton = () => {
               />
             </div>
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="caretaker"
               render={({ field }) => (
@@ -188,7 +189,7 @@ const CreatePropertyButton = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             {/* <FormField
               control={form.control}

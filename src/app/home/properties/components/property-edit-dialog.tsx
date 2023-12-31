@@ -27,6 +27,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { Property } from "@/types/property";
 
 const PropertyEditDialog = ({ property }: { property: Property }) => {
   const [open, setOpen] = useState(false);

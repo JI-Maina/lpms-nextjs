@@ -18,6 +18,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Tenant } from "@/types/property";
 
 const DeleteTenantModal = ({ tenant }: { tenant: Tenant }) => {
   const { data: session } = useSession();

@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { columns } from "./components/columns";
 import { TenantsTable } from "./components/tenants-table";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { Tenant } from "@/types/property";
 
 const getAllTenants = async () => {
   const session = await getServerSession(authOptions);
@@ -17,7 +18,7 @@ const getAllTenants = async () => {
 };
 
 const TenantsPage = async () => {
-  const tenantData = getAllTenants();
+  const tenantData: Promise<Tenant[]> = getAllTenants();
   const tenants = await tenantData;
 
   // console.log(tenants);

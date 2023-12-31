@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import { Unit } from "@/types/property";
 
 const RemoveTenantDialog = ({ unit }: { unit: Unit }) => {
   const { data: session } = useSession();

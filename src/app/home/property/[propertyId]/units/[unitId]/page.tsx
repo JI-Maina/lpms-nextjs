@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 
 import UnitCard from "../components/unit-card";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { Unit } from "@/types/property";
 
 type Params = {
   params: {

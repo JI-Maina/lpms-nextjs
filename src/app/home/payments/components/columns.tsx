@@ -3,6 +3,7 @@
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import { Payment } from "@/types/property";
 
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -53,8 +54,8 @@ export const columns: ColumnDef<Payment>[] = [
 
       return (
         <div>
-          {payment.unit.tenant.user.first_name}{" "}
-          {payment.unit.tenant.user.last_name}
+          {payment.unit.tenant?.user.first_name}{" "}
+          {payment.unit.tenant?.user.last_name}
         </div>
       );
     },

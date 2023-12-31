@@ -28,6 +28,7 @@ import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { RotateCcw } from "lucide-react";
+import { Unit } from "@/types/property";
 
 const MAINTENANCETYPES = ["Routine", "Preventive", "Corrective"] as const;
 

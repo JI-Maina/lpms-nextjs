@@ -5,7 +5,7 @@ import { PaymentsTable } from "../components/payments-table";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import AddUnitPaymentDialog from "../components/add-unit-payment-dialog";
 import { getProperty } from "@/lib/data-fetching/fetch-property";
-import { Property } from "@/types/property";
+import { Payment, Property } from "@/types/property";
 import PropertyHeader from "../../components/property-header";
 
 type Props = {
@@ -30,7 +30,7 @@ const getAllPayments = async (id: string) => {
 };
 
 const PropertPaymentsPage = async ({ params: { propertyId } }: Props) => {
-  const paymentData = getAllPayments(propertyId as string);
+  const paymentData: Promise<Payment[]> = getAllPayments(propertyId as string);
   const payments = await paymentData;
 
   const propertyData: Promise<Property> = getProperty(propertyId as string);

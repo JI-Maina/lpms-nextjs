@@ -36,6 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Unit } from "@/types/property";
 
 const UNITTYPES = [
   "single-room",

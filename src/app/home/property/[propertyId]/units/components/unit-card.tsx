@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Tenant, Unit, UnitInput } from "@/types/property";
 
 const getTenants = async () => {
   const session = await getServerSession(authOptions);
