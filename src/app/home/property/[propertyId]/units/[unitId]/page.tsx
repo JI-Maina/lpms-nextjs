@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { getServerSession } from "next-auth";
 
-import UnitCard from "../components/unit-card";
+import UnitCard from "../../../components/unit-card";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Unit } from "@/types/property";
 

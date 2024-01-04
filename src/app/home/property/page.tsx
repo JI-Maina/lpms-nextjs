@@ -1,6 +1,6 @@
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 import SelectProperty from "../components/select-property";
-import UnitsNavigation from "./[propertyId]/units/components/units-navigation";
+import UnitsNavigation from "./components/units-navigation";
 import { Property } from "@/types/property";
 
 const SinglePropertyPage = async () => {

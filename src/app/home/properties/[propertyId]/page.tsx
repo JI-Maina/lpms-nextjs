@@ -1,13 +1,17 @@
 import Image from "next/image";
-import { getServerSession } from "next-auth";
+import { format } from "date-fns";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-
-import { columns } from "../../property/components/columns";
-import PropertyEditDialog from "../components/property-edit-dialog";
-import { UnitsTable } from "../../property/components/unit-table";
 import { Property } from "@/types/property";
 import { getProperty } from "@/lib/data-fetching/fetch-property";
+import PropertyEditDialog from "../components/property-edit-dialog";
+import PropertyDeleteDialog from "../components/property-delete-dialog";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type Params = {
   params: {
@@ -19,56 +23,58 @@ const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
   const propertyData: Promise<Property> = getProperty(propertyId);
   const property = await propertyData;
 
-  const { unit_set: units } = property;
+  // const { unit_set: units } = property;
   // console.log(units);
 
   return (
-    <main className="">
-      <header className="border text-card-foreground p-4 pb-2 flex flex-col gap-2">
-        <div className="flex items-center gap-3">
+    <main className="flex items-center justify-center mt-8">
+      <Card className="max-w-sm">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>
+            {property.property_name} - {property.property_lrl}
+          </CardTitle>
+          {/* <NavigateButton propertyId={property.id} /> */}
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 pb-3">
           <Image
-            src="/property-1.jpg"
-            alt={property.property_name}
-            width={120}
-            height={120}
+            src={
+              property.property_img
+                ? `http://127.0.0.1:8000${property.property_img}`
+                : "/no-propertyfound.png"
+            }
+            alt=""
+            width={400}
+            height={400}
             priority
-            className="rounded-sm"
+            className="flex-1 rounded-md"
           />
 
-          <div>
-            <h2 className="text-lg font-semibold">{property.property_name}</h2>
-            <p className="text-muted-foreground text-sm">residential</p>
-            <p className="text-muted-foreground text-sm">
-              {property.property_lrl}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between relative">
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 text-muted-foreground">
-            <div className="flex gap-4">
+          <div className="flex-1 justify-end">
+            <div className="grid gap-4 mb-2 grid-cols-2">
               <DetailsCard event="floors" detail={property.number_of_floors} />
               <DetailsCard event="units" detail={property.number_of_units} />
             </div>
+            <DetailsCard event="type" detail="residential" />
             <DetailsCard
               event="caretaker"
               detail={
                 property.care_taker
-                  ? `${property.care_taker.user.first_name} ${property.care_taker.user.last_name}`
+                  ? `${property.care_taker?.user.first_name} ${property.care_taker?.user.last_name}`
                   : "None"
               }
             />
-          </div>
+            <DetailsCard
+              event="Created at"
+              detail={format(new Date(property.created_at), "yyyy-MM-dd")}
+            />
 
-          <div className="flex gap-1 absolute right-0 bottom-0">
-            <PropertyEditDialog property={property} />
+            <CardFooter className="flex gap-1 mt-2 p-0">
+              <PropertyEditDialog property={property} />
+              <PropertyDeleteDialog id={property.id} />
+            </CardFooter>
           </div>
-        </div>
-      </header>
-
-      <div className="max-w-[360px] sm:max-w-full">
-        <UnitsTable columns={columns} data={units} propertyId={propertyId} />
-      </div>
+        </CardContent>
+      </Card>
     </main>
   );
 };
