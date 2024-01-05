@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 const loginSchema = z.object({
   phoneNo: z.string().min(10, { message: "Invalid phone number" }).max(10),
@@ -23,6 +24,8 @@ const loginSchema = z.object({
 
 const LoginForm = () => {
   const router = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: { phoneNo: "", password: "" },
@@ -39,7 +42,14 @@ const LoginForm = () => {
       console.log(res);
       router.push("/home");
       router.refresh();
+    } else if (res?.status === 401) {
+      toast({
+        description: "Invalid login credentials",
+        variant: "destructive",
+      });
     }
+
+    console.log(res);
   };
 
   return (
