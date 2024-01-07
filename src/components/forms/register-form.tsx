@@ -45,8 +45,10 @@ const RegisterForm = () => {
       is_tenant: false,
     };
 
+    const url = `${process.env.NEXT_PUBLIC_DJANGO_BASE_URL}/auth/register/`;
+
     try {
-      await axios.post("http://127.0.0.1:8000/auth/register/", user, {
+      await axios.post(url, user, {
         headers: { "Content-Type": "application/json" },
       });
 

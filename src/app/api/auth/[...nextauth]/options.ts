@@ -45,7 +45,7 @@ export const authOptions: AuthOptions = {
         // console.log(credentials);
         try {
           const res = await fetch(
-            `${process.env.DJANGO_BASE_URL}/auth/login/`,
+            `${process.env.NEXT_PUBLIC_DJANGO_BASE_URL}/auth/login/`,
             {
               method: "POST",
               body: JSON.stringify(credentials),
