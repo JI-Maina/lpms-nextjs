@@ -1,21 +1,7 @@
-import { getServerSession } from "next-auth";
-
+import { Tenant } from "@/types/property";
 import { columns } from "./components/columns";
 import { TenantsTable } from "./components/tenants-table";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { Tenant } from "@/types/property";
-
-const getAllTenants = async () => {
-  const session = await getServerSession(authOptions);
-
-  const res = await fetch("http://127.0.0.1:8000/users/tenants/", {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch tenants data");
-
-  return res.json();
-};
+import { getAllTenants } from "@/lib/data-fetching/fetch-tenants";
 
 const TenantsPage = async () => {
   const tenantData: Promise<Tenant[]> = getAllTenants();

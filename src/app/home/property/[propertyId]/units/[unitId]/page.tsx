@@ -1,28 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { getServerSession } from "next-auth";
-
 import UnitCard from "../../../components/unit-card";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Unit } from "@/types/property";
+import { getUnit } from "@/lib/data-fetching/fetch-units";
 
 type Params = {
   params: {
     propertyId: string;
     unitId: string;
   };
-};
-
-const getUnit = async (propertyId: string, unitId: string) => {
-  const session = await getServerSession(authOptions);
-
-  const res = await fetch(`http://127.0.0.1:8000/property/units/${unitId}/`, {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch unit");
-
-  return res.json();
 };
 
 const UnitPage = async (params: Params) => {

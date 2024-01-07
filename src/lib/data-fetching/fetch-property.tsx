@@ -1,6 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 
+const url = process.env.NEXT_PUBLIC_DJANGO_BASE_URL;
+
 const getCurrentSession = async () => {
   const session = await getServerSession(authOptions);
   return session;
@@ -9,7 +11,7 @@ const getCurrentSession = async () => {
 export const getAllProperties = async () => {
   const session = await getCurrentSession();
 
-  const res = await fetch("http://127.0.0.1:8000/property/properties/", {
+  const res = await fetch(`${url}/property/properties/`, {
     headers: { Authorization: `Bearer ${session?.access_token}` },
   });
 
@@ -21,7 +23,7 @@ export const getAllProperties = async () => {
 export const getProperty = async (id: string) => {
   const session = await getCurrentSession();
 
-  const res = await fetch(`http://127.0.0.1:8000/property/properties/${id}/`, {
+  const res = await fetch(`${url}/property/properties/${id}/`, {
     headers: { Authorization: `Bearer ${session?.access_token}` },
   });
 
