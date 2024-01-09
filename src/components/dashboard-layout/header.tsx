@@ -5,7 +5,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import useScroll from "@/hooks/use-scroll";
+import useScroll from "@/lib/hooks/use-scroll";
 import { ModeToggle } from "../theme/mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {

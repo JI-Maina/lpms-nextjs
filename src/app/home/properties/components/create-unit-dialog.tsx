@@ -27,10 +27,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { Plus } from "lucide-react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -54,8 +54,9 @@ const unitSchema = z.object({
 });
 
 const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const router = useRouter();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   //   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -99,16 +100,9 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
     // console.log([...formData.entries()]);
 
     try {
-      const res = await axios.post(
-        `http://127.0.0.1:8000/property/properties/${propertyId}/units/`,
-        unitData,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access_token}`,
-            "Content-Type": "application/json",
-            // "Content-Type": "multipart/form-data",
-          },
-        }
+      const res = await axiosAuth.post(
+        `/property/properties/${propertyId}/units/`,
+        unitData
       );
 
       //   console.log(res);

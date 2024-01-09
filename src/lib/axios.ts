@@ -1,16 +1,30 @@
 import axios from "axios";
-import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+const BASE_URL = process.env.NEXT_PUBLIC_DJANGO_BASE_URL;
 
-const BASE_URL = "http://127.0.0.1:8000";
-
-const axiosPrivate = axios.create({
+export default axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 
-export default axiosPrivate;
+export const axiosAuth = axios.create({
+  baseURL: BASE_URL,
+  headers: { "Content-Length": "application/json" },
+});
+
+// import axios from "axios";
+// import { getServerSession } from "next-auth";
+
+// import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+
+// const BASE_URL = "http://127.0.0.1:8000";
+
+// const axiosPrivate = axios.create({
+//   baseURL: BASE_URL,
+//   headers: { "Content-Type": "application/json" },
+// });
+
+// export default axiosPrivate;
 
 // export const getSession = async (req, res) => {
 //   const session = await getServerSession(authOptions, { req });

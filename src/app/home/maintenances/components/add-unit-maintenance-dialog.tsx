@@ -34,13 +34,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import axiosPrivate from "@/lib/axios-private";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { RotateCcw } from "lucide-react";
 import { Unit } from "@/types/property";
 import { useState } from "react";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 const MAINTENANCETYPES = ["Routine", "Preventive", "Corrective"] as const;
 
@@ -52,8 +52,9 @@ const maintenanceSchema = z.object({
 });
 
 const AddUnitMaintenanceDialog = ({ units }: { units: Unit[] }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const { toast } = useToast();
+  const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -80,12 +81,9 @@ const AddUnitMaintenanceDialog = ({ units }: { units: Unit[] }) => {
     const unitId = data.unit;
 
     try {
-      const res = await axiosPrivate.post(
+      const res = await axiosAuth.post(
         `/property/properties/${propertyId}/units/${unitId}/maintenances/`,
-        maintenance,
-        {
-          headers: { Authorization: `Bearer ${session?.access_token}` },
-        }
+        maintenance
       );
 
       if (res.status === 201) {

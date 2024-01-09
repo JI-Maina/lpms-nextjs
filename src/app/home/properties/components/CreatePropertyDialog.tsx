@@ -24,14 +24,15 @@ import { z } from "zod";
 import { propertySchema } from "@/components/forms/form-schema";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import axiosPrivate from "@/lib/axios-private";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 export const CreatePropertyDialog = () => {
   const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -56,9 +57,7 @@ export const CreatePropertyDialog = () => {
     };
 
     try {
-      await axiosPrivate.post("/property/properties/", property, {
-        headers: { Authorization: `Bearer ${session?.access_token}` },
-      });
+      await axiosAuth.post("/property/properties/", property);
 
       router.refresh();
       form.reset();

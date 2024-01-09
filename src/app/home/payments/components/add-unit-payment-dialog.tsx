@@ -14,11 +14,10 @@ import { z } from "zod";
 import { RotateCcw } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
-import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -39,6 +38,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { Unit } from "@/types/property";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 const FORTYPES = ["rent", "deposit", "maintenance"] as const;
 const METHODTYPES = ["cash", "m-pesa", "bank"] as const;
@@ -52,8 +52,9 @@ const paymentSchema = z.object({
 });
 
 const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const { toast } = useToast();
+  const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -82,12 +83,9 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
     const unitId = data.unit;
 
     try {
-      const res = await axiosPrivate.post(
+      const res = await axiosAuth.post(
         `/property/properties/${propertyId}/units/${unitId}/payments/`,
-        pay,
-        {
-          headers: { Authorization: `Bearer ${session?.access_token}` },
-        }
+        pay
       );
 
       if (res.status === 201) {

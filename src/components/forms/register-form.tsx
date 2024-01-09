@@ -48,11 +48,13 @@ const RegisterForm = () => {
     const url = `${process.env.NEXT_PUBLIC_DJANGO_BASE_URL}/auth/register/`;
 
     try {
-      await axios.post(url, user, {
+      const res = await axios.post(url, user, {
         headers: { "Content-Type": "application/json" },
       });
 
-      router.push("/auth/register");
+      if (res.status === 200) {
+        router.push("/auth/register");
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log(error?.response?.data);

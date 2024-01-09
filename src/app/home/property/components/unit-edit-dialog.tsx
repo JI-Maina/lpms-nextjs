@@ -5,11 +5,10 @@ import { useState } from "react";
 import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
-import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -37,6 +36,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Unit } from "@/types/property";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 const UNITTYPES = [
   "single-room",
@@ -56,7 +56,8 @@ const unitSchema = z.object({
 });
 
 const UnitEditDialog = ({ unit }: { unit: Unit }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -74,16 +75,18 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
     mode: "onChange",
   });
 
-  // console.log(unit);
+  // console.log(unit.tenant?.id);
+  const tenant = unit.tenant?.id;
   const propertyId = unit.property;
   const unitId = unit.id;
 
   const onsubmit = async (data: z.infer<typeof unitSchema>) => {
+    const updatedUnit = { ...unit, tenant };
+
     try {
-      const res = await axiosPrivate.patch(
+      const res = await axiosAuth.patch(
         `/property/properties/${propertyId}/units/${unitId}/`,
-        { ...unit, ...data },
-        { headers: { Authorization: `Bearer ${session?.access_token}` } }
+        { ...updatedUnit, ...data }
       );
 
       // console.log(res);

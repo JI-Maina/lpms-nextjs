@@ -2,9 +2,8 @@
 
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
-import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -18,19 +17,18 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Unit } from "@/types/property";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const router = useRouter();
 
   const handleDelete = async () => {
     try {
-      await axiosPrivate.delete(
-        `/property/properties/${unit.property}/units/${unit.id}/`,
-        {
-          headers: { Authorization: `Bearer ${session?.access_token}` },
-        }
+      await axiosAuth.delete(
+        `/property/properties/${unit.property}/units/${unit.id}/`
       );
 
       toast({ description: `Success! unit ${unit.unit_name} deleted` });

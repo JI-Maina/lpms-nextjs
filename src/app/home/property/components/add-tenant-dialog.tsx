@@ -4,10 +4,9 @@ import { z } from "zod";
 import { UserPlus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -37,6 +36,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { Tenant, UnitInput } from "@/types/property";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 type AddProps = {
   unit: UnitInput;
@@ -49,7 +49,8 @@ const tenantSchema = z.object({
 
 const AddTenantDialog = ({ unit, tenants }: AddProps) => {
   const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -64,10 +65,9 @@ const AddTenantDialog = ({ unit, tenants }: AddProps) => {
 
   const onsubmit = async (data: z.infer<typeof tenantSchema>) => {
     try {
-      await axiosPrivate.patch(
+      await axiosAuth.patch(
         `/property/properties/${propertyId}/units/${unitId}/`,
-        { ...unit, tenant: parseInt(data.tenant) },
-        { headers: { Authorization: `Bearer ${session?.access_token}` } }
+        { ...unit, tenant: parseInt(data.tenant) }
       );
       //   console.log(res);
       setOpen(false);

@@ -2,9 +2,8 @@
 
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
-import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -19,17 +18,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Tenant } from "@/types/property";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 const DeleteTenantModal = ({ tenant }: { tenant: Tenant }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const router = useRouter();
 
   const onDelete = async () => {
     try {
-      const res = await axiosPrivate.delete(`/users/tenants/${tenant.id}/`, {
-        headers: { Authorization: `Bearer ${session?.access_token}` },
-      });
+      const res = await axiosAuth.delete(`/users/tenants/${tenant.id}/`);
 
       if (res.status === 204) {
         toast({ title: "success", description: "Tenant  deleted" });

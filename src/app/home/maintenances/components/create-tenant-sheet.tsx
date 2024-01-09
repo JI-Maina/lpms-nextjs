@@ -21,10 +21,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/use-toast";
-import axiosPrivate from "@/lib/axios-private";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserPlus2 } from "lucide-react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -47,8 +47,9 @@ const tenantSchema = z.object({
 });
 
 const CreateTenantSheet = () => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const router = useRouter();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
@@ -83,9 +84,7 @@ const CreateTenantSheet = () => {
     };
 
     try {
-      const res = await axiosPrivate.post("/users/tenants/", tenant, {
-        headers: { Authorization: `Bearer ${session?.access_token}` },
-      });
+      const res = await axiosAuth.post("/users/tenants/", tenant);
 
       if (res.status === 201) {
         toast({ description: "Tenant created", title: "Success" });

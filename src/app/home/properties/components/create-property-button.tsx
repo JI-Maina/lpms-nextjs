@@ -25,15 +25,16 @@ import { z } from "zod";
 import { propertySchema } from "@/components/forms/form-schema";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import axios from "axios";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 const CreatePropertyButton = () => {
   const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const router = useRouter();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof propertySchema>>({
@@ -61,16 +62,7 @@ const CreatePropertyButton = () => {
 
     // console.log(property);
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/property/properties/",
-        property,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access_token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await axiosAuth.post("/property/properties/", property);
 
       toast({ description: res.statusText });
       router.refresh();

@@ -2,9 +2,8 @@
 
 import { UserX } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
-import axiosPrivate from "@/lib/axios-private";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -18,9 +17,11 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { Unit } from "@/types/property";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 const RemoveTenantDialog = ({ unit }: { unit: Unit }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -29,10 +30,9 @@ const RemoveTenantDialog = ({ unit }: { unit: Unit }) => {
 
   const onsubmit = async () => {
     try {
-      await axiosPrivate.patch(
+      await axiosAuth.patch(
         `/property/properties/${propertyId}/units/${unitId}/`,
-        { ...unit, tenant: null },
-        { headers: { Authorization: `Bearer ${session?.access_token}` } }
+        { ...unit, tenant: null }
       );
       //   console.log(res);
       toast({ description: "Success" });
