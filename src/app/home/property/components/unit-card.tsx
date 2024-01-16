@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 import UnitEditDialog from "./unit-edit-dialog";
 import AddTenantDialog from "./add-tenant-dialog";
@@ -15,21 +13,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tenant, Unit, UnitInput } from "@/types/property";
-
-const getTenants = async () => {
-  const session = await getServerSession(authOptions);
-
-  const res = await fetch("http://127.0.0.1:8000/users/tenants/", {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch tenants");
-
-  return res.json();
-};
+import { getAllTenants } from "@/lib/data-fetching/fetch-tenants";
 
 const UnitCard = async ({ unit }: { unit: Unit }) => {
-  const tenantData: Promise<Tenant[]> = getTenants();
+  const tenantData: Promise<Tenant[]> = getAllTenants();
   const tenants = await tenantData;
 
   const firstName = unit.tenant?.user.first_name;
