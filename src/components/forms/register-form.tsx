@@ -3,7 +3,6 @@
 import * as z from "zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "../ui/input";
@@ -17,11 +16,12 @@ import {
   FormMessage,
 } from "../ui/form";
 import { regSchema } from "./form-schema";
-// import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 const RegisterForm = () => {
   const router = useRouter();
-  // const { toast } = useToast();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof regSchema>>({
     resolver: zodResolver(regSchema),
@@ -52,17 +52,27 @@ const RegisterForm = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (res.status === 200) {
-        router.push("/auth/register");
+      if (res.status === 201) {
+        router.push("/auth/login");
+        toast({
+          title: "Success",
+          description: "Account created! login to your account",
+        });
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log(error?.response?.data);
         if (!error?.response) {
-          // toast.error("Registration Failed! Check your internet connection");
+          toast({
+            description: "Registration Failed! Check your internet connection",
+            variant: "destructive",
+          });
         } else if (error?.response?.status === 400) {
           if (error.response.data.phone_number) {
-            // toast.error(error.response.data?.phone_no[0]);
+            toast({
+              description: error.response.data?.phone_no[0],
+              variant: "destructive",
+            });
           }
         }
       } else {

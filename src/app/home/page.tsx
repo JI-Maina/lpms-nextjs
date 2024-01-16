@@ -4,7 +4,7 @@ import { authOptions } from "../api/auth/[...nextauth]/options";
 const HomePage = async () => {
   const session = await getServerSession(authOptions);
 
-  console.log(session);
+  // console.log(session);
   return (
     <div className="space-y-2">
       <span className="font-bold text-4xl">Home</span>

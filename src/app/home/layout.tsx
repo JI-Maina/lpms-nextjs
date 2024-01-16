@@ -5,6 +5,7 @@ import HeaderMobile from "@/components/dashboard-layout/header-mobile";
 import SideNav from "@/components/dashboard-layout/side-nav";
 import MarginWidthWrapper from "@/components/dashboard-layout/margin-width-wrapper";
 import PageWrapper from "@/components/dashboard-layout/page-wrapper";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,6 +26,7 @@ export default function DashboardLayout({
           <HeaderMobile />
 
           <PageWrapper>{children}</PageWrapper>
+          <Toaster />
         </MarginWidthWrapper>
       </main>
     </div>
