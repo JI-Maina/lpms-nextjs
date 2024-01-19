@@ -12,7 +12,7 @@ export const getAllTenants = async () => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/users/tenants/`, {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
   if (!res.ok) throw new Error("Failed to fetch tenants data");

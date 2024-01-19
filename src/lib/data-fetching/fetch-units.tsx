@@ -12,7 +12,7 @@ export const getUnit = async (propertyId: string, unitId: string) => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/property/units/${unitId}/`, {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
   if (!res.ok) throw new Error("Failed to fetch unit");

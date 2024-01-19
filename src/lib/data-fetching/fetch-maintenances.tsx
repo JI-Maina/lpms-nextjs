@@ -12,7 +12,7 @@ export const getAllMaintenances = async (id: string) => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/property/properties/${id}/maintenances/`, {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
   if (!res.ok) throw new Error("Failed to fetch payments data");

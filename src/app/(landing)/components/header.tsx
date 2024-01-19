@@ -5,6 +5,7 @@ import { navigation } from "./constants";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useState } from "react";
 import NavMobile from "./nav-mobile";
+import SigninButton from "./signin-button";
 
 const Header = () => {
   const [bg, setBg] = useState(false);
@@ -41,10 +42,7 @@ const Header = () => {
               ))}
             </ul>
 
-            <button className="ml-8 p-2 px-4 flex items-center text-sm bg-purple-600 rounded-sm hover:bg-purple-800">
-              <Link href="/auth/register">Get Started</Link>
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </button>
+            <SigninButton />
           </nav>
 
           <div

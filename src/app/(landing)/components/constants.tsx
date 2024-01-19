@@ -15,10 +15,6 @@ export const navigation = [
     name: "Contact",
     href: "/contact",
   },
-  {
-    name: "Login",
-    href: "/auth/login",
-  },
 ];
 
 export const hero = {

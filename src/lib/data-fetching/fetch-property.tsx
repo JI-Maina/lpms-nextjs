@@ -12,7 +12,7 @@ export const getAllProperties = async () => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/property/properties/`, {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
   if (!res.ok) throw new Error("Failed to fetch property data");
@@ -24,7 +24,7 @@ export const getProperty = async (id: string) => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/property/properties/${id}/`, {
-    headers: { Authorization: `Bearer ${session?.access_token}` },
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
   if (!res.ok) throw new Error("Failed to fetch data");
