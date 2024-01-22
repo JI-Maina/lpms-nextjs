@@ -7,7 +7,7 @@ const UnitsNavigation = ({ property }: { property: String }) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(`/home/property/${property}`);
+    router.push(`/home/managers/property/${property}`);
   }, [property, router]);
 
   return null;

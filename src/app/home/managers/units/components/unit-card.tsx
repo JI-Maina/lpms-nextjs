@@ -5,6 +5,8 @@ import AddTenantDialog from "./add-tenant-dialog";
 import UnitDeleteDialog from "./unit-delete-dialog";
 import { Separator } from "@/components/ui/separator";
 import RemoveTenantDialog from "./remove-tenant-dialog";
+import { Tenant, Unit, UnitInput } from "@/types/property";
+import { getAllTenants } from "@/lib/data-fetching/fetch-tenants";
 import {
   Card,
   CardContent,
@@ -12,8 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tenant, Unit, UnitInput } from "@/types/property";
-import { getAllTenants } from "@/lib/data-fetching/fetch-tenants";
 
 const UnitCard = async ({ unit }: { unit: Unit }) => {
   const tenantData: Promise<Tenant[]> = getAllTenants();

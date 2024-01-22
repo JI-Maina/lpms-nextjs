@@ -5,12 +5,12 @@ import { SideNavItem } from "./types";
 export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: "Home",
-    path: "/home",
+    path: "/home/managers",
     icon: <Icon icon="lucide:home" width="24" height="24" />,
   },
   {
     title: "Properties",
-    path: "/home/properties",
+    path: "/home/managers/properties",
     icon: <Icon icon="lucide:building" width="24" height="24" />,
     // submenu: true,
     // subMenuItems: [
@@ -21,22 +21,27 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   },
   {
     title: "Units",
-    path: "/home/property",
+    path: "/home/managers/units",
+    icon: <Icon icon="lucide:users" width="24" height="24" />,
+  },
+  {
+    title: "Units old",
+    path: "/home/managers/property",
     icon: <Icon icon="lucide:users" width="24" height="24" />,
   },
   {
     title: "Payments",
-    path: "/home/payments",
+    path: "/home/managers/payments",
     icon: <Icon icon="lucide:bitcoin" width="24" height="24" />,
   },
   {
     title: "Maintenances",
-    path: "/home/maintenances",
+    path: "/home/managers/maintenances",
     icon: <Icon icon="lucide:construction" width="24" height="24" />,
   },
   {
     title: "Tenants",
-    path: "/home/tenants",
+    path: "/home/managers/tenants",
     icon: <Icon icon="lucide:users" width="24" height="24" />,
   },
   // {

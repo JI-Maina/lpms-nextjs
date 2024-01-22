@@ -1,10 +1,24 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/options";
+import NavigationCard from "@/components/shared/navigation-card";
 
-const HomePage = async () => {
+const RoleNavigationPage = async () => {
   const session = await getServerSession(authOptions);
 
   // console.log(session);
+
+  if (session?.user) {
+    const {
+      user: { userRole },
+    } = session;
+
+    if (userRole === "owner") {
+      return <NavigationCard />;
+    } else if (userRole === "tenant") {
+      return <div>Tenant</div>;
+    }
+  }
+
   return (
     <div className="space-y-2">
       <span className="font-bold text-4xl">Home, you have properties</span>
@@ -18,4 +32,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default RoleNavigationPage;

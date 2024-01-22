@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import UnitCard from "../../../components/unit-card";
+import UnitCard from "../../../../units/components/unit-card";
 import { Unit } from "@/types/property";
 import { getUnit } from "@/lib/data-fetching/fetch-units";
 
@@ -12,8 +12,8 @@ type Params = {
 };
 
 const UnitPage = async (params: Params) => {
-  const { propertyId, unitId } = params.params;
-  const unitData: Promise<Unit> = getUnit(propertyId, unitId);
+  const { unitId } = params.params;
+  const unitData: Promise<Unit> = getUnit(unitId);
   const unit = await unitData;
 
   return (

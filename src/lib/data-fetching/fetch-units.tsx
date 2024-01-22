@@ -8,7 +8,7 @@ const getCurrentSession = async () => {
   return session;
 };
 
-export const getUnit = async (propertyId: string, unitId: string) => {
+export const getUnit = async (unitId: string) => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/property/units/${unitId}/`, {

@@ -12,7 +12,7 @@ const NavigateButton = ({ propertyId }: { propertyId: string }) => {
     <Button
       size="icon"
       variant="link"
-      onClick={() => router.push(`/home/properties/${propertyId}`)}
+      onClick={() => router.push(`/home/managers/properties/${propertyId}`)}
     >
       <MoreHorizontal />
     </Button>

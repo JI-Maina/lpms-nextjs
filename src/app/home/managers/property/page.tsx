@@ -18,7 +18,7 @@ const SinglePropertyPage = async () => {
       {properties.length === 1 ? (
         <UnitsNavigation property={propertyId as string} />
       ) : (
-        <SelectProperty path={"/home/property"} />
+        <SelectProperty path={"/home/managers/property"} />
       )}
     </>
   );
