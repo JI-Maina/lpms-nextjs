@@ -16,6 +16,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -24,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import AddUnitPaymentDialog from "./add-unit-payment-dialog";
+import { Payment } from "@/types/property";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -33,7 +35,7 @@ interface DataTableProps<TData, TValue> {
 export function PaymentsTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<Payment, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -48,6 +50,16 @@ export function PaymentsTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  const calcTotal = (payments: Payment[]) => {
+    const total = payments.reduce((accumulator, payment) => {
+      return accumulator + parseInt(payment.payment_amount);
+    }, 0);
+
+    return total;
+  };
+
+  const total = calcTotal(data);
 
   return (
     <>
@@ -117,6 +129,15 @@ export function PaymentsTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
+
+          {data.length > 0 && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={5}>Total</TableCell>
+                <TableCell className="">KSh {total}</TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </div>
 

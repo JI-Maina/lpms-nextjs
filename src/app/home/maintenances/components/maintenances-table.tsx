@@ -128,12 +128,14 @@ export function MaintenancesTable<TData, TValue>({
             )}
           </TableBody>
 
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="">KSh {total}</TableCell>
-            </TableRow>
-          </TableFooter>
+          {data.length > 0 && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={3}>Total</TableCell>
+                <TableCell className="">KSh {total}</TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </div>
 
