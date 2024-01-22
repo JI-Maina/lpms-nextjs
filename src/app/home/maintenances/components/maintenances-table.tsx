@@ -16,6 +16,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -23,6 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Maintenance } from "@/types/property";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -32,7 +34,7 @@ interface DataTableProps<TData, TValue> {
 export function MaintenancesTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<Maintenance, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -47,6 +49,16 @@ export function MaintenancesTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  const calcTotal = (maintenance: Maintenance[]) => {
+    const total = maintenance.reduce((accumulator, item) => {
+      return accumulator + parseInt(item.maintenance_fee);
+    }, 0);
+
+    return total;
+  };
+
+  const total = calcTotal(data);
 
   return (
     <>
@@ -115,6 +127,13 @@ export function MaintenancesTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
+
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell className="">KSh {total}</TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
       </div>
 

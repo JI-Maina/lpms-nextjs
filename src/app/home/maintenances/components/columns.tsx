@@ -21,15 +21,6 @@ export const columns: ColumnDef<Maintenance>[] = [
     },
   },
   {
-    accessorKey: "maintenance_fee",
-    header: "Amount",
-    // cell: ({ row }) => {
-    //   const tenant = row.original;
-
-    //   return <div>{tenant.user.phone_no}</div>;
-    // },
-  },
-  {
     accessorKey: "maintenance_date",
     header: "Date",
   },
@@ -41,6 +32,15 @@ export const columns: ColumnDef<Maintenance>[] = [
 
       return <div>{payment.unit.unit_name}</div>;
     },
+  },
+  {
+    accessorKey: "maintenance_fee",
+    header: "Amount",
+    // cell: ({ row }) => {
+    //   const tenant = row.original;
+
+    //   return <div>{tenant.user.phone_no}</div>;
+    // },
   },
   // {
   //   accessorKey: "actions",
