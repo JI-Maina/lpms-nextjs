@@ -14,7 +14,7 @@ const useAxiosAuth = () => {
     const requestIntercept = axiosAuth.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${session?.access_token}`;
+          config.headers["Authorization"] = `Bearer ${session?.accessToken}`;
         }
 
         return config;
@@ -33,7 +33,7 @@ const useAxiosAuth = () => {
           await refreshToken();
           prevRequest.headers[
             "Authorization"
-          ] = `Bearer ${session?.access_token}`;
+          ] = `Bearer ${session?.accessToken}`;
 
           return axiosAuth(prevRequest);
         }

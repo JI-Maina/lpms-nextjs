@@ -24,11 +24,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     path: "/home/managers/units",
     icon: <Icon icon="lucide:users" width="24" height="24" />,
   },
-  {
-    title: "Units old",
-    path: "/home/managers/property",
-    icon: <Icon icon="lucide:users" width="24" height="24" />,
-  },
+  // {
+  //   title: "Units old",
+  //   path: "/home/managers/property",
+  //   icon: <Icon icon="lucide:users" width="24" height="24" />,
+  // },
   {
     title: "Payments",
     path: "/home/managers/payments",

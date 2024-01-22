@@ -42,7 +42,7 @@ const UnitsHeader = ({ property }: { property: Property }) => {
         </div>
 
         <div className="flex gap-1 absolute right-0 bottom-0">
-          <PropertyEditDialog property={property} />
+          {/* <PropertyEditDialog property={property} /> */}
         </div>
       </div>
     </header>
