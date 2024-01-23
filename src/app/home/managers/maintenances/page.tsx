@@ -21,7 +21,7 @@ const MaintenancePage = async () => {
       {properties.length === 1 ? (
         <MaintenanceNavigation property={propertyId as string} />
       ) : (
-        <SelectProperty path="/home/maintenances" />
+        <SelectProperty path="/home/managers/maintenances" />
       )}
     </>
   );

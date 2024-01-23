@@ -7,7 +7,7 @@ const PaymentsNavigation = ({ property }: { property: String }) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(`/home/payments/${property}`);
+    router.push(`/home/managers/payments/${property}`);
   }, [property, router]);
 
   return null;

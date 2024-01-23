@@ -10,7 +10,7 @@ const TenantsPage = async () => {
   const propertyId = properties.length === 1 && properties[0].id;
 
   // console.log(payments);
-  // console.log(properties.length);
+  // console.log(properties);
 
   if (properties.length === 0) {
     return <div>No payments to view, create a property first.</div>;
@@ -18,10 +18,11 @@ const TenantsPage = async () => {
 
   return (
     <>
+      {/* <div>properties page</div> */}
       {properties.length === 1 ? (
         <PaymentsNavigation property={propertyId as string} />
       ) : (
-        <SelectProperty path="/home/payments" />
+        <SelectProperty path="/home/managers/payments" />
       )}
     </>
   );
