@@ -7,7 +7,7 @@ const MaintenanceNavigation = ({ property }: { property: String }) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(`/home/managers/payments/${property}`);
+    router.push(`/home/managers/maintenances/${property}`);
   }, [property, router]);
 
   return null;

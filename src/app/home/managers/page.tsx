@@ -23,6 +23,7 @@ const ManagersHomePage = () => {
             <Overview />
           </CardContent>
         </Card>
+
         <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Recent Maintenances</CardTitle>
