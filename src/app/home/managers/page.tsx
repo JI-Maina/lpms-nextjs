@@ -5,13 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Overview } from "./components/cards/overview";
-import { RecentMaintenances } from "./components/cards/recent-maintenances";
 import RevenueCard from "./components/cards/revenue-card";
 import BalanceCard from "./components/cards/balance-card";
 import TenantsCard from "./components/cards/tenants-card";
 import VacantsCard from "./components/cards/vacants-card";
+import { RecentMaintenances } from "./components/cards/recent-maintenances";
 
 const ManagersHomePage = () => {
   return (

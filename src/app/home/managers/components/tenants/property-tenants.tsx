@@ -42,7 +42,7 @@ const PropertyTenants = ({ properties }: TenantsProps) => {
       />
 
       <div className="max-w-[360px] sm:max-w-full">
-        {tenants && <TenantsTable data={tenants} columns={columns} />}
+        <TenantsTable data={tenants as Tenant[]} columns={columns} />
       </div>
     </main>
   );
