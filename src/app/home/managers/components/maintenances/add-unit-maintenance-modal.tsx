@@ -51,7 +51,7 @@ const maintenanceSchema = z.object({
   unit: z.string().min(1, { message: "Please select a unit" }),
 });
 
-const AddUnitMaintenanceDialog = ({ units }: { units: Unit[] }) => {
+const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
   // const { data: session } = useSession();
   const { toast } = useToast();
   const axiosAuth = useAxiosAuth();
@@ -231,4 +231,4 @@ const AddUnitMaintenanceDialog = ({ units }: { units: Unit[] }) => {
   );
 };
 
-export default AddUnitMaintenanceDialog;
+export default AddUnitMaintenanceModal;

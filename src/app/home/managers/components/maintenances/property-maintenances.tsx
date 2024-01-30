@@ -4,17 +4,17 @@ import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
 import { Property } from "@/types/property";
-import { PaymentsTable } from "./payments-table";
-import AddUnitPaymentDialog from "./add-unit-payment-modal";
+import { MaintenancesTable } from "./maintenances-table";
+import AddUnitMaintenanceModal from "./add-unit-maintenance-modal";
 import SelectPropertyHeader from "../shared/select-property-header";
 
-type PropertyProps = {
+type MaintenanceProps = {
   properties: Property[];
 };
 
-const PropertyPayments = ({ properties }: PropertyProps) => {
+const PropertyMaintenances = ({ properties }: MaintenanceProps) => {
   const [id, setId] = useState(properties[0].id);
-  const [payments, setPayments] = useState([]);
+  const [maintenaces, setMaintenances] = useState([]);
 
   const property = properties.find((property) => property.id === id);
   const units = property?.unit_set;
@@ -24,30 +24,30 @@ const PropertyPayments = ({ properties }: PropertyProps) => {
   };
 
   useEffect(() => {
-    const getPayments = async () => {
-      const res = await fetch(`/api/payments/${id}`);
+    const getMaintenances = async () => {
+      const res = await fetch(`/api/maintenances/${id}`);
       const data = await res.json();
-      setPayments(data);
+      setMaintenances(data);
     };
 
-    if (id) getPayments();
+    if (id) getMaintenances();
   }, [id]);
 
   return (
     <main>
       <SelectPropertyHeader
         id={id}
-        title="Payments Data"
+        title="Maintenances Data"
         properties={properties}
         onChange={onChange}
-        actionModal={units && <AddUnitPaymentDialog units={units} />}
+        actionModal={units && <AddUnitMaintenanceModal units={units} />}
       />
 
       <div className="max-w-[360px] sm:max-w-full">
-        <PaymentsTable data={payments} columns={columns} />
+        <MaintenancesTable data={maintenaces} columns={columns} />
       </div>
     </main>
   );
 };
 
-export default PropertyPayments;
+export default PropertyMaintenances;
