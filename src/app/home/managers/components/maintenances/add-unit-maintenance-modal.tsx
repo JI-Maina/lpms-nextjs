@@ -93,7 +93,6 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
           description: "Maintenance updated successfully",
         });
         router.refresh();
-        // location.reload();
         setOpen(false);
       }
     } catch (err: any) {
