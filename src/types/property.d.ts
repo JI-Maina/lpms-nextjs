@@ -38,7 +38,7 @@ type Unit = {
   unit_img: string | null;
   is_rent_paid: boolean;
   balance: number;
-  tenant: User | null;
+  tenant: Tenant | null;
 };
 
 type UnitInput = {

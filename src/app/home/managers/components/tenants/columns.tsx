@@ -6,7 +6,7 @@ import { ArrowUpDown, Trash2 } from "lucide-react";
 import DeleteTenantModal from "./delete-tenant-modal";
 import { Tenant } from "@/types/property";
 
-export const columns: ColumnDef<Tenant>[] = [
+export const columns: ColumnDef<Tenant | null>[] = [
   {
     accessorKey: "first_name",
     header: ({ column }) => {
@@ -25,7 +25,7 @@ export const columns: ColumnDef<Tenant>[] = [
 
       return (
         <div>
-          {tenant.user.first_name} {tenant.user.last_name}
+          {tenant?.user.first_name} {tenant?.user.last_name}
         </div>
       );
     },
@@ -36,7 +36,7 @@ export const columns: ColumnDef<Tenant>[] = [
     cell: ({ row }) => {
       const tenant = row.original;
 
-      return <div>{tenant.user.phone_no}</div>;
+      return <div>{tenant?.user.phone_no}</div>;
     },
   },
   {
@@ -51,7 +51,7 @@ export const columns: ColumnDef<Tenant>[] = [
 
       return (
         <div>
-          {tenant.nok_first_name} {tenant.nok_last_name}
+          {tenant?.nok_first_name} {tenant?.nok_last_name}
         </div>
       );
     },
@@ -65,33 +65,7 @@ export const columns: ColumnDef<Tenant>[] = [
     cell: ({ row }) => {
       const tenant = row.original;
 
-      return <DeleteTenantModal tenant={tenant} />;
+      return <DeleteTenantModal tenant={tenant as Tenant} />;
     },
   },
 ];
-
-// {
-//     id: 5,
-//     id_number: '32327754',
-//     nok_first_name: 'Michael',
-//     nok_last_name: 'Joseph',
-//     nok_phone_no: '0770416102',
-//     user: {
-//       id: 11,
-//       first_name: 'George',
-//       last_name: 'Saitoti',
-//       phone_no: '0717416111',
-//       is_owner: false,
-//       is_caretaker: false,
-//       is_tenant: true
-//     },
-//     creator: {
-//       id: 9,
-//       first_name: 'Daniel',
-//       last_name: 'Moi',
-//       phone_no: '0770416103',
-//       is_owner: true,
-//       is_caretaker: false,
-//       is_tenant: false
-//     }
-//   }

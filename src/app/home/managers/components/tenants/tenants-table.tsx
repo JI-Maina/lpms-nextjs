@@ -23,7 +23,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import CreateTenantSheet from "./create-tenant-sheet";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -65,8 +64,6 @@ export function TenantsTable<TData, TValue>({
             className="max-w-sm"
           />
         </div>
-
-        <CreateTenantSheet />
       </div>
 
       <div className="rounded-md border">

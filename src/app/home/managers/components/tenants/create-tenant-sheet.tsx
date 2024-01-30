@@ -89,7 +89,7 @@ const CreateTenantSheet = () => {
       if (res.status === 201) {
         toast({ description: "Tenant created", title: "Success" });
         setOpen(false);
-        router.refresh();
+        router.push("/home/managers/units");
         form.reset();
       }
     } catch (err: any) {

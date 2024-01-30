@@ -1,19 +1,14 @@
-import { Tenant } from "@/types/property";
-import { columns } from "./components/columns";
-import { TenantsTable } from "./components/tenants-table";
-import { getAllTenants } from "@/lib/data-fetching/fetch-tenants";
+import { getAllProperties } from "@/lib/data-fetching/fetch-property";
+import { Property } from "@/types/property";
+import PropertyTenants from "../components/tenants/property-tenants";
 
 const TenantsPage = async () => {
-  const tenantData: Promise<Tenant[]> = getAllTenants();
-  const tenants = await tenantData;
+  const propertyData: Promise<Property[]> = getAllProperties();
+  const properties = await propertyData;
 
-  // console.log(tenants);
+  console.log(properties);
 
-  return (
-    <div>
-      <TenantsTable columns={columns} data={tenants} />
-    </div>
-  );
+  return <PropertyTenants properties={properties} />;
 };
 
 export default TenantsPage;
