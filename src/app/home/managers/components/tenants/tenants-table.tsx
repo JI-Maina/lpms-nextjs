@@ -109,7 +109,7 @@ export function TenantsTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No tenants to display.
                 </TableCell>
               </TableRow>
             )}

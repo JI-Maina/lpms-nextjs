@@ -122,7 +122,7 @@ export function MaintenancesTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No maintenance data to display.
                 </TableCell>
               </TableRow>
             )}

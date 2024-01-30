@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Property } from "@/types/property";
 import PropertyEditDialog from "../../properties/components/property-edit-dialog";
+import CreateUnitDialog from "../../properties/components/create-unit-dialog";
 
 const UnitsHeader = ({ property }: { property: Property }) => {
   return (
@@ -42,7 +43,7 @@ const UnitsHeader = ({ property }: { property: Property }) => {
         </div>
 
         <div className="flex gap-1 absolute right-0 bottom-0">
-          {/* <PropertyEditDialog property={property} /> */}
+          <CreateUnitDialog propertyId={property.id} />
         </div>
       </div>
     </header>

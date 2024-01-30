@@ -13,7 +13,7 @@ type MaintenanceProps = {
 };
 
 const PropertyMaintenances = ({ properties }: MaintenanceProps) => {
-  const [id, setId] = useState(properties[0].id);
+  const [id, setId] = useState(properties[0]?.id);
   const [maintenaces, setMaintenances] = useState([]);
 
   const property = properties.find((property) => property.id === id);

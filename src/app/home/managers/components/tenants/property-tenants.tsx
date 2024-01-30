@@ -17,9 +17,10 @@ const PropertyTenants = ({ properties }: TenantsProps) => {
 
   const property = properties.find((property) => property.id === id);
   const units = property?.unit_set;
-  const tenants = units
-    ?.filter((unit) => unit.tenant)
-    .map((unit) => unit.tenant);
+
+  const [tenants, setTenants] = useState(
+    () => units?.filter((unit) => unit.tenant).map((unit) => unit.tenant) || []
+  );
 
   const onChange = (value: string) => {
     setId(value);

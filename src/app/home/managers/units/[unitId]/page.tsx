@@ -1,5 +1,5 @@
 import { Unit } from "@/types/property";
-import UnitCard from "../components/unit-card";
+import UnitCard from "../../components/units/unit-card";
 import { getUnit } from "@/lib/data-fetching/fetch-units";
 
 type Params = {

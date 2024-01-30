@@ -13,7 +13,7 @@ type PropertyProps = {
 };
 
 const PropertyPayments = ({ properties }: PropertyProps) => {
-  const [id, setId] = useState(properties[0].id);
+  const [id, setId] = useState(properties[0]?.id);
   const [payments, setPayments] = useState([]);
 
   const property = properties.find((property) => property.id === id);
