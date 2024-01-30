@@ -5,14 +5,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import HighlightCards from "./components/highlight-cards";
-import { Overview } from "./components/overview";
-import { RecentMaintenances } from "./components/recent-maintenances";
+
+import { Overview } from "./components/cards/overview";
+import { RecentMaintenances } from "./components/cards/recent-maintenances";
+import RevenueCard from "./components/cards/revenue-card";
+import BalanceCard from "./components/cards/balance-card";
+import TenantsCard from "./components/cards/tenants-card";
+import VacantsCard from "./components/cards/vacants-card";
 
 const ManagersHomePage = () => {
   return (
     <div className="mt-3 space-y-4">
-      <HighlightCards />
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <RevenueCard />
+        <BalanceCard />
+        <TenantsCard />
+        <VacantsCard />
+      </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">

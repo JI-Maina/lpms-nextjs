@@ -36,7 +36,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     submenu: true,
     subMenuItems: [
       { title: "Payments", path: "/home/managers/finances/payments" },
-      { title: "Invoices", path: "/home/managers/finances/invoices" },
+      // { title: "Invoices", path: "/home/managers/finances/invoices" },
     ],
   },
   {

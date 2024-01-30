@@ -8,6 +8,18 @@ const getCurrentSession = async () => {
   return session;
 };
 
+export const getPayments = async () => {
+  const session = await getCurrentSession();
+
+  const res = await fetch(`${url}/property/payments/`, {
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch payments data");
+
+  return res.json();
+};
+
 export const getAllPayments = async (id: string) => {
   const session = await getCurrentSession();
 
@@ -15,7 +27,7 @@ export const getAllPayments = async (id: string) => {
     headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
-  if (!res.ok) throw new Error("Failed to fetch payments data");
+  if (!res.ok) throw new Error("Failed to fetch property payments");
 
   return res.json();
 };

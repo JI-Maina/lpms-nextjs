@@ -15,7 +15,19 @@ export const getUnit = async (unitId: string) => {
     headers: { Authorization: `Bearer ${session?.accessToken}` },
   });
 
-  if (!res.ok) throw new Error("Failed to fetch unit");
+  if (!res.ok) throw new Error("Failed to fetch property units");
+
+  return res.json();
+};
+
+export const getAllUnits = async () => {
+  const session = await getCurrentSession();
+
+  const res = await fetch(`${url}/property/units/`, {
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch all units");
 
   return res.json();
 };
