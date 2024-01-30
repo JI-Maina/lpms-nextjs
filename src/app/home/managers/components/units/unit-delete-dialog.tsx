@@ -32,7 +32,7 @@ const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
       );
 
       toast({ description: `Success! unit ${unit.unit_name} deleted` });
-      router.push(`/home/properties/${unit.property}`);
+      router.push(`/home/managers/units`);
       router.refresh();
     } catch (err: any) {
       console.log(err);

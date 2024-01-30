@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import UnitsHeader from "./units-header";
-import { Property } from "@/types/property";
+import { Property, Unit } from "@/types/property";
 import { columns } from "./columns";
 import {
   Select,
@@ -20,13 +20,17 @@ type SelectProps = {
 
 const PropertyUnits = ({ properties }: SelectProps) => {
   const [id, setId] = useState(properties[0]?.id);
+  const [units, setUnits] = useState<Unit[] | undefined>([]);
 
   const handleSelectChange = (value: string) => {
     setId(value);
   };
 
   const property = properties.find((property) => property.id === id);
-  const [units, setUnits] = useState(property?.unit_set || []);
+
+  useEffect(() => {
+    setUnits(property?.unit_set);
+  }, [property]);
 
   return (
     <main>
@@ -61,7 +65,11 @@ const PropertyUnits = ({ properties }: SelectProps) => {
       )}
 
       <div className="max-w-[360px] sm:max-w-full">
-        <UnitsTable data={units} columns={columns} propertyId={property?.id} />
+        <UnitsTable
+          data={units as Unit[]}
+          columns={columns}
+          propertyId={property?.id}
+        />
       </div>
     </main>
   );

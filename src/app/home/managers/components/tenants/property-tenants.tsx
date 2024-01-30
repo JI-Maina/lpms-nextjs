@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
-import { Property } from "@/types/property";
+import { Property, Tenant } from "@/types/property";
 import { TenantsTable } from "./tenants-table";
 import CreateTenantSheet from "./create-tenant-sheet";
 import SelectPropertyHeader from "../shared/select-property-header";
@@ -14,13 +14,18 @@ type TenantsProps = {
 
 const PropertyTenants = ({ properties }: TenantsProps) => {
   const [id, setId] = useState(properties[0]?.id);
+  const [tenants, setTenants] = useState<Tenant[] | undefined>([]);
 
   const property = properties.find((property) => property.id === id);
   const units = property?.unit_set;
 
-  const [tenants, setTenants] = useState(
-    () => units?.filter((unit) => unit.tenant).map((unit) => unit.tenant) || []
-  );
+  useEffect(() => {
+    setTenants(
+      units
+        ?.filter((unit) => unit.tenant)
+        .map((unit) => unit.tenant) as Tenant[]
+    );
+  }, [units]);
 
   const onChange = (value: string) => {
     setId(value);

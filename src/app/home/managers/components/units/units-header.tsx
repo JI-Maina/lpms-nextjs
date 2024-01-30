@@ -1,8 +1,7 @@
 import Image from "next/image";
 
 import { Property } from "@/types/property";
-import PropertyEditDialog from "../../properties/components/property-edit-dialog";
-import CreateUnitDialog from "../../properties/components/create-unit-dialog";
+import CreateUnitDialog from "./create-unit-dialog";
 
 const UnitsHeader = ({ property }: { property: Property }) => {
   return (

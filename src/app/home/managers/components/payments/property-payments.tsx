@@ -31,7 +31,7 @@ const PropertyPayments = ({ properties }: PropertyProps) => {
     };
 
     if (id) getPayments();
-  }, [id]);
+  }, [id, properties]);
 
   return (
     <main>

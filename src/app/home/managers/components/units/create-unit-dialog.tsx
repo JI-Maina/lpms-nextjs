@@ -107,6 +107,8 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
 
       //   console.log(res);
       setOpen(false);
+      // location.reload();
+      // router.push("/home/managers/units");
       router.refresh();
       toast({ description: "Unit created" });
       form.reset();

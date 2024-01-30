@@ -22,7 +22,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: "Units",
     path: "/home/managers/units",
-    icon: <Icon icon="lucide:users" width="24" height="24" />,
+    icon: <Icon icon="lucide:container" width="24" height="24" />,
   },
   {
     title: "Tenants",

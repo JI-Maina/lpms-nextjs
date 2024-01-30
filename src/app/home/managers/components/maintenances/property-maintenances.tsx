@@ -31,7 +31,7 @@ const PropertyMaintenances = ({ properties }: MaintenanceProps) => {
     };
 
     if (id) getMaintenances();
-  }, [id]);
+  }, [id, properties]);
 
   return (
     <main>

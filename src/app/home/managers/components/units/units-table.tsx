@@ -32,7 +32,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import CreateUnitDialog from "../../properties/components/create-unit-dialog";
+import CreateUnitDialog from "./create-unit-dialog";
 import { Unit } from "@/types/property";
 
 interface DataTableProps<TData, TValue> {
