@@ -10,7 +10,7 @@ type HeaderProps = {
 };
 
 const PropertyHeader = ({ property, title, actionModal }: HeaderProps) => {
-  console.log(title);
+  // console.log(title);
   return (
     <header className="border text-card-foreground p-4 pb-2 flex flex-col md:flex-row gap-2 ">
       <div className="flex-1 flex items-center gap-3 ">

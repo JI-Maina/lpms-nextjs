@@ -24,25 +24,25 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     path: "/home/managers/units",
     icon: <Icon icon="lucide:users" width="24" height="24" />,
   },
-  // {
-  //   title: "Units old",
-  //   path: "/home/managers/property",
-  //   icon: <Icon icon="lucide:users" width="24" height="24" />,
-  // },
   {
-    title: "Payments",
-    path: "/home/managers/payments",
+    title: "Tenants",
+    path: "/home/managers/tenants",
+    icon: <Icon icon="lucide:users" width="24" height="24" />,
+  },
+  {
+    title: "Finances",
+    path: "/home/managers/finances",
     icon: <Icon icon="lucide:bitcoin" width="24" height="24" />,
+    submenu: true,
+    subMenuItems: [
+      { title: "Payments", path: "/home/managers/finances/payments" },
+      { title: "Invoices", path: "/home/managers/finances/invoices" },
+    ],
   },
   {
     title: "Maintenances",
     path: "/home/managers/maintenances",
     icon: <Icon icon="lucide:construction" width="24" height="24" />,
-  },
-  {
-    title: "Tenants",
-    path: "/home/managers/tenants",
-    icon: <Icon icon="lucide:users" width="24" height="24" />,
   },
   // {
   //   title: "Settings",

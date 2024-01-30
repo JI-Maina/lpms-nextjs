@@ -24,7 +24,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import AddUnitPaymentDialog from "./add-unit-payment-dialog";
 import { Payment } from "@/types/property";
 
 interface DataTableProps<TData, TValue> {
