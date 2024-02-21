@@ -28,6 +28,7 @@ const RegisterForm = () => {
     defaultValues: {
       firstName: "",
       lastName: "",
+      username: "",
       phoneNo: "",
       password: "",
       cfmPassword: "",
@@ -38,13 +39,14 @@ const RegisterForm = () => {
     const user = {
       first_name: values.firstName,
       last_name: values.lastName,
+      username: values.username,
       phone_no: values.phoneNo,
       password: values.password,
       is_owner: true,
       is_caretaker: false,
       is_tenant: false,
     };
-
+    // console.log(user);
     const url = `${process.env.NEXT_PUBLIC_DJANGO_BASE_URL}/auth/register/`;
 
     try {
@@ -68,15 +70,23 @@ const RegisterForm = () => {
             variant: "destructive",
           });
         } else if (error?.response?.status === 400) {
-          if (error.response.data.phone_number) {
+          if (error.response.data.phone_no && error.response.data.username) {
+            toast({
+              description: `${error?.response?.data?.username[0]} ${error.response.data.phone_no[0]}`,
+              variant: "destructive",
+            });
+          } else if (error.response.data.phone_no) {
             toast({
               description: error.response.data?.phone_no[0],
               variant: "destructive",
             });
+          } else if (error.response.data.username) {
+            toast({
+              description: error.response.data?.username[0],
+              variant: "destructive",
+            });
           }
         }
-      } else {
-        return "An unexpected error occurred";
       }
     }
   };
@@ -114,19 +124,35 @@ const RegisterForm = () => {
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="phoneNo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone Number:</FormLabel>
-              <FormControl>
-                <Input placeholder="0700000000" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username:</FormLabel>
+                <FormControl>
+                  <Input placeholder="jonte" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phoneNo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number:</FormLabel>
+                <FormControl>
+                  <Input placeholder="0700000000" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}

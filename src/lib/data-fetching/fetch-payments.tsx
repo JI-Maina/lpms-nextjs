@@ -8,7 +8,7 @@ const getCurrentSession = async () => {
   return session;
 };
 
-export const getPayments = async () => {
+export const getAllPayments = async () => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/property/payments/`, {
@@ -20,7 +20,7 @@ export const getPayments = async () => {
   return res.json();
 };
 
-export const getAllPayments = async (id: string) => {
+export const getPropertyPayments = async (id: string) => {
   const session = await getCurrentSession();
 
   const res = await fetch(`${url}/property/properties/${id}/payments/`, {

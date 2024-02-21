@@ -7,6 +7,7 @@ export const regSchema = z
       .min(3, { message: "Enter a valid firstname" })
       .max(100),
     lastName: z.string().min(3, { message: "Enter a valid lastname" }).max(100),
+    username: z.string().min(3, { message: "Enter a valid username" }).max(100),
     phoneNo: z
       .string()
       .min(10, { message: "Phone no. must be exactly 10 characters" })

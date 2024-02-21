@@ -79,6 +79,7 @@ type Tenant = {
     is_caretaker: boolean;
     is_tenant: boolean;
   };
+
   creator: {
     id: number;
     first_name: string;
@@ -91,14 +92,20 @@ type Tenant = {
 };
 
 type Payment = {
-  id: 16;
-  payment_date: "2023-12-20";
-  payment_method: "cash";
-  payment_amount: "2500.00";
-  payment_for: "rent";
+  id: number;
+  payment_date: string;
+  payment_method: string;
+  payment_amount: string;
+  payment_for: string;
   unit: Unit;
-  tenant: Tenant;
+  tenant: Tenant | null;
 };
+
+type YearlyPayments = {
+  [year: string]: {
+    [month: string]: Payment[];
+  }
+}
 
 type Maintenance = {
   id: number;

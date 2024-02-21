@@ -30,7 +30,7 @@ const BalanceCard = async () => {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">KSh{balance}</div>
-        <p className="text-xs text-muted-foreground">+201 from last month</p>
+        {/* <p className="text-xs text-muted-foreground">+201 from last month</p> */}
       </CardContent>
     </Card>
   );

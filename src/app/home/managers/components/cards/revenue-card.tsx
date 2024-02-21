@@ -1,9 +1,9 @@
-import { getPayments } from "@/lib/data-fetching/fetch-payments";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { YearlyPayments } from "@/types/property";
+import { getAllPayments } from "@/lib/data-fetching/fetch-payments";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const RevenueCard = async () => {
-  const paymentsData: Promise<YearlyPayments> = getPayments();
+  const paymentsData: Promise<YearlyPayments> = getAllPayments();
   const payments = await paymentsData;
 
   const date = new Date();
