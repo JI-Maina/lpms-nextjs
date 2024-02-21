@@ -39,12 +39,12 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        phone_no: {},
+        username: {},
         password: {},
       },
 
       async authorize(credentials, req) {
-        if (!credentials?.password || !credentials?.phone_no) {
+        if (!credentials?.password || !credentials?.username) {
           return null;
         }
 
@@ -52,7 +52,7 @@ export const authOptions: AuthOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            phone_no: credentials.phone_no,
+            username: credentials.username,
             password: credentials.password,
           }),
         });
