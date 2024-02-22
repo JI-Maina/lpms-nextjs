@@ -25,9 +25,14 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="lucide:container" width="24" height="24" />,
   },
   {
-    title: "Tenants",
-    path: "/home/managers/tenants",
+    title: "Users",
+    path: "/home/managers/users",
     icon: <Icon icon="lucide:users" width="24" height="24" />,
+    submenu: true,
+    subMenuItems: [
+      { title: "Tenants", path: "/home/managers/users/tenants" },
+      { title: "Caretakers", path: "/home/managers/users/caretakers" },
+    ],
   },
   {
     title: "Finances",

@@ -14,17 +14,19 @@ type Property = {
   updated_at: string;
 };
 
+type Person = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  phone_no: string;
+  is_owner: boolean;
+  is_caretaker: boolean;
+  is_tenant: boolean;
+};
+
 type User = {
   id: number;
-  user: {
-    id: number;
-    first_name: string;
-    last_name: string;
-    phone_no: string;
-    is_owner: boolean;
-    is_caretaker: boolean;
-    is_tenant: boolean;
-  };
+  user: Person;
 };
 
 type Unit = {
@@ -70,26 +72,15 @@ type Tenant = {
   nok_first_name: string;
   nok_last_name: string;
   nok_phone_no: string;
-  user: {
-    id: number;
-    first_name: string;
-    last_name: string;
-    phone_no: string;
-    is_owner: boolean;
-    is_caretaker: boolean;
-    is_tenant: boolean;
-  };
-
-  creator: {
-    id: number;
-    first_name: string;
-    last_name: string;
-    phone_no: string;
-    is_owner: boolean;
-    is_caretaker: boolean;
-    is_tenant: boolean;
-  };
+  user: Person;
+  creator: Person;
 };
+
+type Caretaker = {
+  id: number;
+  user: Person;
+  creator: number;
+}
 
 type Payment = {
   id: number;
