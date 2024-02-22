@@ -9,7 +9,7 @@ export default axios.create({
 
 export const axiosAuth = axios.create({
   baseURL: BASE_URL,
-  headers: { "Content-Length": "application/json" },
+  headers: { "Content-Type": "application/json" },
 });
 
 // import axios from "axios";

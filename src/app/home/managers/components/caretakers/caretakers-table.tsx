@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import CreateCaretakerDialog from "../property/create-caretaker-dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,7 +45,9 @@ export function CaretakersTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">create</div>
+      <div className="flex items-center py-4">
+        <CreateCaretakerDialog />
+      </div>
 
       <div className="rounded-md border">
         <Table>
