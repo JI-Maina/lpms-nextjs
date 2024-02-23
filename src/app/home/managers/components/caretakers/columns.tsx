@@ -5,6 +5,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Caretaker } from "@/types/property";
 import { Button } from "@/components/ui/button";
+import DeleteCaretakersDialog from "./delete-caretakers-dialog";
+import EditCaretakersDialog from "./edit-caretakers-dialog";
 
 export const columns: ColumnDef<Caretaker>[] = [
   {
@@ -46,8 +48,8 @@ export const columns: ColumnDef<Caretaker>[] = [
 
       return (
         <div className="flex gap-2">
-          <div>Edit</div>
-          <div>Delete</div>
+          <EditCaretakersDialog />
+          <DeleteCaretakersDialog id={tenant.id} />
         </div>
       );
       //   return <DeleteTenantModal tenant={tenant as Tenant} />;

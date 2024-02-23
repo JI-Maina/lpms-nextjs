@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import CreateCaretakerDialog from "../property/create-caretaker-dialog";
+import CreateCaretakerDialog from "./create-caretaker-dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
