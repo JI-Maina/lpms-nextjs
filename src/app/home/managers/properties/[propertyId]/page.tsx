@@ -3,8 +3,7 @@ import { format } from "date-fns";
 
 import { Property } from "@/types/property";
 import { getProperty } from "@/lib/data-fetching/fetch-property";
-import PropertyEditDialog from "../components/property-edit-dialog";
-import PropertyDeleteDialog from "../components/property-delete-dialog";
+
 import {
   Card,
   CardContent,
@@ -12,6 +11,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+// import PropertyEditDialog from "../../components/property/property-edit-dialog";
+// import PropertyDeleteDialog from "../../components/property/property-delete-dialog";
 
 type Params = {
   params: {
@@ -69,8 +70,8 @@ const SinglePropertyPage = async ({ params: { propertyId } }: Params) => {
             />
 
             <CardFooter className="flex gap-1 mt-2 p-0">
-              <PropertyEditDialog property={property} />
-              <PropertyDeleteDialog id={property.id} />
+              {/* <PropertyEditDialog property={property} />
+              <PropertyDeleteDialog id={property.id} /> */}
             </CardFooter>
           </div>
         </CardContent>
