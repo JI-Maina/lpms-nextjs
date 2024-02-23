@@ -1,5 +1,18 @@
 "use client";
+
+import { z } from "zod";
+import { useState } from "react";
+import { Plus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import { propertySchema } from "@/components/forms/form-schema";
 import {
   Dialog,
   DialogClose,
@@ -17,21 +30,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Plus } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { propertySchema } from "@/components/forms/form-schema";
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-// import { useSession } from "next-auth/react";
-import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 export const CreatePropertyDialog = () => {
   const [open, setOpen] = useState(false);
-  // const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -52,8 +53,6 @@ export const CreatePropertyDialog = () => {
       property_lrl: data.lrl,
       number_of_units: data.units,
       number_of_floors: data.floors,
-      // property_img: null,
-      care_taker: null,
     };
 
     try {
@@ -174,34 +173,6 @@ export const CreatePropertyDialog = () => {
               )}
             />
 
-            {/* <FormField
-              control={form.control}
-              name="caretaker"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Caretaker</FormLabel>
-                  <FormControl>
-                    <Input type="text" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
-            {/* <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>image</FormLabel>
-                  <FormControl>
-                    <Input type="file" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
             <DialogFooter>
               <DialogClose asChild>
                 <Button
@@ -210,9 +181,9 @@ export const CreatePropertyDialog = () => {
                   onClick={form.handleSubmit(onSubmit)}
                 >
                   Create
-                  {/* {form.formState.isSubmitting && (
+                  {form.formState.isSubmitting && (
                     <ReloadIcon className="animate-spin h-3 w-3" />
-                  )} */}
+                  )}
                 </Button>
               </DialogClose>
             </DialogFooter>

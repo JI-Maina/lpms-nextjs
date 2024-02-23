@@ -2,6 +2,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import NavigationCard from "@/components/shared/navigation-card";
 
+// edit color="#25f609"
+// delete color="#f60909"
+
 const RoleNavigationPage = async () => {
   const session = await getServerSession(authOptions);
 

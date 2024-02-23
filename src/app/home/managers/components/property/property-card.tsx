@@ -2,22 +2,23 @@ import Image from "next/image";
 import { format } from "date-fns";
 
 import { Caretaker, Property } from "@/types/property";
-import PropertyEditDialog from "./property-edit-dialog";
-import PropertyDeleteDialog from "./property-delete-dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import AddCaretakerDialog from "./add-caretaker-dialog";
+import EditPropertyDialog from "./edit-property-dialog";
+import DeletePropertyDialog from "./delete-property-dialog";
 import CreateCaretakerDialog from "../caretakers/create-caretaker-dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Props = { property: Property; caretakers: Caretaker[] };
 
 const PropertyCard = ({ property, caretakers }: Props) => {
+  console.log(property);
   return (
     <Card className="">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-3xl">{property.property_name}</CardTitle>
-        <div>
-          <PropertyEditDialog property={property} />
-          <PropertyDeleteDialog id={property.id} />
+        <div className="space-x-2">
+          <EditPropertyDialog property={property} />
+          <DeletePropertyDialog id={property.id} />
         </div>
       </CardHeader>
 
@@ -39,18 +40,28 @@ const PropertyCard = ({ property, caretakers }: Props) => {
           <div className="grid gap-4 mb-3 grid-cols-2 md:grid-cols-1">
             <DetailsCard event="lrl" detail={property.property_lrl} />
             <DetailsCard event="type" detail="residential" />
-            <DetailsCard event="floors" detail={property.number_of_floors} />
+            <DetailsCard
+              event="floors"
+              detail={
+                property.number_of_floors === null
+                  ? "none"
+                  : property.number_of_floors
+              }
+            />
             <DetailsCard event="units" detail={property.number_of_units} />
           </div>
           <DetailsCard
             event="caretaker"
             detail={
-              property.care_taker ? (
-                `${property.care_taker?.user.first_name} ${property.care_taker?.user.last_name}`
+              property.caretaker !== null ? (
+                `${property.caretaker?.user.first_name} ${property.caretaker?.user.last_name}`
               ) : caretakers.length === 0 ? (
                 <CreateCaretakerDialog />
               ) : (
-                <AddCaretakerDialog caretakers={caretakers} />
+                <AddCaretakerDialog
+                  caretakers={caretakers}
+                  property={property}
+                />
               )
             }
           />

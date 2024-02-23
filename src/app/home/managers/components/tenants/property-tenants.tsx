@@ -30,7 +30,7 @@ const PropertyTenants = ({ properties }: TenantsProps) => {
   const onChange = (value: string) => {
     setId(value);
   };
-
+  console.log(tenants);
   return (
     <main>
       <PropertyDetailsHeader

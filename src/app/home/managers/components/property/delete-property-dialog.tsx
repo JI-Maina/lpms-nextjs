@@ -2,9 +2,9 @@
 
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-// import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,10 +15,8 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
-const PropertyDeleteDialog = ({ id }: { id: string }) => {
-  // const { data: session } = useSession();
+const DeletePropertyDialog = ({ id }: { id: string }) => {
   const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -49,7 +47,7 @@ const PropertyDeleteDialog = ({ id }: { id: string }) => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="outline" size="icon">
-          <Trash2 />
+          <Trash2 color="#f60909" />
         </Button>
       </AlertDialogTrigger>
 
@@ -70,4 +68,4 @@ const PropertyDeleteDialog = ({ id }: { id: string }) => {
   );
 };
 
-export default PropertyDeleteDialog;
+export default DeletePropertyDialog;

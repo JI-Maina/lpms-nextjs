@@ -7,7 +7,7 @@ type Property = {
   number_of_units: number;
   number_of_floors: number;
   owner: User;
-  care_taker: User | null;
+  caretaker: User | null;
   unit_set: Unit[];
   property_img: string | null;
   created_at: string;

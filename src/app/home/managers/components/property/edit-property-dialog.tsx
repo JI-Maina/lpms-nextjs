@@ -4,10 +4,11 @@ import * as z from "zod";
 import { useState } from "react";
 import { FileEdit } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { Property } from "@/types/property";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { propertySchema } from "@/components/forms/form-schema";
 import {
   Dialog,
@@ -27,15 +28,9 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Property } from "@/types/property";
 
-const PropertyEditDialog = ({ property }: { property: Property }) => {
+const EditPropertyDialog = ({ property }: { property: Property }) => {
   const [open, setOpen] = useState(false);
-
-  //   console.log(typeof property.number_of_units);
-  //   console.log(typeof property.number_of_floors);
-  //   const x = property.care_taker ? property.care_taker.id : 0;
-  //   console.log(typeof x);
 
   const form = useForm({
     resolver: zodResolver(propertySchema),
@@ -44,8 +39,6 @@ const PropertyEditDialog = ({ property }: { property: Property }) => {
       lrl: property.property_lrl,
       units: property.number_of_units,
       floors: property.number_of_floors,
-      image: "",
-      caretaker: property.care_taker ? property.care_taker.id : 0,
     },
   });
 
@@ -58,7 +51,7 @@ const PropertyEditDialog = ({ property }: { property: Property }) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button size="icon" variant="ghost">
-          <FileEdit />
+          <FileEdit color="#25f609" />
         </Button>
       </DialogTrigger>
 
@@ -133,34 +126,6 @@ const PropertyEditDialog = ({ property }: { property: Property }) => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="caretaker"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Caretaker</FormLabel>
-                  <FormControl>
-                    <Input type="text" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>image</FormLabel>
-                  <FormControl>
-                    <Input type="file" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
@@ -175,4 +140,4 @@ const PropertyEditDialog = ({ property }: { property: Property }) => {
   );
 };
 
-export default PropertyEditDialog;
+export default EditPropertyDialog;

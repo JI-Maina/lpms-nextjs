@@ -1,14 +1,6 @@
 import { Property } from "@/types/property";
 import SelectProperty from "../shared/select-property";
-import { CreatePropertyDialog } from "./CreatePropertyDialog";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { CreatePropertyDialog } from "./create-property-dialog";
 
 type Props = {
   properties: Property[];
