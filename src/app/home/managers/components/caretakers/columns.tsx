@@ -33,6 +33,15 @@ export const columns: ColumnDef<Caretaker>[] = [
     },
   },
   {
+    accessorKey: "username",
+    header: "Username",
+    cell: ({ row }) => {
+      const caretaker = row.original;
+
+      return <div className="font-medium">{caretaker.user.username}</div>;
+    },
+  },
+  {
     accessorKey: "contact",
     header: "Contact",
     cell: ({ row }) => {
@@ -44,15 +53,14 @@ export const columns: ColumnDef<Caretaker>[] = [
   {
     accessorKey: "actions",
     cell: ({ row }) => {
-      const tenant = row.original;
+      const caretaker = row.original;
 
       return (
         <div className="flex gap-2">
-          <EditCaretakersDialog />
-          <DeleteCaretakersDialog id={tenant.id} />
+          <EditCaretakersDialog caretaker={caretaker} />
+          <DeleteCaretakersDialog caretaker={caretaker} />
         </div>
       );
-      //   return <DeleteTenantModal tenant={tenant as Tenant} />;
     },
   },
 ];

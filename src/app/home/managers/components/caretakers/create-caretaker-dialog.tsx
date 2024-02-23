@@ -7,6 +7,7 @@ import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { CaretakerSchema } from "./schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -28,25 +29,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-const CaretakerSchema = z.object({
-  firstName: z
-    .string()
-    .min(3, { message: "Please provide a valid firstname" })
-    .max(15),
-  lastName: z
-    .string()
-    .min(3, { message: "Please provide a valid lastname" })
-    .max(15),
-  username: z
-    .string()
-    .min(3, { message: "Please provide a valid username" })
-    .max(15),
-  phoneNo: z
-    .string()
-    .min(10, { message: "Please provide a valid username" })
-    .max(10),
-});
 
 type FormInput = z.infer<typeof CaretakerSchema>;
 

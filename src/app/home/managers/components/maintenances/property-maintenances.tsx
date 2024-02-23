@@ -6,7 +6,7 @@ import { columns } from "./columns";
 import { Property } from "@/types/property";
 import { MaintenancesTable } from "./maintenances-table";
 import AddUnitMaintenanceModal from "./add-unit-maintenance-modal";
-import SelectPropertyHeader from "../shared/select-property-header";
+import PropertyDetailsHeader from "../shared/property-details-header";
 
 type MaintenanceProps = {
   properties: Property[];
@@ -35,7 +35,7 @@ const PropertyMaintenances = ({ properties }: MaintenanceProps) => {
 
   return (
     <main>
-      <SelectPropertyHeader
+      <PropertyDetailsHeader
         id={id}
         title="Maintenances Data"
         properties={properties}

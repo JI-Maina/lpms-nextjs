@@ -6,7 +6,7 @@ import { columns } from "./columns";
 import { Property } from "@/types/property";
 import { PaymentsTable } from "./payments-table";
 import AddUnitPaymentDialog from "./add-unit-payment-modal";
-import SelectPropertyHeader from "../shared/select-property-header";
+import PropertyDetailsHeader from "../shared/property-details-header";
 
 type PropertyProps = {
   properties: Property[];
@@ -35,7 +35,7 @@ const PropertyPayments = ({ properties }: PropertyProps) => {
 
   return (
     <main>
-      <SelectPropertyHeader
+      <PropertyDetailsHeader
         id={id}
         title="Payments Data"
         properties={properties}

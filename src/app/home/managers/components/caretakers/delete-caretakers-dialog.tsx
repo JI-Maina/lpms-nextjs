@@ -3,6 +3,7 @@
 import { Trash2 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
+import { Caretaker } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/lib/hooks/use-axios-auth";
@@ -18,14 +19,18 @@ import {
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 
-const DeleteCaretakersDialog = ({ id }: { id: number }) => {
+type DeleteProps = {
+  caretaker: Caretaker;
+};
+
+const DeleteCaretakersDialog = ({ caretaker }: DeleteProps) => {
   const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const { toast } = useToast();
 
   const handleDelete = async () => {
     try {
-      const res = await axiosAuth.delete(`/users/caretakers/${id}/`);
+      const res = await axiosAuth.delete(`/users/caretakers/${caretaker.id}/`);
 
       if (res.status === 204) {
         toast({ description: "Caretaker Deleted", title: "Success" });
@@ -66,8 +71,8 @@ const DeleteCaretakersDialog = ({ id }: { id: number }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone. This will permanently delete caretaker{" "}
+            {caretaker.user.username} and remove his/her data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
 

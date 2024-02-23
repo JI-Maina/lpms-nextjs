@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
-import { Property, Tenant } from "@/types/property";
 import { TenantsTable } from "./tenants-table";
+import { Property, Tenant } from "@/types/property";
 import CreateTenantSheet from "./create-tenant-sheet";
-import SelectPropertyHeader from "../shared/select-property-header";
+import PropertyDetailsHeader from "../shared/property-details-header";
 
 type TenantsProps = {
   properties: Property[];
@@ -33,9 +33,9 @@ const PropertyTenants = ({ properties }: TenantsProps) => {
 
   return (
     <main>
-      <SelectPropertyHeader
+      <PropertyDetailsHeader
         id={id}
-        title="Tenants Data"
+        // title="Tenants Data"
         properties={properties}
         onChange={onChange}
         actionModal={units && <CreateTenantSheet />}

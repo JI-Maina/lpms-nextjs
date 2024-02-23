@@ -72,6 +72,7 @@ module.exports = {
       },
       backgroundImage: {
         hero: 'url("/hero-bg.jpg")',
+        property: 'url("/property.jpg")'
       },
     },
   },

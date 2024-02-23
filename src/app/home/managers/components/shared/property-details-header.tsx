@@ -1,23 +1,18 @@
 import Image from "next/image";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Property } from "@/types/property";
 import { ReactNode } from "react";
+
+import { Property } from "@/types/property";
+import SelectProperty from "./select-property";
 
 type SelectProps = {
   id: string;
-  title: string;
+  title?: string;
   properties: Property[];
   actionModal?: ReactNode;
   onChange: (value: string) => void;
 };
 
-const SelectPropertyHeader = ({
+const PropertyDetailsHeader = ({
   id,
   properties,
   title,
@@ -29,24 +24,7 @@ const SelectPropertyHeader = ({
   return (
     <div className="flex gap-3 flex-col md:flex-row">
       {property && (
-        <div className="md:w-1/4 flex justify-center items-center border rounded-sm p-2">
-          <div className="w-full space-y-4">
-            <p>Filter property</p>
-            <Select onValueChange={onChange} defaultValue={properties[0]?.id}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a property" />
-              </SelectTrigger>
-
-              <SelectContent>
-                {properties.map((property) => (
-                  <SelectItem key={property.id} value={property.id}>
-                    {property.property_name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        <SelectProperty properties={properties} onChange={onChange} />
       )}
 
       <div className="md:w-3/4">
@@ -89,4 +67,4 @@ const SelectPropertyHeader = ({
   );
 };
 
-export default SelectPropertyHeader;
+export default PropertyDetailsHeader;

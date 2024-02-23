@@ -2,17 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-import UnitsHeader from "./units-header";
-import { Property, Unit } from "@/types/property";
 import { columns } from "./columns";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import UnitsHeader from "./units-header";
 import { UnitsTable } from "./units-table";
+import { Property, Unit } from "@/types/property";
+import SelectProperty from "../shared/select-property";
 
 type SelectProps = {
   properties: Property[];
@@ -36,27 +30,10 @@ const PropertyUnits = ({ properties }: SelectProps) => {
     <main>
       {property && (
         <div className="flex gap-3 flex-col md:flex-row">
-          <div className="md:w-1/4 flex justify-center items-center border rounded-sm p-2">
-            <div className="w-full space-y-4">
-              <p>Filter property</p>
-              <Select
-                onValueChange={handleSelectChange}
-                defaultValue={properties[0]?.id}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a property" />
-                </SelectTrigger>
-
-                <SelectContent>
-                  {properties.map((property) => (
-                    <SelectItem key={property.id} value={property.id}>
-                      {property.property_name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+          <SelectProperty
+            properties={properties}
+            onChange={handleSelectChange}
+          />
 
           <div className="md:w-3/4">
             <UnitsHeader property={property} />
