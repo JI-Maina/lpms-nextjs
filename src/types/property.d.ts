@@ -12,6 +12,7 @@ type Property = {
   property_img: string | null;
   created_at: string;
   updated_at: string;
+  water_rate_per_unit: string
 };
 
 type Person = {

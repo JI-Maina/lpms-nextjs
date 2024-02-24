@@ -11,7 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 type Props = { property: Property; caretakers: Caretaker[] };
 
 const PropertyCard = ({ property, caretakers }: Props) => {
-  console.log(property);
   return (
     <Card className="">
       <CardHeader className="flex flex-row items-center justify-between">
