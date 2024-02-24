@@ -39,6 +39,7 @@ const PropertyCard = ({ property, caretakers }: Props) => {
           <div className="grid gap-4 mb-3 grid-cols-2 md:grid-cols-1">
             <DetailsCard event="lrl" detail={property.property_lrl} />
             <DetailsCard event="type" detail="residential" />
+
             <DetailsCard
               event="floors"
               detail={
@@ -49,6 +50,10 @@ const PropertyCard = ({ property, caretakers }: Props) => {
             />
             <DetailsCard event="units" detail={property.number_of_units} />
           </div>
+          <DetailsCard
+            event="Water Rate per unit"
+            detail={`KSh ${property.water_rate_per_unit}`}
+          />
           <DetailsCard
             event="caretaker"
             detail={

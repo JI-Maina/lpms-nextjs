@@ -75,7 +75,7 @@ const AddCaretakerDialog = ({ caretakers, property }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button size="sm">assign</Button>
+        <Button size="sm">Assign</Button>
       </DialogTrigger>
 
       <DialogContent>

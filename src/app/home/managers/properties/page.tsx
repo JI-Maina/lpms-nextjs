@@ -1,7 +1,7 @@
 import { Caretaker, Property } from "@/types/property";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
-import PropertyDetailsPage from "../components/property/property-details-page";
 import { getAllCaretakers } from "@/lib/data-fetching/fetch-caretakers";
+import PropertyDetailsPage from "../components/property/property-details-page";
 
 const PropertyPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();

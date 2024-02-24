@@ -4,11 +4,14 @@ import { z } from "zod";
 import { useState } from "react";
 import { FileEdit } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Property } from "@/types/property";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 import {
   Dialog,
   DialogClose,
@@ -27,9 +30,6 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
 
 const EditSchema = z.object({
   property_name: z.string().min(3).max(20),
@@ -75,8 +75,25 @@ const EditPropertyDialog = ({ property }: { property: Property }) => {
         router.refresh();
         setOpen(false);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (!error.response) {
+        toast({
+          description: "Update Failed! Check your internet connection",
+          variant: "destructive",
+        });
+      } else if (error.response.status === 400) {
+        if (error.response?.data?.water_rate_per_unit) {
+          toast({
+            description: `On water rate ${error.response.data.water_rate_per_unit[0]}`,
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          description: `${error.response.status} ${error.response.statusText}`,
+          variant: "destructive",
+        });
+      }
     }
   };
 

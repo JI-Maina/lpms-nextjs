@@ -44,6 +44,7 @@ export const CreatePropertyDialog = () => {
       lrl: "",
       units: 0,
       floors: 0,
+      water_rate: "",
     },
   });
 
@@ -53,6 +54,7 @@ export const CreatePropertyDialog = () => {
       property_lrl: data.lrl,
       number_of_units: data.units,
       number_of_floors: data.floors,
+      water_rate_per_unit: data.water_rate,
     };
 
     try {
@@ -69,18 +71,18 @@ export const CreatePropertyDialog = () => {
           description: "Creation Failed! Check your internet connection",
           variant: "destructive",
         });
-      } else if (err?.response?.status === 400) {
-        if (err.response.data?.user.phone_no) {
+      } else if (err.response.status === 400) {
+        if (err.response?.data?.water_rate_per_unit) {
           toast({
-            description: err.response.data.user.phone_no[0],
-            variant: "destructive",
-          });
-        } else if (err.response.data?.user.id_number) {
-          toast({
-            description: err.response.data.user.id_number[0],
+            description: `On water rate ${err.response.data.water_rate_per_unit[0]}`,
             variant: "destructive",
           });
         }
+      } else {
+        toast({
+          description: `${err.response.status} ${err.response.statusText}`,
+          variant: "destructive",
+        });
       }
     }
   };
@@ -131,6 +133,20 @@ export const CreatePropertyDialog = () => {
                   <FormLabel>LRL</FormLabel>
                   <FormControl>
                     <Input placeholder="D0064" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="water_rate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Water Rate per unit</FormLabel>
+                  <FormControl>
+                    <Input placeholder="15.00" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

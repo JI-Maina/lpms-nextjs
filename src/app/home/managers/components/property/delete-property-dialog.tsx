@@ -2,6 +2,7 @@
 
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/lib/hooks/use-axios-auth";
@@ -23,10 +24,13 @@ const DeletePropertyDialog = ({ id }: { id: string }) => {
 
   const handleDelete = async () => {
     try {
-      await axiosAuth.delete(`/property/properties/${id}`);
+      const res = await axiosAuth.delete(`/property/properties/${id}`);
 
-      router.refresh();
-      toast({ description: "Success! property deleted" });
+      if (res.status === 204) {
+        toast({ description: "Success! property deleted" });
+        router.refresh();
+        router.push("/home/managers/properties");
+      }
     } catch (err: any) {
       console.log(err);
       if (!err?.response) {
