@@ -84,7 +84,7 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
     const updatedUnit = { ...unit, tenant };
 
     try {
-      const res = await axiosAuth.patch(
+      await axiosAuth.patch(
         `/property/properties/${propertyId}/units/${unitId}/`,
         { ...updatedUnit, ...data }
       );

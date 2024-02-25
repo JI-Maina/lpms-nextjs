@@ -1,4 +1,5 @@
 import UnitEditDialog from "./unit-edit-dialog";
+import AddMeterReading from "./add-meter-reading";
 import AddTenantDialog from "./add-tenant-dialog";
 import UnitDeleteDialog from "./unit-delete-dialog";
 import { Separator } from "@/components/ui/separator";
@@ -11,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import AddMeterReading from "./add-meter-reading";
+import EditMeterReading from "./edit-meter-reading";
 
 type UnitProps = { unit: Unit; tenants: Tenant[]; meterReading: MeterReading };
 
@@ -27,7 +28,7 @@ const UnitCard = async ({ unit, tenants, meterReading }: UnitProps) => {
     day: "numeric",
   });
 
-  // console.log(formattedDate);
+  // console.log(meterReading);
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -58,14 +59,12 @@ const UnitCard = async ({ unit, tenants, meterReading }: UnitProps) => {
           {unit.tenant ? (
             <DetailsCard event="tenant" detail={tenant} />
           ) : (
-            <div className="flex items-center justify-center bg-accent border mt-3 px-1">
-              <h1 className="font-semibold text-center">Vacant</h1>
-            </div>
+            <DetailsCard event="tenant" detail="Vacant" />
           )}
 
           <DetailsCard
             event={`Meter reading as at ${formattedDate}`}
-            detail={meterReading.meter_reading}
+            detail={meterReading?.meter_reading}
           />
         </div>
 
@@ -79,6 +78,10 @@ const UnitCard = async ({ unit, tenants, meterReading }: UnitProps) => {
           )}
 
           <AddMeterReading unit={unit as UnitInput} />
+
+          {meterReading?.meter_reading !== undefined && (
+            <EditMeterReading reading={meterReading} />
+          )}
         </CardFooter>
       </CardContent>
     </Card>

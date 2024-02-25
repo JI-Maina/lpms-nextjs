@@ -2,14 +2,13 @@
 
 import { z } from "zod";
 import { useState } from "react";
-import { format } from "date-fns";
-import { PlusCircle } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { UnitInput } from "@/types/property";
 import { Input } from "@/components/ui/input";
+import { MeterReading } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/lib/hooks/use-axios-auth";
@@ -32,42 +31,36 @@ import {
 } from "@/components/ui/form";
 
 type AddProps = {
-  unit: UnitInput;
+  reading: MeterReading;
 };
 
-const tenantSchema = z.object({
+const readingSchema = z.object({
   meterReading: z.string().refine((value) => /^\d+(\.\d+)?$/.test(value), {
     message: "Invalid decimal format for meter reading",
   }),
 });
 
-const AddMeterReading = ({ unit }: AddProps) => {
+const EditMeterReading = ({ reading }: AddProps) => {
   const [open, setOpen] = useState(false);
   const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof tenantSchema>>({
-    resolver: zodResolver(tenantSchema),
-    defaultValues: { meterReading: "" },
+  const form = useForm<z.infer<typeof readingSchema>>({
+    resolver: zodResolver(readingSchema),
+    defaultValues: {
+      meterReading: reading?.meter_reading,
+    },
+    mode: "onChange",
   });
 
-  const propertyId = unit.property;
-  const unitId = unit.id;
-  const date = new Date();
-
-  const onsubmit = async (data: z.infer<typeof tenantSchema>) => {
-    const reading = {
-      reading_date: format(date, "yyyy-MM-dd"),
-      meter_reading: data.meterReading,
-    };
-
+  const onsubmit = async (data: z.infer<typeof readingSchema>) => {
     try {
-      await axiosAuth.post(
-        `/property/properties/${propertyId}/units/${unitId}/meter_readings/`,
-        reading
+      const res = await axiosAuth.patch(
+        `/property/meter_readings/${reading.id}/`,
+        { ...reading, meter_reading: data.meterReading }
       );
-      //   console.log(res);
+
       setOpen(false);
       toast({ description: "Success" });
       router.refresh();
@@ -99,13 +92,13 @@ const AddMeterReading = ({ unit }: AddProps) => {
     <Dialog open={open} onOpenChange={openChangeWrapper}>
       <DialogTrigger asChild>
         <Button size="sm">
-          <PlusCircle className="w-5 h-5 mr-2" /> Add Reading
+          <Edit className="w-5 h-5 mr-2" /> Edit Reading
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add meter reading for unit {unit.unit_name}</DialogTitle>
+          <DialogTitle>Update meter reading</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -115,9 +108,9 @@ const AddMeterReading = ({ unit }: AddProps) => {
               name="meterReading"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Meter reading</FormLabel>
+                  <FormLabel>Current meter reading</FormLabel>
                   <FormControl>
-                    <Input placeholder="0727.0000" type="text" {...field} />
+                    <Input placeholder="527.0000" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -129,7 +122,7 @@ const AddMeterReading = ({ unit }: AddProps) => {
         <DialogFooter>
           <DialogClose asChild>
             <Button type="submit" onClick={form.handleSubmit(onsubmit)}>
-              Save
+              Update
             </Button>
           </DialogClose>
         </DialogFooter>
@@ -138,4 +131,4 @@ const AddMeterReading = ({ unit }: AddProps) => {
   );
 };
 
-export default AddMeterReading;
+export default EditMeterReading;
