@@ -1,14 +1,18 @@
 "use client";
 
 import { z } from "zod";
-import { UserPlus } from "lucide-react";
+import { useState } from "react";
+import { format } from "date-fns";
+import { PlusCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-// import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { UnitInput } from "@/types/property";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 import {
   Dialog,
   DialogClose,
@@ -26,47 +30,42 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
-import { Tenant, UnitInput } from "@/types/property";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 
 type AddProps = {
   unit: UnitInput;
-  tenants: Tenant[];
 };
 
 const tenantSchema = z.object({
-  tenant: z.string(),
+  meterReading: z.string().refine((value) => /^\d+(\.\d+)?$/.test(value), {
+    message: "Invalid decimal format for meter reading",
+  }),
 });
 
-const AddTenantDialog = ({ unit, tenants }: AddProps) => {
+const AddMeterReading = ({ unit }: AddProps) => {
   const [open, setOpen] = useState(false);
-  // const { data: session } = useSession();
   const axiosAuth = useAxiosAuth();
   const router = useRouter();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof tenantSchema>>({
     resolver: zodResolver(tenantSchema),
-    defaultValues: { tenant: "" },
-    // mode: "onChange",
+    defaultValues: { meterReading: "" },
   });
 
   const propertyId = unit.property;
   const unitId = unit.id;
+  const date = new Date();
 
   const onsubmit = async (data: z.infer<typeof tenantSchema>) => {
+    const reading = {
+      reading_date: format(date, "yyyy-MM-dd"),
+      meter_reading: data.meterReading,
+    };
+
     try {
-      await axiosAuth.patch(
-        `/property/properties/${propertyId}/units/${unitId}/`,
-        { ...unit, tenant: parseInt(data.tenant) }
+      await axiosAuth.post(
+        `/property/properties/${propertyId}/units/${unitId}/meter_readings/`,
+        reading
       );
       //   console.log(res);
       setOpen(false);
@@ -83,6 +82,11 @@ const AddTenantDialog = ({ unit, tenants }: AddProps) => {
         if (err.response.data) {
           toast({ description: err.response.data[0], variant: "destructive" });
         }
+      } else {
+        toast({
+          description: `${err.response.status} ${err.response.statusText}`,
+          variant: "destructive",
+        });
       }
     }
   };
@@ -95,7 +99,7 @@ const AddTenantDialog = ({ unit, tenants }: AddProps) => {
     <Dialog open={open} onOpenChange={openChangeWrapper}>
       <DialogTrigger asChild>
         <Button size="sm">
-          <UserPlus className="w-5 h-5 mr-2" /> Add tenant
+          <PlusCircle className="w-5 h-5 mr-2" /> Add Reading
         </Button>
       </DialogTrigger>
 
@@ -108,24 +112,13 @@ const AddTenantDialog = ({ unit, tenants }: AddProps) => {
           <form onSubmit={form.handleSubmit(onsubmit)} className="py-8">
             <FormField
               control={form.control}
-              name="tenant"
+              name="meterReading"
               render={({ field }) => (
                 <FormItem>
-                  {/* <FormLabel>Select Tenant</FormLabel> */}
-                  <Select onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a tenant" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {tenants.map((tenant) => (
-                        <SelectItem key={tenant.id} value={String(tenant.id)}>
-                          {tenant.user.first_name} {tenant.user.last_name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Water meter reading</FormLabel>
+                  <FormControl>
+                    <Input placeholder="27.0000" type="text" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -145,4 +138,4 @@ const AddTenantDialog = ({ unit, tenants }: AddProps) => {
   );
 };
 
-export default AddTenantDialog;
+export default AddMeterReading;

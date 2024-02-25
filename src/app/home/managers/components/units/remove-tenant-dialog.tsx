@@ -58,8 +58,8 @@ const RemoveTenantDialog = ({ unit }: { unit: Unit }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="icon" variant="outline">
-          <UserX className="h-5 w-5" />
+        <Button size="sm">
+          <UserX className="h-5 w-5 mr-2" /> Remove tenant
         </Button>
       </AlertDialogTrigger>
 

@@ -116,7 +116,7 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
     <Dialog open={open} onOpenChange={onOpenChangeWrapper}>
       <DialogTrigger asChild>
         <Button size="icon" variant="outline">
-          <Edit className="w-5 h-5" />
+          <Edit className="w-5 h-5" color="#25f609" />
         </Button>
       </DialogTrigger>
 
@@ -126,7 +126,7 @@ const UnitEditDialog = ({ unit }: { unit: Unit }) => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onsubmit)}>
+          <form onSubmit={form.handleSubmit(onsubmit)} className="space-y-6">
             <div className="flex gap-2">
               <FormField
                 control={form.control}

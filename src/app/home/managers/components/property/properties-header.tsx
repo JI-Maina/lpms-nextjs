@@ -9,7 +9,7 @@ type Props = {
 
 const PropertiesHeader = ({ properties, onChange }: Props) => {
   return (
-    <div className="h-36 bg-property bg-no-repeat bg-cover bg-center">
+    <div className="h-36 bg-property bg-no-repeat bg-cover bg-center bg-opacity-0">
       <div className="flex gap-4 flex-col md:flex-row h-full relative">
         {properties.length > 1 && (
           <SelectProperty properties={properties} onChange={onChange} />

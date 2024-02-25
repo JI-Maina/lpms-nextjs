@@ -54,7 +54,7 @@ const UnitDeleteDialog = ({ unit }: { unit: Unit }) => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button size="icon" variant="outline">
-          <Trash2 className="w-5 h-5" />
+          <Trash2 className="w-5 h-5" color="#f60909" />
         </Button>
       </AlertDialogTrigger>
 

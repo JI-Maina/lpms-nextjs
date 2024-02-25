@@ -12,7 +12,7 @@ type Property = {
   property_img: string | null;
   created_at: string;
   updated_at: string;
-  water_rate_per_unit: string
+  water_rate_per_unit: string;
 };
 
 type Person = {
@@ -107,3 +107,10 @@ type Maintenance = {
   maintenance_date: string;
   unit: Unit;
 };
+
+type MeterReading = {
+  id: number;
+  reading_date: string;
+  meter_reading: string;
+  unit: number;
+}
