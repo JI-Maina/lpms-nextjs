@@ -6,6 +6,7 @@ const PaymentsPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();
   const properties = await propertyData;
 
+  console.log(properties);
   return <PropertyPayments properties={properties} />;
 };
 

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
-import { Property } from "@/types/property";
+import { Payment, Property } from "@/types/property";
 import { PaymentsTable } from "./payments-table";
 import AddUnitPaymentDialog from "./add-unit-payment-modal";
 import PropertyDetailsHeader from "../shared/property-details-header";
@@ -33,6 +33,17 @@ const PropertyPayments = ({ properties }: PropertyProps) => {
     if (id) getPayments();
   }, [id, properties]);
 
+  const year = new Date().getFullYear();
+  let recentPayments: Payment[] = [];
+
+  if (year in payments) {
+    const keys = Object.keys(payments[year]);
+    recentPayments = payments[year][keys[keys.length - 1]];
+  } else if (year - 1 in payments) {
+    const keys = Object.keys(payments[year - 1]);
+    recentPayments = payments[year - 1][keys[keys.length - 1]];
+  }
+
   return (
     <main>
       <PropertyDetailsHeader
@@ -44,7 +55,7 @@ const PropertyPayments = ({ properties }: PropertyProps) => {
       />
 
       <div className="max-w-[360px] sm:max-w-full">
-        <PaymentsTable data={payments} columns={columns} />
+        <PaymentsTable data={recentPayments} columns={columns} />
       </div>
     </main>
   );
