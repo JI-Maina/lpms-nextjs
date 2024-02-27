@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
-import { Property } from "@/types/property";
+import { Maintenance, Property } from "@/types/property";
 import { MaintenancesTable } from "./maintenances-table";
 import AddUnitMaintenanceModal from "./add-unit-maintenance-modal";
 import PropertyDetailsHeader from "../shared/property-details-header";
@@ -25,13 +25,24 @@ const PropertyMaintenances = ({ properties }: MaintenanceProps) => {
 
   useEffect(() => {
     const getMaintenances = async () => {
-      const res = await fetch(`/api/maintenances/${id}`);
+      const res = await fetch(`/api/maintenances/${id}/`);
       const data = await res.json();
       setMaintenances(data);
     };
 
     if (id) getMaintenances();
   }, [id, properties]);
+
+  const year = new Date().getFullYear();
+  let recentMaintenances: Maintenance[] = [];
+
+  if (year in maintenaces) {
+    const keys = Object.keys(maintenaces[year]);
+    recentMaintenances = maintenaces[year][keys[keys.length - 1]];
+  } else if (year - 1 in maintenaces) {
+    const keys = Object.keys(maintenaces[year - 1]);
+    recentMaintenances = maintenaces[year - 1][keys[keys.length - 1]];
+  }
 
   return (
     <main>
@@ -44,7 +55,7 @@ const PropertyMaintenances = ({ properties }: MaintenanceProps) => {
       />
 
       <div className="max-w-[360px] sm:max-w-full">
-        <MaintenancesTable data={maintenaces} columns={columns} />
+        <MaintenancesTable data={recentMaintenances} columns={columns} />
       </div>
     </main>
   );

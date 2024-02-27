@@ -57,7 +57,7 @@ export function PaymentsTable<TData, TValue>({
 
     return total;
   };
-  console.log(data);
+  // console.log(data);
   const total = calcTotal(data);
 
   return (
