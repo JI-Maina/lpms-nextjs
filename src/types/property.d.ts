@@ -98,7 +98,7 @@ type YearlyPayments = {
   [year: string]: {
     [month: string]: Payment[];
   }
-}
+};
 
 type Maintenance = {
   id: number;
@@ -113,4 +113,14 @@ type MeterReading = {
   reading_date: string;
   meter_reading: string;
   unit: number;
-}
+};
+
+type Invoice = {
+  id: number;
+  invoice_date: string;
+  total_amount: string;
+  unit: Unit;
+  tenant: Tenant;
+  rent_amount: string
+  bills: number[]
+};

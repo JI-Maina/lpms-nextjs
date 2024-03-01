@@ -16,8 +16,8 @@ const RecentPayments = ({ payments }: PaymentsProps) => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
 
-  const monthPayments = payments[year][month];
-
+  const monthPayments = payments?.[year]?.[month] || [];
+  console.log(monthPayments);
   return (
     <Card className="col-span-3">
       <CardHeader>
