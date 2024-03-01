@@ -124,3 +124,12 @@ type Invoice = {
   rent_amount: string
   bills: number[]
 };
+
+type Bill = {
+  id: number;
+  bill_amount: string;
+  bill_date: string;
+  bill_type: string;
+  unit: number;
+  meter_reading: number;
+};

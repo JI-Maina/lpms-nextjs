@@ -3,8 +3,9 @@
 import { useState } from "react";
 
 import { Caretaker, Property } from "@/types/property";
-import PropertiesHeader from "./properties-header";
+import PropertiesHeader from "../shared/properties-header";
 import PropertyCard from "./property-card";
+import { CreatePropertyDialog } from "./create-property-dialog";
 
 type DetailsProps = {
   properties: Property[];
@@ -22,7 +23,11 @@ const PropertyDetailsPage = ({ properties, caretakers }: DetailsProps) => {
 
   return (
     <main className="flex flex-col gap-2">
-      <PropertiesHeader properties={properties} onChange={onChange} />
+      <PropertiesHeader
+        properties={properties}
+        onChange={onChange}
+        dialog={<CreatePropertyDialog />}
+      />
 
       <PropertyCard property={property as Property} caretakers={caretakers} />
     </main>
