@@ -120,7 +120,7 @@ const CreateCaretakerDialog = () => {
         <DialogHeader>
           <DialogTitle>Create a new Caretaker</DialogTitle>
           <DialogDescription>
-            Caretakers default password is 'caretaker'
+            Caretakers default password is &apos;caretaker&apos;
           </DialogDescription>
         </DialogHeader>
 

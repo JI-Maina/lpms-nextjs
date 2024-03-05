@@ -34,8 +34,8 @@ const UnitsHeader = ({ property }: { property: Property }) => {
           <DetailsCard
             event="caretaker"
             detail={
-              property.care_taker
-                ? `${property.care_taker.user.first_name} ${property.care_taker.user.last_name}`
+              property?.caretaker
+                ? `${property?.caretaker?.user.first_name} ${property?.caretaker?.user.last_name}`
                 : "None"
             }
           />
