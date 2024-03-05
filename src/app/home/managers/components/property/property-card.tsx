@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { format } from "date-fns";
+import { useSession } from "next-auth/react";
 
 import { Caretaker, Property } from "@/types/property";
 import AddCaretakerDialog from "./add-caretaker-dialog";
@@ -11,13 +12,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 type Props = { property: Property; caretakers: Caretaker[] };
 
 const PropertyCard = ({ property, caretakers }: Props) => {
+  const { data: session } = useSession();
+
   return (
     <Card className="">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-3xl">{property.property_name}</CardTitle>
         <div className="space-x-2">
           <EditPropertyDialog property={property} />
-          <DeletePropertyDialog id={property.id} />
+          {session?.user.userRole === "owner" && (
+            <DeletePropertyDialog id={property.id} />
+          )}
         </div>
       </CardHeader>
 

@@ -15,7 +15,7 @@ const RoleNavigationPage = async () => {
       user: { userRole },
     } = session;
 
-    if (userRole === "owner") {
+    if (userRole === "owner" || userRole === "caretaker") {
       return <NavigationCard />;
     } else if (userRole === "tenant") {
       return <div>Tenant</div>;
