@@ -22,7 +22,7 @@ export const columns: ColumnDef<Invoice>[] = [
     cell: ({ row }) => {
       const invoice = row.original;
 
-      return <div>inv-{invoice.id}</div>;
+      return <div>INV-{invoice.id}</div>;
     },
   },
   {
