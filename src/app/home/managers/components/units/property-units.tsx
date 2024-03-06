@@ -30,12 +30,14 @@ const PropertyUnits = ({ properties }: SelectProps) => {
     <main>
       {property && (
         <div className="flex gap-3 flex-col md:flex-row">
-          <SelectProperty
-            properties={properties}
-            onChange={handleSelectChange}
-          />
+          {properties.length > 1 && (
+            <SelectProperty
+              properties={properties}
+              onChange={handleSelectChange}
+            />
+          )}
 
-          <div className="md:w-3/4">
+          <div className="md:w-full">
             <UnitsHeader property={property} />
           </div>
         </div>

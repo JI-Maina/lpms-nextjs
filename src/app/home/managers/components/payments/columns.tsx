@@ -25,6 +25,10 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Method",
   },
   {
+    accessorKey: "receipt_no",
+    header: "Receipt",
+  },
+  {
     accessorKey: "payment_date",
     header: "Date",
   },

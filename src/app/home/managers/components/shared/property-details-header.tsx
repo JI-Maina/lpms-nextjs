@@ -23,11 +23,11 @@ const PropertyDetailsHeader = ({
 
   return (
     <div className="flex gap-3 flex-col md:flex-row">
-      {property && (
+      {property && properties.length > 1 && (
         <SelectProperty properties={properties} onChange={onChange} />
       )}
 
-      <div className="md:w-3/4">
+      <div className="md:w-full">
         {property && (
           <header className="border text-card-foreground p-4 pb-2 flex flex-col md:flex-row gap-2 ">
             <div className="flex-1 flex items-center gap-3 ">

@@ -132,7 +132,7 @@ export function PaymentsTable<TData, TValue>({
           {data.length > 0 && (
             <TableFooter>
               <TableRow>
-                <TableCell colSpan={5}>Total</TableCell>
+                <TableCell colSpan={6}>Total</TableCell>
                 <TableCell className="">KSh {total}</TableCell>
               </TableRow>
             </TableFooter>

@@ -47,6 +47,10 @@ const paymentSchema = z.object({
   date: z.string().min(3, { message: "Please enter a valid date" }),
   method: z.enum(METHODTYPES),
   amount: z.number().min(2, { message: "Please enter a valid fee" }),
+  receipt: z
+    .string()
+    .min(10, { message: "Please enter a valid receipt number" })
+    .max(15),
   paymentFor: z.enum(FORTYPES),
   unit: z.string().min(1, { message: "Please select a unit" }),
 });
@@ -66,6 +70,7 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
       unit: "",
       date: "",
       method: "cash",
+      receipt: "",
       amount: 0,
       paymentFor: "rent",
     },
@@ -77,6 +82,7 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
       payment_method: data.method,
       payment_amount: data.amount,
       payment_for: data.paymentFor,
+      receipt_no: data.receipt,
     };
 
     const propertyId = units[0].property;
@@ -174,35 +180,6 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
 
             <FormField
               control={form.control}
-              name="method"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Payment Method:</FormLabel>
-                  <Select onValueChange={(method) => field.onChange(method)}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select payment method" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {METHODTYPES.map((method, idx) => (
-                        <SelectItem
-                          key={idx}
-                          value={method}
-                          className="capitalize"
-                        >
-                          {method}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="paymentFor"
               render={({ field }) => (
                 <FormItem>
@@ -246,6 +223,49 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
                         field.onChange(parseFloat(e.target.value))
                       }
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="method"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Payment Method:</FormLabel>
+                  <Select onValueChange={(method) => field.onChange(method)}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select payment method" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {METHODTYPES.map((method, idx) => (
+                        <SelectItem
+                          key={idx}
+                          value={method}
+                          className="capitalize"
+                        >
+                          {method}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="receipt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Receipt Number:</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="SC524HUUTM" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
