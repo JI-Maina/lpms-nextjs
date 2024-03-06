@@ -69,7 +69,7 @@ export const CreatePropertyDialog = () => {
     try {
       await axiosAuth.post("/property/properties/", property);
 
-      router.refresh();
+      location.reload();
       form.reset();
       toast({ title: "Success", description: "Property created" });
       setOpen(false);

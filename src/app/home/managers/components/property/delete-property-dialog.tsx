@@ -28,8 +28,7 @@ const DeletePropertyDialog = ({ id }: { id: string }) => {
 
       if (res.status === 204) {
         toast({ description: "Success! property deleted" });
-        router.refresh();
-        router.push("/home/managers/properties");
+        location.reload();
       }
     } catch (err: any) {
       console.log(err);

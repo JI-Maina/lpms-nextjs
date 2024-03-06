@@ -31,7 +31,13 @@ const PropertyDetailsPage = ({ properties, caretakers }: DetailsProps) => {
         dialog={session?.user.userRole === "owner" && <CreatePropertyDialog />}
       />
 
-      <PropertyCard property={property as Property} caretakers={caretakers} />
+      {property ? (
+        <PropertyCard property={property as Property} caretakers={caretakers} />
+      ) : (
+        <div className="flex justify-center items-center pt-[200px] text-3xl">
+          No property to display
+        </div>
+      )}
     </main>
   );
 };

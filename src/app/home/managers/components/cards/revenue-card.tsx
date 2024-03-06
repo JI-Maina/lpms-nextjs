@@ -27,8 +27,12 @@ const RevenueCard = async () => {
     0
   );
 
-  const percentIncrement =
-    prevMonth !== 0 ? ((currentMonth - prevMonth) / prevMonth) * 100 : 0;
+  const increment =
+    prevMonth !== 0
+      ? (((currentMonth - prevMonth) / prevMonth) * 100).toFixed(2)
+      : "0";
+
+  const percentIncrement = increment.toString();
 
   return (
     <Card>
@@ -50,7 +54,8 @@ const RevenueCard = async () => {
       <CardContent>
         <div className="text-2xl font-bold">KSh{currentMonth}</div>
         <p className="text-xs text-muted-foreground">
-          +{percentIncrement}% from last month
+          {percentIncrement.startsWith("-") ? `` : `+`}
+          {percentIncrement}% from last month
         </p>
       </CardContent>
     </Card>

@@ -17,11 +17,11 @@ const PropertyCard = ({ property, caretakers }: Props) => {
   return (
     <Card className="">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-3xl">{property.property_name}</CardTitle>
+        <CardTitle className="text-3xl">{property?.property_name}</CardTitle>
         <div className="space-x-2">
           <EditPropertyDialog property={property} />
           {session?.user.userRole === "owner" && (
-            <DeletePropertyDialog id={property.id} />
+            <DeletePropertyDialog id={property?.id} />
           )}
         </div>
       </CardHeader>
@@ -29,8 +29,8 @@ const PropertyCard = ({ property, caretakers }: Props) => {
       <CardContent className="flex md:flex-row flex-col gap-4 pb-3">
         <Image
           src={
-            property.property_img
-              ? `http://127.0.0.1:8000${property.property_img}`
+            property?.property_img
+              ? `http://127.0.0.1:8000${property?.property_img}`
               : "/no-propertyfound.png"
           }
           alt=""
@@ -42,28 +42,28 @@ const PropertyCard = ({ property, caretakers }: Props) => {
 
         <div className="flex-1 justify-end space-y-5">
           <div className="grid gap-4 mb-3 grid-cols-2 md:grid-cols-1">
-            <DetailsCard event="lrl" detail={property.property_lrl} />
-            <DetailsCard event="type" detail={property.property_type} />
+            <DetailsCard event="lrl" detail={property?.property_lrl} />
+            <DetailsCard event="type" detail={property?.property_type} />
 
             <DetailsCard
               event="floors"
               detail={
-                property.number_of_floors === null
+                property?.number_of_floors === null
                   ? "none"
-                  : property.number_of_floors
+                  : property?.number_of_floors
               }
             />
-            <DetailsCard event="units" detail={property.number_of_units} />
+            <DetailsCard event="units" detail={property?.number_of_units} />
           </div>
           <DetailsCard
             event="Water Rate per unit"
-            detail={`KSh ${property.water_rate_per_unit}`}
+            detail={`KSh ${property?.water_rate_per_unit}`}
           />
           <DetailsCard
             event="caretaker"
             detail={
-              property.caretaker !== null ? (
-                `${property.caretaker?.user.first_name} ${property.caretaker?.user.last_name}`
+              property?.caretaker !== null ? (
+                `${property?.caretaker?.user.first_name} ${property?.caretaker?.user.last_name}`
               ) : caretakers.length === 0 ? (
                 <CreateCaretakerDialog />
               ) : (
@@ -77,7 +77,7 @@ const PropertyCard = ({ property, caretakers }: Props) => {
 
           <DetailsCard
             event="Created at"
-            detail={format(new Date(property.created_at), "yyyy-MM-dd")}
+            detail={format(new Date(property?.created_at), "yyyy-MM-dd")}
           />
         </div>
       </CardContent>

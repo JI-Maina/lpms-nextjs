@@ -7,6 +7,7 @@ import UnitsHeader from "./units-header";
 import { UnitsTable } from "./units-table";
 import { Property, Unit } from "@/types/property";
 import SelectProperty from "../shared/select-property";
+import PropertiesBanner from "../shared/properties-banner";
 
 type SelectProps = {
   properties: Property[];
@@ -28,7 +29,7 @@ const PropertyUnits = ({ properties }: SelectProps) => {
 
   return (
     <main>
-      {property && (
+      {property ? (
         <div className="flex gap-3 flex-col md:flex-row">
           {properties.length > 1 && (
             <SelectProperty
@@ -41,6 +42,8 @@ const PropertyUnits = ({ properties }: SelectProps) => {
             <UnitsHeader property={property} />
           </div>
         </div>
+      ) : (
+        <PropertiesBanner />
       )}
 
       <div className="max-w-[360px] sm:max-w-full">
