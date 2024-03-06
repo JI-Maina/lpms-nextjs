@@ -23,6 +23,8 @@ export const regSchema = z
     path: ["cfmPassword"],
   });
 
+export const PROPERTYTYPE = ["Residential", "Commercial"] as const;
+
 export const propertySchema = z.object({
   name: z.string().min(3, { message: "Property name is required" }),
   lrl: z
@@ -31,6 +33,7 @@ export const propertySchema = z.object({
     .max(10, { message: "Property lrl must be between 4-10 characters" }),
   units: z.number().nonnegative({ message: "Enter a valid figure" }),
   floors: z.number().nonnegative({ message: "Enter a valid figure" }),
+  type: z.enum(PROPERTYTYPE),
   water_rate: z.string().refine((value) => /^\d+(\.\d+)?$/.test(value), {
     message: "Invalid decimal format for water_rate_per_unit",
   }),

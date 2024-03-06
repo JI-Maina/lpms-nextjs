@@ -30,10 +30,20 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const PROPERTYTYPE = ["Residential", "Commercial"] as const;
 
 const EditSchema = z.object({
   property_name: z.string().min(3).max(20),
   property_lrl: z.string().min(3).max(10),
+  property_type: z.string(),
   number_of_units: z.number(),
   number_of_floors: z.number(),
   water_rate_per_unit: z
@@ -56,11 +66,13 @@ const EditPropertyDialog = ({ property }: { property: Property }) => {
     defaultValues: {
       property_name: property.property_name,
       property_lrl: property.property_lrl,
+      property_type: property.property_type,
       number_of_units: property.number_of_units,
       water_rate_per_unit: property.water_rate_per_unit,
       number_of_floors:
         property.number_of_floors === null ? 0 : property.number_of_floors,
     },
+    mode: "onChange",
   });
 
   const onSubmit = async (data: EditInput) => {
@@ -119,7 +131,7 @@ const EditPropertyDialog = ({ property }: { property: Property }) => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="property_name"
@@ -147,6 +159,34 @@ const EditPropertyDialog = ({ property }: { property: Property }) => {
                   <FormControl>
                     <Input placeholder="D0064" type="text" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="property_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select property type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {PROPERTYTYPE.map((type, idx) => (
+                        <SelectItem key={idx} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

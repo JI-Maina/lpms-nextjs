@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/lib/hooks/use-axios-auth";
-import { propertySchema } from "@/components/forms/form-schema";
+import { PROPERTYTYPE, propertySchema } from "@/components/forms/form-schema";
 import {
   Dialog,
   DialogClose,
@@ -30,6 +30,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const CreatePropertyDialog = () => {
   const [open, setOpen] = useState(false);
@@ -42,6 +49,7 @@ export const CreatePropertyDialog = () => {
     defaultValues: {
       name: "",
       lrl: "",
+      type: "Residential",
       units: 0,
       floors: 0,
       water_rate: "",
@@ -52,6 +60,7 @@ export const CreatePropertyDialog = () => {
     const property = {
       property_name: data.name,
       property_lrl: data.lrl,
+      property_type: data.type,
       number_of_units: data.units,
       number_of_floors: data.floors,
       water_rate_per_unit: data.water_rate,
@@ -106,7 +115,7 @@ export const CreatePropertyDialog = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="name"
@@ -134,6 +143,34 @@ export const CreatePropertyDialog = () => {
                   <FormControl>
                     <Input placeholder="D0064" type="text" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select property type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {PROPERTYTYPE.map((type, idx) => (
+                        <SelectItem key={idx} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

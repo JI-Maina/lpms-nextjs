@@ -4,6 +4,7 @@ type Property = {
   id: string;
   property_name: string;
   property_lrl: string;
+  property_type: string;
   number_of_units: number;
   number_of_floors: number;
   owner: User;
@@ -90,6 +91,7 @@ type Payment = {
   payment_method: string;
   payment_amount: string;
   payment_for: string;
+  receipt_no: string;
   unit: Unit;
   tenant: Tenant | null;
 };

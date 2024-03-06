@@ -18,7 +18,9 @@ const UnitsHeader = ({ property }: { property: Property }) => {
 
         <div>
           <h2 className="text-lg font-semibold">{property.property_name}</h2>
-          <p className="text-muted-foreground text-sm">residential</p>
+          <p className="text-muted-foreground text-sm">
+            {property.property_type}
+          </p>
           <p className="text-muted-foreground text-sm">
             {property.property_lrl}
           </p>
