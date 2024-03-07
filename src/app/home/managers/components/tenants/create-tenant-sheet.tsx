@@ -33,6 +33,7 @@ import { z } from "zod";
 const tenantSchema = z.object({
   firstName: z.string().min(3, { message: "Enter a valid first name" }),
   lastName: z.string().min(3, { message: "Enter a valid last name" }),
+  username: z.string().min(3, { message: "Enter a valid username" }),
   phoneNo: z
     .string()
     .min(10, { message: "Provide a valid phone number" })
@@ -58,6 +59,7 @@ const CreateTenantSheet = () => {
     defaultValues: {
       firstName: "",
       lastName: "",
+      username: "",
       phoneNo: "",
       idNumber: "",
       nokFirstName: "",
@@ -71,6 +73,7 @@ const CreateTenantSheet = () => {
       user: {
         first_name: data.firstName,
         last_name: data.lastName,
+        username: data.username,
         phone_no: data.phoneNo,
         password: "tenant",
         is_owner: false,
@@ -157,6 +160,21 @@ const CreateTenantSheet = () => {
                 )}
               />
             </div>
+
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="mjomba" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="phoneNo"
