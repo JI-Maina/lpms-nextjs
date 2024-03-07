@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Props = { property: Property; caretakers: Caretaker[] };
 
+const URL = process.env.NEXT_PUBLIC_DJANGO_BASE_URL;
+
 const PropertyCard = ({ property, caretakers }: Props) => {
   const { data: session } = useSession();
 
@@ -29,8 +31,8 @@ const PropertyCard = ({ property, caretakers }: Props) => {
       <CardContent className="flex md:flex-row flex-col gap-4 pb-3">
         <Image
           src={
-            property?.property_img
-              ? `http://127.0.0.1:8000${property?.property_img}`
+            property?.property_img !== null
+              ? `${URL}/${property?.property_img}`
               : "/no-propertyfound.png"
           }
           alt=""
