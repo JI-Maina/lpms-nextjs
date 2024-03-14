@@ -40,12 +40,13 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="lucide:bitcoin" width="24" height="24" />,
     submenu: true,
     subMenuItems: [
+      // { title: "Invoices", path: "/home/managers/finances/invoices" },
       { title: "Payments", path: "/home/managers/finances/payments" },
-      { title: "Invoices", path: "/home/managers/finances/invoices" },
+      { title: "Statements", path: "/home/managers/finances/statements" },
     ],
   },
   {
-    title: "Maintenances",
+    title: "Maintenance",
     path: "/home/managers/maintenances",
     icon: <Icon icon="lucide:construction" width="24" height="24" />,
   },

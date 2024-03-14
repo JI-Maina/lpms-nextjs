@@ -1,6 +1,16 @@
 "use client";
 
+import { z } from "zod";
+import { useState } from "react";
+import { Plus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 import {
   Dialog,
   DialogClose,
@@ -18,7 +28,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -26,22 +35,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
-// import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const UNITTYPES = [
+  "shop",
   "single-room",
   "double-room",
   "bedsitter",
   "1-bedroom",
-  "2-bedroom",
+  "2-bedrooms",
+  "3-bedrooms",
+  "4-bedrooms",
 ] as const;
 
 const unitSchema = z.object({
@@ -54,12 +57,10 @@ const unitSchema = z.object({
 });
 
 const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
-  // const { data: session } = useSession();
   const router = useRouter();
   const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
-  //   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const form = useForm<z.infer<typeof unitSchema>>({
     resolver: zodResolver(unitSchema),
@@ -73,13 +74,6 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
     },
   });
 
-  //   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     const file = event.target.files?.[0];
-  //     if (file) {
-  //       setSelectedFile(file);
-  //     }
-  //   };
-
   const onSubmit = async (data: z.infer<typeof unitSchema>) => {
     const unitData = {
       unit_name: data.unit_name,
@@ -88,16 +82,6 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
       unit_size: data.unit_size,
       unit_rent: data.unit_rent,
     };
-
-    // const formData = new FormData();
-    // formData.append("unit_name", data.unit_name);
-    // formData.append("unit_type", data.unit_type);
-    // formData.append("unit_size", data.unit_size);
-    // formData.append("unit_rent", String(data.unit_rent));
-    // formData.append("unit_deposit", String(data.unit_deposit));
-    // formData.append("unit_img", selectedFile);
-    // console.log(selectedFile[0]);
-    // console.log([...formData.entries()]);
 
     try {
       const res = await axiosAuth.post(
@@ -155,7 +139,7 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="flex gap-2">
               <FormField
                 control={form.control}
@@ -254,20 +238,6 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
                 )}
               />
             </div>
-
-            {/* <FormField
-              control={form.control}
-              name="unit_img"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image</FormLabel>
-                  <FormControl>
-                    <Input type="file" {...field} onChange={handleFileChange} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
           </form>
         </Form>
 

@@ -23,7 +23,12 @@ export const regSchema = z
     path: ["cfmPassword"],
   });
 
-export const PROPERTYTYPE = ["Residential", "Commercial"] as const;
+export const PROPERTYTYPE = [
+  "Residential",
+  "Commercial",
+  "Mixed",
+  "Facilities",
+] as const;
 
 export const propertySchema = z.object({
   name: z.string().min(3, { message: "Property name is required" }),
