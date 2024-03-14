@@ -1,6 +1,16 @@
 "use client";
 
+import { z } from "zod";
+import { useState } from "react";
+import { UserPlus2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/use-axios-auth";
 import {
   Form,
   FormControl,
@@ -9,7 +19,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetClose,
@@ -20,15 +29,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UserPlus2 } from "lucide-react";
-// import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const tenantSchema = z.object({
   firstName: z.string().min(3, { message: "Enter a valid first name" }),
@@ -76,6 +76,7 @@ const CreateTenantSheet = () => {
         username: data.username,
         phone_no: data.phoneNo,
         password: "tenant",
+        title: "tenant",
         is_owner: false,
         is_caretaker: false,
         is_tenant: true,

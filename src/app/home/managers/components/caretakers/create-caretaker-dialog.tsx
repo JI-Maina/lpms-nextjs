@@ -56,6 +56,7 @@ const CreateCaretakerDialog = () => {
         username: values.username,
         phone_no: values.phoneNo,
         password: "caretaker",
+        title: "caretaker",
         is_owner: false,
         is_caretaker: true,
         is_tenant: false,

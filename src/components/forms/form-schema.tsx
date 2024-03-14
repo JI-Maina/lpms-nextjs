@@ -1,5 +1,10 @@
 import * as z from "zod";
 
+export const TITLETYPE = [
+  "Property owner",
+  "Property landlord/agent/manager",
+] as const;
+
 export const regSchema = z
   .object({
     firstName: z
@@ -8,6 +13,7 @@ export const regSchema = z
       .max(100),
     lastName: z.string().min(3, { message: "Enter a valid lastname" }).max(100),
     username: z.string().min(3, { message: "Enter a valid username" }).max(100),
+    title: z.enum(TITLETYPE),
     phoneNo: z
       .string()
       .min(10, { message: "Phone no. must be exactly 10 characters" })

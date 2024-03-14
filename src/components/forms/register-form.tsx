@@ -7,6 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { TITLETYPE, regSchema } from "./form-schema";
+import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -15,9 +18,13 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { regSchema } from "./form-schema";
-import { useRouter } from "next/navigation";
-import { useToast } from "../ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -29,6 +36,7 @@ const RegisterForm = () => {
       firstName: "",
       lastName: "",
       username: "",
+      title: "Property owner",
       phoneNo: "",
       password: "",
       cfmPassword: "",
@@ -40,6 +48,7 @@ const RegisterForm = () => {
       first_name: values.firstName,
       last_name: values.lastName,
       username: values.username,
+      title: values.title,
       phone_no: values.phoneNo,
       password: values.password,
       is_owner: true,
@@ -93,7 +102,7 @@ const RegisterForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex gap-2">
           <FormField
             control={form.control}
@@ -153,6 +162,31 @@ const RegisterForm = () => {
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <Select onValueChange={field.onChange}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Tell us who you are" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {TITLETYPE.map((type, idx) => (
+                    <SelectItem key={idx} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}

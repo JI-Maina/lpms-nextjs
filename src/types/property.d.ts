@@ -22,6 +22,7 @@ type Person = {
   last_name: string;
   phone_no: string;
   username: string;
+  title: string;
   is_owner: boolean;
   is_caretaker: boolean;
   is_tenant: boolean;
