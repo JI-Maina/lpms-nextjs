@@ -108,6 +108,8 @@ type Maintenance = {
   maintenance_type: string;
   maintenance_fee: string;
   maintenance_date: string;
+  maintenance_status: string;
+  description: string;
   unit: Unit;
 };
 

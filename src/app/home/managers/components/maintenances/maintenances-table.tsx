@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -12,6 +13,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { Input } from "@/components/ui/input";
+import { Maintenance } from "@/types/property";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -21,10 +25,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Maintenance } from "@/types/property";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -131,7 +131,7 @@ export function MaintenancesTable<TData, TValue>({
           {data.length > 0 && (
             <TableFooter>
               <TableRow>
-                <TableCell colSpan={3}>Total</TableCell>
+                <TableCell colSpan={5}>Total</TableCell>
                 <TableCell className="">KSh {total}</TableCell>
               </TableRow>
             </TableFooter>

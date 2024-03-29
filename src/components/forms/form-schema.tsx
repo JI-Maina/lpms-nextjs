@@ -1,9 +1,6 @@
 import * as z from "zod";
 
-export const TITLETYPE = [
-  "Property owner",
-  "Property landlord/agent/manager",
-] as const;
+export const TITLETYPE = ["Property owner", "Property landlord"] as const;
 
 export const regSchema = z
   .object({

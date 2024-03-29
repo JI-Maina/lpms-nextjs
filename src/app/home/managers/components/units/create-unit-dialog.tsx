@@ -160,7 +160,7 @@ const CreateUnitDialog = ({ propertyId }: { propertyId: string }) => {
                 name="unit_size"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Size</FormLabel>
+                    <FormLabel>Size (sq meters)</FormLabel>
                     <FormControl>
                       <Input type="text" placeholder="10 by 10" {...field} />
                     </FormControl>

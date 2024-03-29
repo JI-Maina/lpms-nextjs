@@ -168,7 +168,7 @@ const RegisterForm = () => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Title:</FormLabel>
               <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
@@ -188,37 +188,43 @@ const RegisterForm = () => {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password:</FormLabel>
-              <FormControl>
-                <Input placeholder="your password" type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password:</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="your password"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="cfmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm password:</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="re-enter password"
-                  type="password"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="cfmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm password:</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="re-enter password"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <Button type="submit" className="w-full">
           Sign-up

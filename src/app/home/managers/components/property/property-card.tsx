@@ -44,7 +44,7 @@ const PropertyCard = ({ property, caretakers }: Props) => {
 
         <div className="flex-1 justify-end space-y-5">
           <div className="grid gap-4 mb-3 grid-cols-2 md:grid-cols-1">
-            <DetailsCard event="lrl" detail={property?.property_lrl} />
+            <DetailsCard event="lr number" detail={property?.property_lrl} />
             <DetailsCard event="type" detail={property?.property_type} />
 
             <DetailsCard

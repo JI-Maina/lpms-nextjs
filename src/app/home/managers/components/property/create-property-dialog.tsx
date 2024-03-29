@@ -139,7 +139,7 @@ export const CreatePropertyDialog = () => {
               name="lrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>LRL</FormLabel>
+                  <FormLabel>LR Number</FormLabel>
                   <FormControl>
                     <Input placeholder="D0064" type="text" {...field} />
                   </FormControl>
