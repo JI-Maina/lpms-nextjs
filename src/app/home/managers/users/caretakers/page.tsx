@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
 
 import { Caretaker } from "@/types/property";
-import { columns } from "../../components/caretakers/columns";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { columns } from "@/components/managers/caretakers/columns";
 import { getAllCaretakers } from "@/lib/data-fetching/fetch-caretakers";
-import { CaretakersTable } from "../../components/caretakers/caretakers-table";
-import CreateCaretakerDialog from "../../components/caretakers/create-caretaker-dialog";
+import { CaretakersTable } from "@/components/managers/caretakers/caretakers-table";
+import CreateCaretakerDialog from "@/components/managers/caretakers/create-caretaker-dialog";
 
 const CaretakersPage = async () => {
   const caretakersData: Promise<Caretaker[]> = getAllCaretakers();

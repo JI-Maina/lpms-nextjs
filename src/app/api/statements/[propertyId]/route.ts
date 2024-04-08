@@ -14,7 +14,7 @@ export async function GET(request: Request, { params }: any) {
     },
   });
 
-  const statements = await res.json();
+  const product = await res.json();
 
-  return Response.json(statements);
+  return Response.json(product);
 }

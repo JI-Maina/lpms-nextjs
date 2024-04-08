@@ -1,6 +1,6 @@
-import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 import { Property } from "@/types/property";
-import PropertyMaintenances from "../components/maintenances/property-maintenances";
+import { getAllProperties } from "@/lib/data-fetching/fetch-property";
+import PropertyMaintenances from "@/components/managers/maintenances/property-maintenances";
 
 const MaintenancesPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();

@@ -1,6 +1,6 @@
-import { PropertyStatements } from "@/components/managers/statements/property-statements";
-import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 import { Property } from "@/types/property";
+import { getAllProperties } from "@/lib/data-fetching/fetch-property";
+import { PropertyStatements } from "@/components/managers/statements/property-statements";
 
 const StatementsPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();

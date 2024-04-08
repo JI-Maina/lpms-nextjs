@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Statement } from "@/types/property";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const StatementCard = ({ statement }: { statement: Statement }) => {
   const { statement_month, total_income, total_expenses, net_income } =

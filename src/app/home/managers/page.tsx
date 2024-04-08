@@ -1,11 +1,12 @@
 import { YearlyPayments } from "@/types/property";
-import { Overview } from "./components/cards/overview";
-import RevenueCard from "./components/cards/revenue-card";
-import BalanceCard from "./components/cards/balance-card";
-import TenantsCard from "./components/cards/tenants-card";
-import VacantsCard from "./components/cards/vacants-card";
-import RecentPayments from "./components/cards/recent-payments";
+
+import { Overview } from "@/components/managers/cards/overview";
+import BalanceCard from "@/components/managers/cards/balance-card";
+import TenantsCard from "@/components/managers/cards/tenants-card";
+import VacantsCard from "@/components/managers/cards/vacants-card";
+import RevenueCard from "@/components/managers/cards/revenue-card";
 import { getAllPayments } from "@/lib/data-fetching/fetch-payments";
+import RecentPayments from "@/components/managers/cards/recent-payments";
 
 const ManagersHomePage = async () => {
   const payments: Promise<YearlyPayments> = getAllPayments();

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import { StatementCard } from "./statement-card";
 import { Property, YearStatements } from "@/types/property";
-import PropertyDetailsHeader from "@/app/home/managers/components/shared/property-details-header";
+import { StatementCard } from "@/components/managers/statements/statement-card";
+import PropertyDetailsHeader from "@/components/managers/shared/property-details-header";
 
 type StatementsProps = {
   properties: Property[];

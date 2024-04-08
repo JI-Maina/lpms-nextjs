@@ -1,6 +1,6 @@
 import { Property } from "@/types/property";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
-import PropertyUnits from "../components/units/property-units";
+import PropertyUnits from "@/components/managers/units/property-units";
 
 const UnitsPage = async () => {
   const propertyData: Promise<Property[]> = getAllProperties();

@@ -1,5 +1,5 @@
 import { Property } from "@/types/property";
-import CreateInvoiceCard from "../../../components/invoices/create-invoice-card";
+import CreateInvoiceCard from "@/components/managers/invoices/create-invoice-card";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 
 const CreateInvoice = async () => {
