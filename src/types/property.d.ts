@@ -138,3 +138,20 @@ type Bill = {
   unit: number;
   meter_reading: number;
 };
+
+type Statement = {
+  id: number;
+  property: string;
+  statement_month: number;
+  statement_year: number;
+  total_income: string;
+  total_expenses: string;
+  net_income: string;
+  period: string;
+}
+
+type YearStatements = {
+  [year:string]: {
+    [month:string]: Statement[]
+  }
+}
