@@ -27,7 +27,7 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
     };
 
     if (id) fetchStatements();
-  }, [id]);
+  }, [id, state]);
 
   const currentYear = new Date().getFullYear();
   const currentYearStatements = state[currentYear] || {};

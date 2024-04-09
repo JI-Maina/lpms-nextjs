@@ -1,9 +1,16 @@
 import { Statement } from "@/types/property";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import DeleteStatementDialog from "@/components/managers/statements/delete-statement-dialog";
 
 export const StatementCard = ({ statement }: { statement: Statement }) => {
-  const { statement_month, total_income, total_expenses, net_income } =
-    statement;
+  const {
+    id,
+    property,
+    net_income,
+    total_income,
+    statement_month,
+    total_expenses,
+  } = statement;
   const months = [
     "January",
     "February",
@@ -21,8 +28,9 @@ export const StatementCard = ({ statement }: { statement: Statement }) => {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{months[statement_month - 1]}</CardTitle>
+        <DeleteStatementDialog id={id} propertyId={property} />
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex justify-between">

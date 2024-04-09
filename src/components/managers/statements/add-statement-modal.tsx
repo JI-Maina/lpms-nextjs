@@ -1,6 +1,6 @@
 "use client";
 
-import { string, z } from "zod";
+import { z } from "zod";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { RotateCcw } from "lucide-react";
@@ -73,14 +73,14 @@ const AddStatementDialog = ({ property }: { property: Property }) => {
     resolver: zodResolver(paymentSchema),
     defaultValues: {
       year: new Date().getFullYear(),
-      month: MONTHTYPES[mont + 1],
+      month: MONTHTYPES[mont],
     },
   });
 
   const onSubmit = async (data: z.infer<typeof paymentSchema>) => {
     const statement = {
       statement_year: data.year,
-      statement_month: MONTHTYPES.indexOf(data.month),
+      statement_month: MONTHTYPES.indexOf(data.month) + 1,
     };
 
     try {
@@ -92,7 +92,7 @@ const AddStatementDialog = ({ property }: { property: Property }) => {
       if (res.status === 201) {
         form.reset();
         toast({ description: "Statement generated successfully" });
-        location.reload();
+        // location.reload();
         router.refresh();
         setOpen(false);
       }
@@ -159,7 +159,7 @@ const AddStatementDialog = ({ property }: { property: Property }) => {
                   <FormLabel>Month</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={MONTHTYPES[mont + 1]}
+                    defaultValue={MONTHTYPES[mont]}
                   >
                     <FormControl>
                       <SelectTrigger>
