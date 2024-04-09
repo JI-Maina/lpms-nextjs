@@ -4,7 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
@@ -29,6 +29,7 @@ const loginSchema = z.object({
 const LoginForm = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const { data: session } = useSession();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -44,8 +45,12 @@ const LoginForm = () => {
 
     if (res && res.ok) {
       console.log(res);
-      router.push("/home");
       router.refresh();
+      if (session?.user.userRole === "owner") {
+        router.push("/managers");
+      } else {
+        router.push("/tenants");
+      }
     } else if (res?.status === 401) {
       toast({
         description: "Invalid login credentials",

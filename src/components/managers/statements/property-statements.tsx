@@ -23,11 +23,11 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
     const fetchStatements = async () => {
       const res = await fetch(`/api/statements/${id}`);
       const data = await res.json();
-      setState(data);
+      setState((prevState) => ({ ...prevState, ...data }));
     };
 
     if (id) fetchStatements();
-  }, [id, state]);
+  }, [id]);
 
   const currentYear = new Date().getFullYear();
   const currentYearStatements = state[currentYear] || {};
@@ -36,7 +36,8 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
   const property = properties.find(
     (property) => property.id === id
   ) as Property;
-
+  console.log(state);
+  console.log(property);
   return (
     <main>
       <PropertyDetailsHeader

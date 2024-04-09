@@ -138,7 +138,7 @@ export function UnitsTable<TData, TValue>({
                   className="hover:cursor-pointer"
                   onClick={() => {
                     const { id } = row.original as Unit;
-                    router.push(`/home/managers/units/${id}`);
+                    router.push(`/managers/units/${id}`);
                   }}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
