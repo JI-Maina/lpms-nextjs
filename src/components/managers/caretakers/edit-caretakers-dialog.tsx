@@ -81,7 +81,6 @@ const EditCaretakersDialog = ({ caretaker }: EditProps) => {
         setOpen(false);
         router.refresh();
         form.reset();
-        console.log(res);
       }
     } catch (err: any) {
       if (!err.response) {

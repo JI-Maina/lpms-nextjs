@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Property, YearStatements } from "@/types/property";
 import { StatementCard } from "@/components/managers/statements/statement-card";
+import AddStatementDialog from "@/components/managers/statements/add-statement-modal";
 import PropertyDetailsHeader from "@/components/managers/shared/property-details-header";
 
 type StatementsProps = {
@@ -32,6 +33,10 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
   const currentYearStatements = state[currentYear] || {};
   const statements = Object.values(currentYearStatements);
 
+  const property = properties.find(
+    (property) => property.id === id
+  ) as Property;
+
   return (
     <main>
       <PropertyDetailsHeader
@@ -39,7 +44,7 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
         title="Statements Data"
         properties={properties}
         onChange={onChange}
-        // actionModal={units && <AddUnitPaymentDialog units={units} />
+        actionModal={<AddStatementDialog property={property} />}
       />
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
