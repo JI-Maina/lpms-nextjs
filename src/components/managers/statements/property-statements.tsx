@@ -49,12 +49,20 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
         actionModal={<AddStatementDialog property={property} />}
       />
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-        {Object.values(statements).map((monthStatements) =>
-          monthStatements.map((statement) => (
-            <StatementCard key={statement.id} statement={statement} />
-          ))
+      <section className="mt-4">
+        {Object.keys(statements).length === 0 && (
+          <div className="h-24 text-center border w-full md:w-auto flex items-center justify-center">
+            No statements at this time!
+          </div>
         )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {Object.values(statements).map((monthStatements) =>
+            monthStatements.map((statement) => (
+              <StatementCard key={statement.id} statement={statement} />
+            ))
+          )}
+        </div>
       </section>
     </main>
   );

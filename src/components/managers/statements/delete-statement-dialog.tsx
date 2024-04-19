@@ -4,8 +4,8 @@ import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/hooks/use-axios-auth";
+import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,

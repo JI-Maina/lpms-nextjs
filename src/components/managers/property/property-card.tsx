@@ -42,11 +42,10 @@ const PropertyCard = ({ property, caretakers }: Props) => {
           className="flex-1 rounded-md"
         />
 
-        <div className="flex-1 justify-end space-y-5">
+        <div className="flex-1 justify-end space-y-4">
+          <DetailsCard event="lr number" detail={property?.property_lrl} />
+          <DetailsCard event="type" detail={property?.property_type} />
           <div className="grid gap-4 mb-3 grid-cols-2 md:grid-cols-1">
-            <DetailsCard event="lr number" detail={property?.property_lrl} />
-            <DetailsCard event="type" detail={property?.property_type} />
-
             <DetailsCard
               event="floors"
               detail={
@@ -61,6 +60,7 @@ const PropertyCard = ({ property, caretakers }: Props) => {
             event="Water Rate per unit"
             detail={`KSh ${property?.water_rate_per_unit}`}
           />
+
           <DetailsCard
             event="caretaker"
             detail={
@@ -91,8 +91,8 @@ export default PropertyCard;
 
 const DetailsCard = ({ event, detail }: { event: any; detail: any }) => {
   return (
-    <div className="flex items-center justify-between border mb-1 p-3 md:p-4">
-      <h1 className="font-semibold text-muted-foreground capitalize">
+    <div className="flex items-center justify-between border mb-1 p-3">
+      <h1 className="font-semibold text-muted-foreground capitalize whitespace-nowrap">
         {event}:
       </h1>
       <h1 className="ml-2">{detail}</h1>

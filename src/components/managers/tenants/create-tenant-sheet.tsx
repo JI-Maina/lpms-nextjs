@@ -9,8 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/hooks/use-axios-auth";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -20,15 +20,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const tenantSchema = z.object({
   firstName: z.string().min(3, { message: "Enter a valid first name" }),
@@ -93,7 +93,7 @@ const CreateTenantSheet = () => {
       if (res.status === 201) {
         toast({ description: "Tenant created", title: "Success" });
         setOpen(false);
-        router.push("/home/managers/units");
+        router.push("/managers/units");
         form.reset();
       }
     } catch (err: any) {
@@ -117,19 +117,19 @@ const CreateTenantSheet = () => {
   };
 
   return (
-    <Sheet open={open} onOpenChange={openChangeWrapper}>
-      <SheetTrigger asChild>
+    <Dialog open={open} onOpenChange={openChangeWrapper}>
+      <DialogTrigger asChild>
         <Button>
           <UserPlus2 className="mr-2 w-4 h-4" />
           Tenant
         </Button>
-      </SheetTrigger>
+      </DialogTrigger>
 
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Add new Tenant</SheetTitle>
-          <SheetDescription>Enter Tenant details below</SheetDescription>
-        </SheetHeader>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add new Tenant</DialogTitle>
+          <DialogDescription>Enter Tenant details below</DialogDescription>
+        </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -162,33 +162,36 @@ const CreateTenantSheet = () => {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="mjomba" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex gap-2">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder="mjomba" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="phoneNo"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input type="tel" placeholder="0700000000" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="phoneNo"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <Input type="tel" placeholder="0700000000" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="idNumber"
@@ -203,9 +206,9 @@ const CreateTenantSheet = () => {
               )}
             />
 
-            <SheetDescription className="mt-4">
+            <DialogDescription className="mt-4">
               Enter next of kin details below
-            </SheetDescription>
+            </DialogDescription>
 
             <div className="flex gap-2">
               <FormField
@@ -253,15 +256,15 @@ const CreateTenantSheet = () => {
           </form>
         </Form>
 
-        <SheetFooter className="mt-4">
-          <SheetClose asChild>
+        <DialogFooter className="mt-4">
+          <DialogClose asChild>
             <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
               Create Tenant
             </Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

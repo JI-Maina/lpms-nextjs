@@ -97,7 +97,6 @@ const AddUnitPaymentDialog = ({ units }: { units: Unit[] }) => {
       if (res.status === 201) {
         form.reset();
         toast({ description: "Payment updated successfully" });
-        router.push("/home/managers/finances/payments");
         router.refresh();
         setOpen(false);
       }

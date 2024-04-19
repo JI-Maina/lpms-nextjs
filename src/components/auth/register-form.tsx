@@ -7,9 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { TITLETYPE, regSchema } from "../../schemas/form-schema";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { TITLETYPE, regSchema } from "../../schemas/form-schema";
 import {
   Form,
   FormControl,
@@ -36,7 +36,7 @@ const RegisterForm = () => {
       firstName: "",
       lastName: "",
       username: "",
-      title: "Property owner",
+      title: "Property Owner",
       phoneNo: "",
       password: "",
       cfmPassword: "",

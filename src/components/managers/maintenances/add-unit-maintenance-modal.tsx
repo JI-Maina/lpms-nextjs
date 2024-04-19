@@ -49,6 +49,7 @@ const maintenanceSchema = z.object({
   fee: z.string().min(2, { message: "Please enter a valid amount" }),
   date: z.string().min(3, { message: "Please input a valid date" }),
   unit: z.string().min(1, { message: "Please select a unit" }),
+  description: z.string().min(3, { message: "Description is required" }),
 });
 
 const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
@@ -65,6 +66,7 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
       unit: "",
       fee: "",
       date: "",
+      description: "",
     },
   });
 
@@ -75,6 +77,8 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
       maintenance_type: data.type,
       maintenance_fee: data.fee,
       maintenance_date: data.date,
+      description: data.description,
+      maintenance_status: "false",
     };
 
     const propertyId = units[0].property;
@@ -96,10 +100,11 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
         setOpen(false);
       }
     } catch (err: any) {
-      // console.log(err?.response.data);
+      console.log(err?.response.data);
       if (!err.response) {
         toast({
-          description: "Failed to make payment! Check your internet connection",
+          description:
+            "Failed to add maintenance! Check your internet connection",
           variant: "destructive",
         });
       } else if (err?.response.status === 400) {
@@ -206,6 +211,24 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
                   <FormLabel>Maintenance Cost</FormLabel>
                   <FormControl>
                     <Input type="text" placeholder="3000" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Replaced liking sink"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -12,7 +12,7 @@ import RegisterForm from "@/components/auth/register-form";
 
 const RegisterPage = () => {
   return (
-    <Card className="w-[380px] mb-4">
+    <Card className="w-[370px] md:w-[440px] mb-4">
       <CardHeader>
         <CardTitle>Get Started</CardTitle>
         <CardDescription>
