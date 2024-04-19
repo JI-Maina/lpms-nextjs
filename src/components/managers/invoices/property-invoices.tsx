@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
-import { Property } from "@/types/property";
+import { Property } from "../../../../types/property";
 import { InvoiceTable } from "./invoice-table";
 import PropertiesHeader from "../shared/properties-header";
 import CreateInvoiceButton from "./create-invoice-button";

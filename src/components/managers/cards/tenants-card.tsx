@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllTenants } from "@/lib/data-fetching/fetch-tenants";
-import { Tenant } from "@/types/property";
+import { Tenant } from "../../../../types/property";
 
 const TenantsCard = async () => {
   const tenantsData: Promise<Tenant[]> = getAllTenants();

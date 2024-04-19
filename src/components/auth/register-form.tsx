@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { TITLETYPE, regSchema } from "./form-schema";
+import { TITLETYPE, regSchema } from "../../schemas/form-schema";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import {

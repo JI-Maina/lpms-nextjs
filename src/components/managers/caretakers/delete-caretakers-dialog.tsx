@@ -3,10 +3,10 @@
 import { Trash2 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
-import { Caretaker } from "@/types/property";
+import { Caretaker } from "../../../../types/property";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 import {
   AlertDialogAction,
   AlertDialog,

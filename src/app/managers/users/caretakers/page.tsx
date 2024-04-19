@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import { Caretaker } from "@/types/property";
+import { Caretaker } from "../../../../../types/property";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { columns } from "@/components/managers/caretakers/columns";
 import { getAllCaretakers } from "@/lib/data-fetching/fetch-caretakers";

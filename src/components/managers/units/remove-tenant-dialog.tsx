@@ -16,8 +16,8 @@ import {
   AlertDialogTrigger,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { Unit } from "@/types/property";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import { Unit } from "../../../../types/property";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 
 const RemoveTenantDialog = ({ unit }: { unit: Unit }) => {
   // const { data: session } = useSession();

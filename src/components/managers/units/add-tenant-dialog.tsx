@@ -34,8 +34,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-import { Tenant, UnitInput } from "@/types/property";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import { Tenant, UnitInput } from "../../../../types/property";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 
 type AddProps = {
   unit: UnitInput;

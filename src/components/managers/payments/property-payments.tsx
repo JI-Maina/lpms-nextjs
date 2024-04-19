@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
 import { PaymentsTable } from "./payments-table";
-import { Payment, Property } from "@/types/property";
+import { Payment, Property } from "../../../../types/property";
 import AddUnitPaymentDialog from "./add-unit-payment-modal";
 import PropertyDetailsHeader from "../shared/property-details-header";
 

@@ -35,8 +35,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Unit } from "@/types/property";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import { Unit } from "../../../../types/property";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 
 const UNITTYPES = [
   "single-room",

@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { ArrowUpDown } from "lucide-react";
-import { Caretaker } from "@/types/property";
+import { Caretaker } from "../../../../types/property";
 import { Button } from "@/components/ui/button";
 import DeleteCaretakersDialog from "./delete-caretakers-dialog";
 import EditCaretakersDialog from "./edit-caretakers-dialog";

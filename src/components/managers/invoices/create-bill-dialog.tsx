@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Bill, Unit } from "@/types/property";
+import { Bill, Unit } from "../../../../types/property";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 import {
   Dialog,
   DialogClose,

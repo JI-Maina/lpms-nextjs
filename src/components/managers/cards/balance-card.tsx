@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllUnits } from "@/lib/data-fetching/fetch-units";
-import { Unit } from "@/types/property";
+import { Unit } from "../../../../types/property";
 
 const BalanceCard = async () => {
   const unitsData: Promise<Unit[]> = getAllUnits();

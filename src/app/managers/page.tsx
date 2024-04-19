@@ -1,4 +1,4 @@
-import { YearlyPayments } from "@/types/property";
+import { YearlyPayments } from "../../../types/property";
 
 import { Overview } from "@/components/managers/cards/overview";
 import BalanceCard from "@/components/managers/cards/balance-card";

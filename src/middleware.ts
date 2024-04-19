@@ -1,3 +1,7 @@
+export { default } from "next-auth/middleware";
+
+export const config = { matcher: ["/managers/:path*", "/tenants/:path*"] };
+
 // import { getServerSession } from "next-auth";
 // import { NextRequest, NextResponse } from "next/server";
 // import { authOptions } from "./app/api/auth/[...nextauth]/options";
@@ -15,9 +19,7 @@
 //   },
 //   { callbacks: { authorized: ({ token }) => !!token } }
 // );
-export { default } from "next-auth/middleware";
 
-export const config = { matcher: ["/managers/:path*", "/tenants/:path*"] };
 
 // export async function middleware(request: NextRequest) {
 //     const session = await getServerSession(authOptions);

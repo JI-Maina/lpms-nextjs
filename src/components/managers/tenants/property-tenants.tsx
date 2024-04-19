@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { columns } from "./columns";
 import { TenantsTable } from "./tenants-table";
-import { Property, Tenant } from "@/types/property";
+import { Property, Tenant } from "../../../../types/property";
 import CreateTenantSheet from "./create-tenant-sheet";
 import PropertyDetailsHeader from "../shared/property-details-header";
 

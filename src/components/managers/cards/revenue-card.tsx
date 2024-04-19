@@ -1,4 +1,4 @@
-import { YearlyPayments } from "@/types/property";
+import { YearlyPayments } from "../../../../types/property";
 import { getAllPayments } from "@/lib/data-fetching/fetch-payments";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 

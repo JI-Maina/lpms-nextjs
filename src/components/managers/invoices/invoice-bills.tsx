@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { Bill, Unit } from "@/types/property";
+import { Bill, Unit } from "../../../../types/property";
 import CreateBillsDialog from "./create-bill-dialog";
 
 type BillsProps = {

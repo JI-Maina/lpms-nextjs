@@ -1,12 +1,14 @@
 "use client";
 
 import * as z from "zod";
+import { useEffect } from "react";
+import { RotateCcw } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { signIn, useSession } from "next-auth/react";
 import { useToast } from "../ui/use-toast";
-import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,12 +31,22 @@ const loginSchema = z.object({
 const LoginForm = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: { username: "", password: "" },
   });
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      if (session.user.userRole === "owner") {
+        router.push("/managers");
+      } else if (session.user.userRole === "tenant") {
+        router.push("/tenants");
+      }
+    }
+  }, [status, session]);
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     const res = await signIn("credentials", {
@@ -43,22 +55,14 @@ const LoginForm = () => {
       redirect: false,
     });
 
-    if (res && res.ok) {
-      console.log(res);
-      router.refresh();
-      if (session?.user.userRole === "owner") {
-        router.push("/managers");
-      } else {
-        router.push("/tenants");
+    if (res && !res.ok) {
+      if (res.status === 401) {
+        toast({
+          description: "Invalid login credentials",
+          variant: "destructive",
+        });
       }
-    } else if (res?.status === 401) {
-      toast({
-        description: "Invalid login credentials",
-        variant: "destructive",
-      });
     }
-
-    console.log(res);
   };
 
   return (
@@ -99,8 +103,15 @@ const LoginForm = () => {
           )}
         />
 
-        <Button type="submit" className="w-full">
-          Log-in
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={form.formState.isSubmitting}
+        >
+          Log-in{" "}
+          {form.formState.isSubmitting && (
+            <RotateCcw className="ml-2 h-4 w-4 animate-spin" />
+          )}
         </Button>
       </form>
     </Form>

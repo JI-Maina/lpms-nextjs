@@ -4,7 +4,12 @@ import AddTenantDialog from "./add-tenant-dialog";
 import UnitDeleteDialog from "./unit-delete-dialog";
 import { Separator } from "@/components/ui/separator";
 import RemoveTenantDialog from "./remove-tenant-dialog";
-import { MeterReading, Tenant, Unit, UnitInput } from "@/types/property";
+import {
+  MeterReading,
+  Tenant,
+  Unit,
+  UnitInput,
+} from "../../../../types/property";
 import {
   Card,
   CardContent,

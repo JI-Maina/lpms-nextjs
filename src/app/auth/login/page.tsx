@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import LoginForm from "@/components/forms/login-form";
+import LoginForm from "@/components/auth/login-form";
 
 const LoginPage = () => {
   return (

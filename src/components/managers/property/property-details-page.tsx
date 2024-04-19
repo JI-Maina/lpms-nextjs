@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Caretaker, Property } from "@/types/property";
+import { Caretaker, Property } from "../../../../types/property";
 import PropertiesHeader from "../shared/properties-header";
 import PropertyCard from "./property-card";
 import { CreatePropertyDialog } from "./create-property-dialog";

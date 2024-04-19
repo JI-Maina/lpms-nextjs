@@ -6,7 +6,7 @@ import { ArrowUpDown, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UnitDeleteDialog from "./unit-delete-dialog";
 import UnitEditDialog from "./unit-edit-dialog";
-import { Unit } from "@/types/property";
+import { Unit } from "../../../../types/property";
 
 // status: "pending" | "processing" | "success" | "failed";
 

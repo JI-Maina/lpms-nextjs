@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { YearlyPayments } from "@/types/property";
+import { YearlyPayments } from "../../../../types/property";
 
 type PaymentsProps = {
   payments: YearlyPayments;

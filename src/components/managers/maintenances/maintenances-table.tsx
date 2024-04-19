@@ -14,7 +14,7 @@ import {
 } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
-import { Maintenance } from "@/types/property";
+import { Maintenance } from "../../../../types/property";
 import { Button } from "@/components/ui/button";
 import {
   Table,

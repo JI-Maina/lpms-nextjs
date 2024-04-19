@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { Property } from "@/types/property";
+import { Property } from "../../../../types/property";
 import SelectProperty from "./select-property";
 
 type Props = {

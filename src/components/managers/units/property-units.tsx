@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import UnitsHeader from "./units-header";
 import { UnitsTable } from "./units-table";
-import { Property, Unit } from "@/types/property";
+import { Property, Unit } from "../../../../types/property";
 import SelectProperty from "../shared/select-property";
 import PropertiesBanner from "../shared/properties-banner";
 

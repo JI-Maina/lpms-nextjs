@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 import {
   AlertDialog,
   AlertDialogAction,

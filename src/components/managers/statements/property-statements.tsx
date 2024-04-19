@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Property, YearStatements } from "@/types/property";
+import { Property, YearStatements } from "../../../../types/property";
 import { StatementCard } from "@/components/managers/statements/statement-card";
 import AddStatementDialog from "@/components/managers/statements/add-statement-modal";
 import PropertyDetailsHeader from "@/components/managers/shared/property-details-header";
@@ -27,7 +27,7 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
     };
 
     if (id) fetchStatements();
-  }, [id]);
+  }, [id, state]);
 
   const currentYear = new Date().getFullYear();
   const currentYearStatements = state[currentYear] || {};
@@ -36,8 +36,9 @@ export const PropertyStatements = ({ properties }: StatementsProps) => {
   const property = properties.find(
     (property) => property.id === id
   ) as Property;
-  console.log(state);
-  console.log(property);
+
+  // console.log(state);
+  // console.log(property);
   return (
     <main>
       <PropertyDetailsHeader

@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import RegisterForm from "@/components/forms/register-form";
 import {
   Card,
   CardContent,
@@ -9,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import RegisterForm from "@/components/auth/register-form";
 
 const RegisterPage = () => {
   return (

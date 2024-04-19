@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import InvoiceBills from "./invoice-bills";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
-import { Bill, Property, Unit } from "@/types/property";
+import useAxiosAuth from "@/hooks/use-axios-auth";
+import { Bill, Property, Unit } from "../../../../types/property";
 import {
   Select,
   SelectContent,

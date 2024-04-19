@@ -1,4 +1,4 @@
-import { Statement } from "@/types/property";
+import { Statement } from "../../../../types/property";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DeleteStatementDialog from "@/components/managers/statements/delete-statement-dialog";
 

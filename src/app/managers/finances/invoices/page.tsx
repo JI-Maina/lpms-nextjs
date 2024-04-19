@@ -1,4 +1,4 @@
-import { Property } from "@/types/property";
+import { Property } from "../../../../../types/property";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 import PropertyInvoices from "@/components/managers/invoices/property-invoices";
 

@@ -37,8 +37,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-import { Unit } from "@/types/property";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import { Unit } from "../../../../types/property";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 
 const FORTYPES = ["rent", "deposit", "maintenance"] as const;
 const METHODTYPES = ["cash", "m-pesa", "bank"] as const;

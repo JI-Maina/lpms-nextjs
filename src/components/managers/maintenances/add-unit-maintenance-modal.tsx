@@ -38,9 +38,9 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { RotateCcw } from "lucide-react";
-import { Unit } from "@/types/property";
+import { Unit } from "../../../../types/property";
 import { useState } from "react";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 
 const MAINTENANCETYPES = ["Routine", "Preventive", "Corrective"] as const;
 

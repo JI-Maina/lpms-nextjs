@@ -2,7 +2,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 
-import { Caretaker, Property } from "@/types/property";
+import { Caretaker, Property } from "../../../../types/property";
 import AddCaretakerDialog from "./add-caretaker-dialog";
 import EditPropertyDialog from "./edit-property-dialog";
 import DeletePropertyDialog from "./delete-property-dialog";

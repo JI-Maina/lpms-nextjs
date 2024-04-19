@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
-import { Caretaker, Property } from "@/types/property";
+import useAxiosAuth from "@/hooks/use-axios-auth";
+import { Caretaker, Property } from "../../../../types/property";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import {
   Dialog,

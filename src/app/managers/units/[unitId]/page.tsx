@@ -1,6 +1,6 @@
 import { getUnit } from "@/lib/data-fetching/fetch-units";
 import UnitCard from "@/components/managers/units/unit-card";
-import { MeterReading, Tenant, Unit } from "@/types/property";
+import { MeterReading, Tenant, Unit } from "../../../../../types/property";
 import { getAllTenants } from "@/lib/data-fetching/fetch-tenants";
 import { getMeterReading } from "@/lib/data-fetching/fetch-meter-readings";
 

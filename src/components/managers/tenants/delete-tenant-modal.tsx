@@ -17,8 +17,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Tenant } from "@/types/property";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import { Tenant } from "../../../../types/property";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 
 const DeleteTenantModal = ({ tenant }: { tenant: Tenant }) => {
   // const { data: session } = useSession();

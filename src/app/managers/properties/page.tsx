@@ -1,4 +1,4 @@
-import { Caretaker, Property } from "@/types/property";
+import { Caretaker, Property } from "../../../../types/property";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 import { getAllCaretakers } from "@/lib/data-fetching/fetch-caretakers";
 import PropertyDetailsPage from "@/components/managers/property/property-details-page";

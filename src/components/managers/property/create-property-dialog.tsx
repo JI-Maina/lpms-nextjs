@@ -11,8 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
-import { PROPERTYTYPE, propertySchema } from "@/components/forms/form-schema";
+import useAxiosAuth from "@/hooks/use-axios-auth";
+import { PROPERTYTYPE, propertySchema } from "@/schemas/form-schema";
 import {
   Dialog,
   DialogClose,

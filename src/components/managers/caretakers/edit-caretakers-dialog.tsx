@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CaretakerSchema } from "./schema";
-import { Caretaker } from "@/types/property";
+import { Caretaker } from "../../../../types/property";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import useAxiosAuth from "@/lib/hooks/use-axios-auth";
+import useAxiosAuth from "@/hooks/use-axios-auth";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
