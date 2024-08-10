@@ -1,25 +1,52 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { getUserRole, getUsername, resetAuthCookies } from "@/actions/actions";
 
 const SigninButton = () => {
-  const { data: session } = useSession();
+  const router = useRouter();
+  const [userRole, setUserRole] = useState("");
+  const [username, setUsername] = useState("");
 
-  console.log(session);
-  if (session && session.user) {
+  const signOut = async () => {
+    await resetAuthCookies();
+
+    router.push("/");
+  };
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      const user = await getUsername();
+      const role = await getUserRole();
+
+      setUsername(user as string);
+
+      if (role === "owner") {
+        setUserRole("/managers");
+      } else if (role === "tenant") {
+        setUserRole("/tenants");
+      }
+    };
+
+    fetchUserRole();
+  }, []);
+
+  if (userRole) {
     return (
       <div className="flex items-center gap-4 ml-10">
         <Link
-          href="/home"
+          href={userRole}
           className="capitalize text-green-500 font-serif hover:border-[#A020F0] hover:text-white transition-all"
         >
-          {session.user.userRole}
+          {username}
         </Link>
 
         <button
-          onClick={() => signOut()}
+          onClick={signOut}
           className="ml-4 p-2 px-4 flex items-center text-sm bg-purple-600 rounded-sm hover:bg-purple-800"
         >
           Log Out

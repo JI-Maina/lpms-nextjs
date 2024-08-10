@@ -5,12 +5,13 @@ import { useEffect } from "react";
 import { RotateCcw } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useToast } from "../ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import apiService from "@/lib/services/api-service";
+import { getUserRole, handleLogin } from "@/actions/actions";
 import {
   Form,
   FormControl,
@@ -19,8 +20,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import apiService from "@/lib/services/api-service";
-import { handleLogin } from "@/actions/actions";
 
 const loginSchema = z.object({
   username: z
@@ -33,7 +32,6 @@ const loginSchema = z.object({
 const LoginForm = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const { data: session, status } = useSession();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -41,14 +39,30 @@ const LoginForm = () => {
   });
 
   useEffect(() => {
-    if (status === "authenticated") {
-      if (session.user.userRole === "owner") {
-        router.push("/managers");
-      } else if (session.user.userRole === "tenant") {
-        router.push("/tenants");
+    const fetchUserRole = async () => {
+      try {
+        const userRole = await getUserRole();
+
+        if (userRole === "owner") {
+          router.push("/managers");
+        } else if (userRole === "tenant") {
+          router.push("/tenants");
+        }
+      } catch (error) {
+        console.error("Failed to fetch user role:", error);
       }
-    }
-  }, [status, session]);
+    };
+
+    fetchUserRole();
+  }, [router]);
+
+  // useEffect(() => {
+  //   if (userRole === "owner") {
+  //     router.push("/managers");
+  //   } else if (userRole === "tenant") {
+  //     router.push("/tenants");
+  //   }
+  // }, [status, session]);
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     const user = {

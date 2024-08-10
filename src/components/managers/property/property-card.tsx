@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { format } from "date-fns";
-import { useSession } from "next-auth/react";
 
 import { Caretaker, Property } from "../../../../types/property";
 import AddCaretakerDialog from "./add-caretaker-dialog";
@@ -8,13 +7,14 @@ import EditPropertyDialog from "./edit-property-dialog";
 import DeletePropertyDialog from "./delete-property-dialog";
 import CreateCaretakerDialog from "../caretakers/create-caretaker-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserRole } from "@/actions/actions";
 
 type Props = { property: Property; caretakers: Caretaker[] };
 
 const URL = process.env.NEXT_PUBLIC_DJANGO_BASE_URL;
 
-const PropertyCard = ({ property, caretakers }: Props) => {
-  const { data: session } = useSession();
+const PropertyCard = async ({ property, caretakers }: Props) => {
+  const userRole = await getUserRole();
 
   return (
     <Card className="">
@@ -22,9 +22,7 @@ const PropertyCard = ({ property, caretakers }: Props) => {
         <CardTitle className="text-3xl">{property?.property_name}</CardTitle>
         <div className="space-x-2">
           <EditPropertyDialog property={property} />
-          {session?.user.userRole === "owner" && (
-            <DeletePropertyDialog id={property?.id} />
-          )}
+          {userRole === "owner" && <DeletePropertyDialog id={property?.id} />}
         </div>
       </CardHeader>
 

@@ -11,6 +11,7 @@ const PropertyPage = async () => {
   const caretakers = await caretakersData;
 
   // console.log(caretakers);
+  // console.log(properties);
 
   return (
     <PropertyDetailsPage properties={properties} caretakers={caretakers} />

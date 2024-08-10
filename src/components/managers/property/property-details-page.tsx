@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Caretaker, Property } from "../../../../types/property";
 import PropertiesHeader from "../shared/properties-header";
 import PropertyCard from "./property-card";
 import { CreatePropertyDialog } from "./create-property-dialog";
-import { useSession } from "next-auth/react";
+import { getUserRole } from "@/actions/actions";
 
 type DetailsProps = {
   properties: Property[];
@@ -15,7 +15,7 @@ type DetailsProps = {
 
 const PropertyDetailsPage = ({ properties, caretakers }: DetailsProps) => {
   const [id, setId] = useState(properties[0]?.id);
-  const { data: session } = useSession();
+  const [userRole, setUserRole] = useState("");
 
   const property = properties.find((property) => property.id === id);
 
@@ -23,12 +23,21 @@ const PropertyDetailsPage = ({ properties, caretakers }: DetailsProps) => {
     setId(value);
   };
 
+  useEffect(() => {
+    const getRole = async () => {
+      const role = await getUserRole();
+      setUserRole(role as string);
+    };
+
+    getRole();
+  }, []);
+
   return (
     <main className="flex flex-col gap-2">
       <PropertiesHeader
         properties={properties}
         onChange={onChange}
-        dialog={session?.user.userRole === "owner" && <CreatePropertyDialog />}
+        dialog={userRole === "owner" && <CreatePropertyDialog />}
       />
 
       {property ? (

@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/options";
+import { getUserRole } from "@/actions/actions";
 import NavigationCard from "@/components/shared/navigation-card";
 import TenantNavigationCard from "@/components/shared/tenant-navigation-card";
 
@@ -7,20 +6,14 @@ import TenantNavigationCard from "@/components/shared/tenant-navigation-card";
 // delete color="#f60909"
 
 const RoleNavigationPage = async () => {
-  const session = await getServerSession(authOptions);
+  const userRole = await getUserRole();
 
   // console.log(session);
 
-  if (session?.user) {
-    const {
-      user: { userRole },
-    } = session;
-
-    if (userRole === "owner" || userRole === "caretaker") {
-      return <NavigationCard />;
-    } else if (userRole === "tenant") {
-      return <TenantNavigationCard />;
-    }
+  if (userRole === "owner" || userRole === "caretaker") {
+    return <NavigationCard />;
+  } else if (userRole === "tenant") {
+    return <TenantNavigationCard />;
   }
 
   return (

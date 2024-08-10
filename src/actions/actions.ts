@@ -36,3 +36,30 @@ export async function handleLogin(
     path: "/",
   });
 }
+
+export async function resetAuthCookies() {
+  cookies().set("session_username", "");
+  cookies().set("session_userRole", "");
+  cookies().set("session_access_token", "");
+  cookies().set("session_refresh_token", "");
+}
+
+export async function getUsername() {
+  const userId = cookies().get("session_username")?.value;
+  return userId;
+}
+
+export async function getAccessToken() {
+  const access = cookies().get("session_access_token")?.value;
+  return access;
+}
+
+export async function getRefreshToken() {
+  const refresh = cookies().get("session_refresh_token")?.value;
+  return refresh;
+}
+
+export async function getUserRole() {
+  const role = cookies().get("session_userRole")?.value;
+  return role;
+}

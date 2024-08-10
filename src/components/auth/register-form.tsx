@@ -68,8 +68,6 @@ const RegisterForm = () => {
           variant: "destructive",
         });
       });
-
-      // setErrors(tmpErrors);
     }
   };
 

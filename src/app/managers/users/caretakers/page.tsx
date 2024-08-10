@@ -1,7 +1,6 @@
-import { getServerSession } from "next-auth";
-
 import { Caretaker } from "../../../../../types/property";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+
+import { getUserRole } from "@/actions/actions";
 import { columns } from "@/components/managers/caretakers/columns";
 import { getAllCaretakers } from "@/lib/data-fetching/fetch-caretakers";
 import { CaretakersTable } from "@/components/managers/caretakers/caretakers-table";
@@ -11,13 +10,13 @@ const CaretakersPage = async () => {
   const caretakersData: Promise<Caretaker[]> = getAllCaretakers();
   const caretakers = await caretakersData;
 
-  const session = await getServerSession(authOptions);
+  const userRole = await getUserRole();
 
   return (
     <main className="space-y-4">
       <div className="h-36 bg-property bg-cover bg-center bg-no-repeat bg-opacity-5 relative">
         <div className="flex justify-end absolute right-0 bottom-0 p-1">
-          {session?.user.userRole === "owner" && <CreateCaretakerDialog />}
+          {userRole === "owner" && <CreateCaretakerDialog />}
         </div>
       </div>
 

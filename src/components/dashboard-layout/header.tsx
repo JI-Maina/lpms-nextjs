@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -14,10 +14,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { signOut } from "next-auth/react";
+import { resetAuthCookies } from "@/actions/actions";
 
 const Header = () => {
   // const scrolled = useScroll(5);
+
   const selectedLayout = useSelectedLayoutSegment();
 
   return (
@@ -50,6 +51,14 @@ const Header = () => {
 export default Header;
 
 const UserAvatar = () => {
+  const router = useRouter();
+
+  const submitLogout = async () => {
+    await resetAuthCookies();
+
+    router.push("/");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -63,7 +72,7 @@ const UserAvatar = () => {
 
       <DropdownMenuContent align="end">
         <DropdownMenuItem>Account</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => signOut()}>Log-Out</DropdownMenuItem>
+        <DropdownMenuItem onClick={submitLogout}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
