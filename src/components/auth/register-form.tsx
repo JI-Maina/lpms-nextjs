@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -9,6 +8,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import apiService from "@/lib/services/api-service";
 import { TITLETYPE, regSchema } from "../../schemas/form-schema";
 import {
   Form,
@@ -25,14 +25,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useState } from "react";
-import apiService from "@/lib/services/api-service";
 
 const RegisterForm = () => {
   const router = useRouter();
   const { toast } = useToast();
-
-  const [errors, setErrors] = useState<String[]>([]);
 
   const form = useForm<z.infer<typeof regSchema>>({
     resolver: zodResolver(regSchema),
@@ -66,8 +62,6 @@ const RegisterForm = () => {
       router.push("/auth/login");
     } else {
       Object.values(res).map((error: any) => {
-        // return error;
-        // const er = error || '';
         toast({
           title: "Error",
           description: error,

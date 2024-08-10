@@ -19,6 +19,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import apiService from "@/lib/services/api-service";
+import { handleLogin } from "@/actions/actions";
 
 const loginSchema = z.object({
   username: z
@@ -49,21 +51,53 @@ const LoginForm = () => {
   }, [status, session]);
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    const res = await signIn("credentials", {
+    const user = {
       username: values.username,
       password: values.password,
-      redirect: false,
-    });
+    };
 
-    if (res && !res.ok) {
-      if (res.status === 401) {
+    const res = await apiService.post("/auth/login/", user);
+
+    if (res.access_token) {
+      handleLogin(
+        res.username,
+        res.user_role,
+        res.access_token,
+        res.refresh_token
+      );
+
+      if (res.user_role === "owner") {
+        router.push("/managers");
+      } else if (res.user_role === "tenant") {
+        router.push("/tenants");
+      }
+    } else {
+      Object.values(res).map((error: any) => {
         toast({
-          description: "Invalid login credentials",
+          title: "Error",
+          description: error,
           variant: "destructive",
         });
-      }
+      });
     }
   };
+
+  // const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  //   const res = await signIn("credentials", {
+  //     username: values.username,
+  //     password: values.password,
+  //     redirect: false,
+  //   });
+
+  //   if (res && !res.ok) {
+  //     if (res.status === 401) {
+  //       toast({
+  //         description: "Invalid login credentials",
+  //         variant: "destructive",
+  //       });
+  //     }
+  //   }
+  // };
 
   return (
     <Form {...form}>
