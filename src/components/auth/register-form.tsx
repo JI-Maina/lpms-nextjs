@@ -25,10 +25,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useState } from "react";
+import apiService from "@/lib/services/api-service";
 
 const RegisterForm = () => {
   const router = useRouter();
   const { toast } = useToast();
+
+  const [errors, setErrors] = useState<String[]>([]);
 
   const form = useForm<z.infer<typeof regSchema>>({
     resolver: zodResolver(regSchema),
@@ -55,54 +59,90 @@ const RegisterForm = () => {
       is_caretaker: false,
       is_tenant: false,
     };
-    // console.log(user);
-    const url = `${process.env.NEXT_PUBLIC_DJANGO_BASE_URL}/auth/register/`;
 
-    try {
-      const res = await axios.post(url, user, {
-        headers: { "Content-Type": "application/json" },
+    const res = await apiService.post("/auth/register/", user);
+
+    if (res.id) {
+      router.push("/auth/login");
+    } else {
+      Object.values(res).map((error: any) => {
+        // return error;
+        // const er = error || '';
+        toast({
+          title: "Error",
+          description: error,
+          variant: "destructive",
+        });
       });
 
-      if (res.status === 201) {
-        router.push("/auth/login");
-        toast({
-          title: "Success",
-          description: "Account created! login to your account",
-        });
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log(error?.response?.data);
-        if (!error?.response) {
-          toast({
-            description: "Registration Failed! Check your internet connection",
-            variant: "destructive",
-          });
-        } else if (error?.response?.status === 400) {
-          if (error.response.data.phone_no && error.response.data.username) {
-            toast({
-              description: `${error?.response?.data?.username[0]} ${error.response.data.phone_no[0]}`,
-              variant: "destructive",
-            });
-          } else if (error.response.data.phone_no) {
-            toast({
-              description: error.response.data?.phone_no[0],
-              variant: "destructive",
-            });
-          } else if (error.response.data.username) {
-            toast({
-              description: error.response.data?.username[0],
-              variant: "destructive",
-            });
-          }
-        }
-      }
+      // setErrors(tmpErrors);
     }
   };
 
+  // const onSubmit = async (values: z.infer<typeof regSchema>) => {
+  //   const user = {
+  //     first_name: values.firstName,
+  //     last_name: values.lastName,
+  //     username: values.username,
+  //     title: values.title,
+  //     phone_no: values.phoneNo,
+  //     password: values.password,
+  //     is_owner: true,
+  //     is_caretaker: false,
+  //     is_tenant: false,
+  //   };
+  //   // console.log(user);
+  //   const url = `${process.env.NEXT_PUBLIC_DJANGO_BASE_URL}/auth/register/`;
+
+  //   try {
+  //     const res = await axios.post(url, user, {
+  //       headers: { "Content-Type": "application/json" },
+  //     });
+
+  //     if (res.status === 201) {
+  //       router.push("/auth/login");
+  //       toast({
+  //         title: "Success",
+  //         description: "Account created! login to your account",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     if (axios.isAxiosError(error)) {
+  //       console.log(error?.response?.data);
+  //       if (!error?.response) {
+  //         toast({
+  //           description: "Registration Failed! Check your internet connection",
+  //           variant: "destructive",
+  //         });
+  //       } else if (error?.response?.status === 400) {
+  //         if (error.response.data.phone_no && error.response.data.username) {
+  //           toast({
+  //             description: `${error?.response?.data?.username[0]} ${error.response.data.phone_no[0]}`,
+  //             variant: "destructive",
+  //           });
+  //         } else if (error.response.data.phone_no) {
+  //           toast({
+  //             description: error.response.data?.phone_no[0],
+  //             variant: "destructive",
+  //           });
+  //         } else if (error.response.data.username) {
+  //           toast({
+  //             description: error.response.data?.username[0],
+  //             variant: "destructive",
+  //           });
+  //         }
+  //       }
+  //     }
+  //   }
+  // };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        // action={onSubmit}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6"
+      >
         <div className="flex gap-2">
           <FormField
             control={form.control}
