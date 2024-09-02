@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import { Maintenance, Property } from "../../../../types/property";
 import { MaintenancesTable } from "./maintenances-table";
-import AddUnitMaintenanceModal from "./add-unit-maintenance-modal";
+import AddUnitMaintenanceModal from "./add-maintenance-modal";
 import PropertyDetailsHeader from "../shared/property-details-header";
 
 type MaintenanceProps = {

@@ -52,7 +52,7 @@ const maintenanceSchema = z.object({
   description: z.string().min(3, { message: "Description is required" }),
 });
 
-const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
+const AddMaintenanceModal = ({ units }: { units: Unit[] }) => {
   // const { data: session } = useSession();
   const { toast } = useToast();
   const axiosAuth = useAxiosAuth();
@@ -78,7 +78,7 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
       maintenance_fee: data.fee,
       maintenance_date: data.date,
       description: data.description,
-      maintenance_status: "false",
+      maintenance_status: "Ongoing",
     };
 
     const propertyId = units[0].property;
@@ -94,7 +94,7 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
         form.reset();
         toast({
           title: "Success",
-          description: "Maintenance updated successfully",
+          description: "Maintenance added successfully",
         });
         router.refresh();
         setOpen(false);
@@ -254,4 +254,4 @@ const AddUnitMaintenanceModal = ({ units }: { units: Unit[] }) => {
   );
 };
 
-export default AddUnitMaintenanceModal;
+export default AddMaintenanceModal;

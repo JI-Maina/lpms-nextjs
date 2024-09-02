@@ -10,29 +10,61 @@ const RevenueCard = async () => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
 
-  // Calculate total payments for the current month
-  const currentMonthPayments = payments[year]?.[month] || [];
-  const currentMonth = currentMonthPayments.reduce(
-    (accumulator, payment) => accumulator + parseInt(payment.payment_amount),
-    0
-  );
+  // Calculate total payents for the year
+  const calculateYearlyPayments = (year: number) => {
+    const yearPayments = payments?.[year] || {};
+    let totalPayments = 0;
 
-  // Calculate total payments for the previous month
-  const prevMonthNumber = month - 1 === 0 ? 12 : month - 1;
-  const prevYear = month - 1 === 0 ? year - 1 : year;
+    Object.values(yearPayments).forEach((monthlyPayments) => {
+      const payments = monthlyPayments.reduce((accumulator, payment) => {
+        if (payment.payment_for !== "maintenance") {
+          return accumulator + parseInt(payment.payment_amount, 10);
+        }
+        return accumulator;
+      }, 0);
+      totalPayments += payments;
+    });
 
-  const prevMonthPayments = payments[prevYear]?.[prevMonthNumber] || [];
-  const prevMonth = prevMonthPayments.reduce(
-    (accumulator, payment) => accumulator + parseInt(payment.payment_amount),
-    0
-  );
+    return totalPayments;
+  };
 
-  const increment =
-    prevMonth !== 0
-      ? (((currentMonth - prevMonth) / prevMonth) * 100).toFixed(2)
+  const thisYearsPayments = calculateYearlyPayments(year);
+  const lastYearsPayments = calculateYearlyPayments(year - 1);
+
+  const yearIncrement =
+    lastYearsPayments !== 0
+      ? (
+          ((thisYearsPayments - lastYearsPayments) / lastYearsPayments) *
+          100
+        ).toFixed(2)
       : "0";
 
-  const percentIncrement = increment.toString();
+  const percentIncrement = yearIncrement.toString();
+
+  // Calculate total payments for the current month
+  // const currentMonthPayments = payments[year]?.[month] || [];
+  // const currentMonth = currentMonthPayments.reduce(
+  //   (accumulator, payment) => accumulator + parseInt(payment.payment_amount),
+  //   0
+  // );
+
+  // Calculate total payments for the previous month
+  // const prevMonthNumber = month - 1 === 0 ? 12 : month - 1;
+  // const prevYear = month - 1 === 0 ? year - 1 : year;
+
+  // const prevMonthPayments = payments[prevYear]?.[prevMonthNumber] || [];
+  // const prevMonth = prevMonthPayments.reduce(
+  //   (accumulator, payment) => accumulator + parseInt(payment.payment_amount),
+  //   0
+  // );
+
+  // const increment =
+  //   prevMonth !== 0
+  //     ? (((currentMonth - prevMonth) / prevMonth) * 100).toFixed(2)
+  //     : "0";
+
+  // const percentIncrement = increment.toString();
+  // console.log(payments);
 
   return (
     <Card>
@@ -52,10 +84,10 @@ const RevenueCard = async () => {
         </svg>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">KSh{currentMonth}</div>
+        <div className="text-2xl font-bold">KSh{thisYearsPayments}</div>
         <p className="text-xs text-muted-foreground">
           {percentIncrement.startsWith("-") ? `` : `+`}
-          {percentIncrement}% from last month
+          {percentIncrement}% from last year
         </p>
       </CardContent>
     </Card>
