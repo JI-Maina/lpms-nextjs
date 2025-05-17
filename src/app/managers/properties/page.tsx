@@ -1,3 +1,6 @@
+import { Suspense } from "react";
+
+import Loading from "../loading";
 import { Caretaker, Property } from "../../../../types/property";
 import { getAllProperties } from "@/lib/data-fetching/fetch-property";
 import { getAllCaretakers } from "@/lib/data-fetching/fetch-caretakers";
@@ -10,11 +13,13 @@ const PropertyPage = async () => {
   const properties = await propertyData;
   const caretakers = await caretakersData;
 
-  // console.log(caretakers);
-  // console.log(properties);
+  console.log(caretakers);
+  console.log(properties);
 
   return (
-    <PropertyDetailsPage properties={properties} caretakers={caretakers} />
+    <Suspense fallback={<Loading />}>
+      <PropertyDetailsPage properties={properties} caretakers={caretakers} />
+    </Suspense>
   );
 };
 

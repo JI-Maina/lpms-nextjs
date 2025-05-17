@@ -13,31 +13,33 @@ const ManagersHomePage = async () => {
   const paymentData = await payments;
 
   const payData = getTotalPayments(paymentData);
-  console.log(paymentData);
 
-  if (Object.keys(paymentData).length <= 0) {
-    return (
-      <div className="mt-3 space-y-4 flex items-center justify-center h-96 text-2xl">
-        No data! Please create a property first
-      </div>
-    );
-  }
+  // console.log(payData);
+  // console.log(paymentData);
 
   return (
-    <div className="mt-3 space-y-4">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <RevenueCard />
-        <BalanceCard />
-        <TenantsCard />
-        <VacantsCard />
-      </div>
+    <>
+      {Object.keys(paymentData).length <= 0 ? (
+        <div className="mt-3 space-y-4 flex items-center justify-center h-96 text-2xl">
+          No data found! Please create a property first
+        </div>
+      ) : (
+        <div className="mt-3 space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <RevenueCard />
+            <BalanceCard />
+            <TenantsCard />
+            <VacantsCard />
+          </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Overview data={payData} />
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+            <Overview data={payData} />
 
-        <RecentPayments payments={paymentData} />
-      </div>
-    </div>
+            <RecentPayments payments={paymentData} />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
