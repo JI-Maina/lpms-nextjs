@@ -13,6 +13,15 @@ const ManagersHomePage = async () => {
   const paymentData = await payments;
 
   const payData = getTotalPayments(paymentData);
+  console.log(paymentData);
+
+  if (Object.keys(paymentData).length <= 0) {
+    return (
+      <div className="mt-3 space-y-4 flex items-center justify-center h-96 text-2xl">
+        No data! Please create a property first
+      </div>
+    );
+  }
 
   return (
     <div className="mt-3 space-y-4">
