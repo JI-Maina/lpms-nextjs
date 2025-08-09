@@ -9,36 +9,35 @@ import { getAllPayments } from "@/lib/data-fetching/fetch-payments";
 import RecentPayments from "@/components/managers/cards/recent-payments";
 
 const ManagersHomePage = async () => {
-  const payments: Promise<YearlyPayments> = getAllPayments();
-  const paymentData = await payments;
+  let paymentData: YearlyPayments | null = null;
+
+  paymentData = await getAllPayments();
+
+  if (!paymentData || Object.keys(paymentData).length === 0) {
+    return (
+      <div className="mt-3 space-y-4 flex items-center justify-center h-96 text-2xl">
+        No data found! Please create a property first
+      </div>
+    );
+  }
 
   const payData = getTotalPayments(paymentData);
 
-  // console.log(payData);
-  // console.log(paymentData);
-
   return (
     <>
-      {Object.keys(paymentData).length <= 0 ? (
-        <div className="mt-3 space-y-4 flex items-center justify-center h-96 text-2xl">
-          No data found! Please create a property first
+      <div className="mt-3 space-y-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <RevenueCard />
+          <BalanceCard />
+          <TenantsCard />
+          <VacantsCard />
         </div>
-      ) : (
-        <div className="mt-3 space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <RevenueCard />
-            <BalanceCard />
-            <TenantsCard />
-            <VacantsCard />
-          </div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Overview data={payData} />
-
-            <RecentPayments payments={paymentData} />
-          </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          <Overview data={payData} />
+          <RecentPayments payments={paymentData} />
         </div>
-      )}
+      </div>
     </>
   );
 };
