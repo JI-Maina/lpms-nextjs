@@ -1,16 +1,32 @@
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+
 const Hero = () => {
   return (
-    <section className="h-screen bg-hero bg-no-repeat bg-cover bg-center relative">
-      <div className="bg-black bg-opacity-70 absolute inset-0"></div>
+    <section id="home" className="mx-auto w-full max-w-screen-2xl px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+      <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="flex-1">
+          <h1 className="mb-4 text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl">
+            Take your property management{" "}
+            <span className="text-primary">to the next level</span>
+          </h1>
+          <p className="mb-8 text-lg text-muted-foreground md:text-xl">
+            A single reference system for landlords and agents — track rent,
+            tenants, maintenance, and finances without spreadsheets.
+          </p>
+          <Button
+            asChild
+            size="lg"
+            className="rounded-full px-8 text-base font-semibold"
+          >
+            <Link href="/auth/register">Get Started Free</Link>
+          </Button>
+        </div>
 
-      <div className="absolute bottom-8 px-2 md:px-24 max-w-[990px]">
-        <h1 className="md:text-5xl text-3xl mb-8 md:mb-16">
-          Take your property management to the next level
-        </h1>
-
-        <button className="border p-2 border-[#A020F0] rounded-sm hover:bg-[#A020F0] ">
-          Learn about LPMS
-        </button>
+        <div className="flex min-h-[280px] w-full flex-1 items-center justify-center rounded-2xl border border-border bg-card p-8 text-center text-muted-foreground lg:min-h-[360px]">
+          <span className="text-xl">📊 Dashboard Preview</span>
+        </div>
       </div>
     </section>
   );

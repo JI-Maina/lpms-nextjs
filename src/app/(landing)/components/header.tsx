@@ -1,57 +1,55 @@
 "use client";
 
 import Link from "next/link";
-import { navigation } from "./constants";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
+
+import { navigation } from "./constants";
 import NavMobile from "./nav-mobile";
 import SigninButton from "./signin-button";
 
 const Header = () => {
-  const [bg, setBg] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
 
   return (
-    <header
-      className={`${
-        bg ? "bg-black" : "bg-none"
-      } fixed left-0 w-full z-20 transition-all duration-200`}
-    >
-      <div className="max-w-[1200px] mx-auto p-3">
-        <div className="flex items-center justify-between">
-          <Link href="/">LPMS</Link>
+    <header className="sticky top-0 z-50 border-b border-border bg-card">
+      <div className="mx-auto flex w-full max-w-screen-2xl flex-wrap items-center justify-between gap-4 px-6 py-4 sm:px-10 lg:px-16">
+        <Link href="/" className="text-3xl font-bold text-foreground">
+          LP<span className="text-primary">MS</span>
+        </Link>
 
-          <div
-            onClick={() => setMobileNav(!mobileNav)}
-            className="text-2xl text-white md:hidden lg:text-xl cursor-pointer"
-          >
-            {mobileNav ? <X /> : <Menu />}
-          </div>
+        <button
+          type="button"
+          onClick={() => setMobileNav(!mobileNav)}
+          className="text-foreground md:hidden"
+          aria-label={mobileNav ? "Close menu" : "Open menu"}
+        >
+          {mobileNav ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
 
-          <nav className="hidden md:flex md:items-center md:justify-center">
-            <ul className="md:flex gap-x-12">
-              {navigation.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    className="capitalize text-white hover:border-b hover:border-[#A020F0] hover:text-[#A020F0] transition-all"
-                    href={item.href}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <nav className="hidden items-center gap-8 md:flex">
+          <ul className="flex items-center gap-8">
+            {navigation.map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="font-medium text-muted-foreground transition-colors hover:text-primary"
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-            <SigninButton />
-          </nav>
+          <SigninButton />
+        </nav>
 
-          <div
-            className={`${
-              mobileNav ? "left-0" : "-left-full"
-            } md:hidden fixed bottom-0 w-full max-w-xs h-screen transition-all`}
-          >
-            <NavMobile />
-          </div>
+        <div
+          className={`${
+            mobileNav ? "left-0" : "-left-full"
+          } fixed bottom-0 top-0 z-40 w-full max-w-xs transition-all md:hidden`}
+        >
+          <NavMobile onClose={() => setMobileNav(false)} />
         </div>
       </div>
     </header>

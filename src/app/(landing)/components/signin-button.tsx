@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { getUserRole, getUsername, resetAuthCookies } from "@/actions/actions";
+import { Button } from "@/components/ui/button";
 
 const SigninButton = () => {
   const router = useRouter();
@@ -14,7 +15,6 @@ const SigninButton = () => {
 
   const signOut = async () => {
     await resetAuthCookies();
-
     router.push("/");
   };
 
@@ -37,35 +37,32 @@ const SigninButton = () => {
 
   if (userRole) {
     return (
-      <div className="flex items-center gap-4 ml-10">
+      <div className="flex items-center gap-4">
         <Link
           href={userRole}
-          className="capitalize text-green-500 font-serif hover:border-[#A020F0] hover:text-white transition-all"
+          className="capitalize text-primary transition-colors hover:text-foreground"
         >
           {username}
         </Link>
 
-        <button
-          onClick={signOut}
-          className="ml-4 p-2 px-4 flex items-center text-sm bg-purple-600 rounded-sm hover:bg-purple-800"
-        >
+        <Button variant="secondary" size="sm" onClick={signOut}>
           Log Out
-        </button>
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="flex gap-4 ml-auto items-center">
-      <button className="ml-8 p-2 px-4 flex items-center text-sm border rounded-sm hover:bg-purple-800">
-        <Link href="/auth/login">Log In</Link>
-      </button>
-
-      <button className="ml-8 p-2 px-4 flex items-center text-sm bg-purple-600 rounded-sm hover:bg-purple-800">
-        <Link href="/auth/register">Get Started</Link>
+    <Button
+      variant="outline"
+      asChild
+      className="rounded-full border-primary font-semibold text-primary hover:bg-primary hover:text-primary-foreground"
+    >
+      <Link href="/auth/register">
+        Get Started
         <ArrowRight className="ml-2 h-4 w-4" />
-      </button>
-    </div>
+      </Link>
+    </Button>
   );
 };
 

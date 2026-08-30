@@ -1,26 +1,42 @@
 import Link from "next/link";
-import { navigation } from "./constants";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 
-const NavMobile = () => {
+import { Button } from "@/components/ui/button";
+
+import { navigation } from "./constants";
+
+type NavMobileProps = {
+  onClose: () => void;
+};
+
+const NavMobile = ({ onClose }: NavMobileProps) => {
   return (
-    <nav className="bg-white w-full h-full shadow-2xl">
-      <ul className="text-center h-full flex flex-col justify-center items-center gap-y-6">
+    <nav className="flex h-full w-full flex-col bg-card shadow-2xl">
+      <div className="flex justify-end p-4">
+        <button type="button" onClick={onClose} aria-label="Close menu">
+          <X className="h-6 w-6 text-foreground" />
+        </button>
+      </div>
+
+      <ul className="flex flex-1 flex-col items-center justify-center gap-6">
         {navigation.map((item) => (
           <li key={item.name}>
             <Link
-              className="text-xl text-black font-medium capitalize"
               href={item.href}
+              onClick={onClose}
+              className="text-xl font-medium capitalize text-foreground hover:text-primary"
             >
               {item.name}
             </Link>
           </li>
         ))}
 
-        <button className="ml-8 p-2 px-4 text-sm flex items-center bg-purple-600 rounded-sm hover:bg-purple-800">
-          <Link href="/auth/register">Get Started</Link>
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </button>
+        <Button asChild className="rounded-full">
+          <Link href="/auth/register">
+            Get Started
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+        </Button>
       </ul>
     </nav>
   );
