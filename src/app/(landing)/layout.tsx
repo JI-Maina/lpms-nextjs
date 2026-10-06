@@ -4,7 +4,7 @@ export default function LandingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="dark min-h-screen bg-background text-foreground scroll-smooth">
+    <div className="dark min-h-screen scroll-smooth bg-[#0b0b0b] text-foreground">
       {children}
     </div>
   );

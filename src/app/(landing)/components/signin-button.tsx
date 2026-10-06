@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -37,14 +36,13 @@ const SigninButton = () => {
 
   if (userRole) {
     return (
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Link
           href={userRole}
           className="capitalize text-primary transition-colors hover:text-foreground"
         >
           {username}
         </Link>
-
         <Button variant="secondary" size="sm" onClick={signOut}>
           Log Out
         </Button>
@@ -54,14 +52,12 @@ const SigninButton = () => {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       asChild
-      className="rounded-full border-primary font-semibold text-primary hover:bg-primary hover:text-primary-foreground"
+      size="sm"
+      className="text-muted-foreground hover:text-foreground"
     >
-      <Link href="/auth/register">
-        Get Started
-        <ArrowRight className="ml-2 h-4 w-4" />
-      </Link>
+      <Link href="/auth/login">Log In</Link>
     </Button>
   );
 };
